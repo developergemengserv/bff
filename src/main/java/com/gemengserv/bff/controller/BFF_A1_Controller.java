@@ -114,4 +114,25 @@ public class BFF_A1_Controller {
     {
         return qhse_8081_Service.login(username, password);
     }
+
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.GET)
+    public ResponseEntity<Object> getNcr( @RequestHeader(value = "userId") Integer userId,
+                                     @RequestHeader(value = "token") String token,
+                                     @RequestParam(value = "companyId") long companyId,
+                                     @RequestParam(value = "projectId") int projectId,
+                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                     @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
+
+    {
+        return qhse_8081_Service.getNcr(userId, token,companyId,projectId,pageNum,pageSize);
+    }
+
+    @RequestMapping(value = "/qc/ncrDetails", method = RequestMethod.GET)
+    public ResponseEntity<Object> getNcrDetails( @RequestHeader(value = "userId") Integer userId,
+                                     @RequestHeader(value = "token") String token,
+                                     @RequestParam(value = "ncrId") long ncrId)
+
+    {
+        return qhse_8081_Service.getNcrDetails(userId, token,ncrId);
+    }
 }
