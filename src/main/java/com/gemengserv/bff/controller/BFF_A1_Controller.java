@@ -115,6 +115,17 @@ public class BFF_A1_Controller {
         return qhse_8081_Service.login(username, password);
     }
 
+
+    // NCR API's
+
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.POST)
+    public ResponseEntity<Object> createQcNcr(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestBody Object ncrRequest)
+    {
+        return qhse_8081_Service.createQcNcr(userId, token,ncrRequest);
+    }
+
     @RequestMapping(value = "/qc/ncr", method = RequestMethod.GET)
     public ResponseEntity<Object> getNcr( @RequestHeader(value = "userId") Integer userId,
                                      @RequestHeader(value = "token") String token,
