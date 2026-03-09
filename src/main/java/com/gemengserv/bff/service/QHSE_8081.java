@@ -73,7 +73,9 @@ public interface QHSE_8081 {
                                          @RequestParam("token") String token);
 
 
-    @RequestMapping(value = "/ncr", method = RequestMethod.POST)
+    // NCR API's
+
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.POST)
     ResponseEntity<Object> createQcNcr(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
