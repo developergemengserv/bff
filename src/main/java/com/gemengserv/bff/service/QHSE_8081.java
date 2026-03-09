@@ -72,4 +72,47 @@ public interface QHSE_8081 {
     public ResponseEntity<?> userDetails(@RequestParam("user_id") int user_id,
                                          @RequestParam("token") String token);
 
+
+    @RequestMapping(value = "/ncr", method = RequestMethod.POST)
+    ResponseEntity<Object> createQcNcr(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object ncrRequest);
+
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.GET)
+    ResponseEntity<Object> getNcr(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "companyId") long companyId,
+            @RequestParam(value = "projectId") int projectId,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "100") int pageSize);
+
+    @RequestMapping(value = "/qc/ncrDetails", method = RequestMethod.GET)
+    ResponseEntity<Object> getNcrDetails(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "ncrId") long ncrId);
+
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.PUT)
+    ResponseEntity<Object> updateNcr(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object qcNcrUpdateRequest);
+
+    @RequestMapping(value = "/qc/filter/ncr", method = RequestMethod.POST)
+    ResponseEntity<Object> getNcrFilter(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object ncrFilterRequest);
+
+    @RequestMapping(value = "/qc/ncrReport", method = RequestMethod.GET)
+    ResponseEntity<?> getDataForNcrReport(
+            @RequestParam(value = "user_id") int userId,
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "ncrId") int ncrId,
+            @RequestParam(value = "webCall", defaultValue = "false") boolean webCall);
+
+
+
 }
