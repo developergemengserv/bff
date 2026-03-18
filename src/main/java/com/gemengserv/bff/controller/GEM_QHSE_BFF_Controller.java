@@ -2,33 +2,26 @@ package com.gemengserv.bff.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.gemengserv.bff.service.TEJRAJ_QHSE_8081;
+import com.gemengserv.bff.service.GEM_QHSE_8083;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/tejrajbff")
-public class TEJRAJ_QHSE_BFF_A1_Controller {
+@RequestMapping("/gembff")
+public class GEM_QHSE_BFF_Controller
+{
 
     @Autowired
-    TEJRAJ_QHSE_8081 tejraj_qhse_8081;
+    GEM_QHSE_8083 gem_qhse_8081_service;
 
 //    ActivityMasterController
 
@@ -41,7 +34,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
             @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.getActivitiesByUser(userId, projectId, token, pageSize, page, lastSync);
+        return gem_qhse_8081_service.getActivitiesByUser(userId, projectId, token, pageSize, page, lastSync);
     }
 
     @RequestMapping(value = "/rest/v1/activity/checklist/master", method = RequestMethod.GET)
@@ -51,75 +44,75 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam("user_id") int user_id, @RequestParam("project_id") int project_id,
             @RequestParam("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.getChecklists(page, pageSize, user_id, project_id, token, lastSync);
+        return gem_qhse_8081_service.getChecklists(page, pageSize, user_id, project_id, token, lastSync);
     }
 
     @GetMapping(value = "/getActivities")
     public ResponseEntity<List<Object>> getActivities()
     {
-        return tejraj_qhse_8081.getActivities();
+        return gem_qhse_8081_service.getActivities();
     }
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addActivities(@RequestParam(value = "file") MultipartFile file,
                                 @RequestParam(value = "userId") int userId)
     {
-        return tejraj_qhse_8081.addActivities(file,userId);
+        return gem_qhse_8081_service.addActivities(file,userId);
     }
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
                                @RequestParam(value = "file") MultipartFile file)
     {
-        return tejraj_qhse_8081.addLocations(userId,file);
+        return gem_qhse_8081_service.addLocations(userId,file);
     }
 
-//    ActivityTypeOfWorkMappingController
+    //    ActivityTypeOfWorkMappingController
     @GetMapping(value = "/rest/v1/activityTypeOfWork", produces = "application/json")
     public ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
                                                                @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.getActivityTypeOfWorkMapping(userId, token, lastSync);
+        return gem_qhse_8081_service.getActivityTypeOfWorkMapping(userId, token, lastSync);
     }
 
-//   ActivityUnitMappingController
+    //   ActivityUnitMappingController
     @GetMapping(value = "activityUnitMapping")
     public List<Object> getAllActivityUnitMapping()
     {
-        return tejraj_qhse_8081.getAllActivityUnitMapping();
+        return gem_qhse_8081_service.getAllActivityUnitMapping();
     }
 
     //  CommonController
     @RequestMapping(value = "/rest/v1/configuration", method = RequestMethod.GET)
     public ResponseEntity<Object> getConfiguration(@RequestParam("package_id") String package_id) {
-        return tejraj_qhse_8081.getConfiguration(package_id);
+        return gem_qhse_8081_service.getConfiguration(package_id);
     }
 
     @RequestMapping(value = "/rest/v1/checkotp", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> checkotp(@RequestParam("otp") int otp, @RequestParam("user_id") int user_id, @RequestParam("version") String version,
                                                         @RequestParam("device_code") String device_code) {
-        return tejraj_qhse_8081.checkotp(otp, user_id, version, device_code);
+        return gem_qhse_8081_service.checkotp(otp, user_id, version, device_code);
     }
 
     @RequestMapping(value = "/rest/v1/logout", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("version") String version,
                                                       @RequestParam("device_code") String device_code) {
-        return tejraj_qhse_8081.logout(user_id, version, device_code);
+        return gem_qhse_8081_service.logout(user_id, version, device_code);
     }
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
     public ResponseEntity<?> userDetails(@RequestParam("user_id") int user_id,
                                          @RequestParam("token") String token)
     {
-        return tejraj_qhse_8081.userDetails(user_id, token);
+        return gem_qhse_8081_service.userDetails(user_id, token);
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     public Object addCompany(@RequestHeader("userId") int userId,
-                      @RequestHeader("token") String token,
-                      @RequestBody Object companyCreateRequest)
+                             @RequestHeader("token") String token,
+                             @RequestBody Object companyCreateRequest)
     {
-        return tejraj_qhse_8081.addCompany(userId,token,companyCreateRequest);
+        return gem_qhse_8081_service.addCompany(userId,token,companyCreateRequest);
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.PUT)
@@ -127,42 +120,42 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                 @RequestHeader("token") String token,
                                 @RequestBody Object companyUpdateRequest)
     {
-        return tejraj_qhse_8081.updateCompany(userId,token,companyUpdateRequest);
+        return gem_qhse_8081_service.updateCompany(userId,token,companyUpdateRequest);
     }
 
     @GetMapping("/company")
     public Object getCombinedResponse(@RequestParam("userId") int userId,
                                       @RequestParam("token") String token) {
-        return tejraj_qhse_8081.getCompanies(userId, token);
+        return gem_qhse_8081_service.getCompanies(userId, token);
     }
 
     @RequestMapping(value = "/deleteCompany", method = RequestMethod.DELETE, produces = {"application/json"})
     public ResponseEntity<?> deleteCompany(@RequestParam(value = "companyId") Integer companyId)
     {
-        return tejraj_qhse_8081.deleteCompany(companyId);
+        return gem_qhse_8081_service.deleteCompany(companyId);
     }
 
     @GetMapping("/registerUser")
     public Object registerUser(@RequestBody Object userRegisterRequest) {
-        return tejraj_qhse_8081.registerUser(userRegisterRequest);
+        return gem_qhse_8081_service.registerUser(userRegisterRequest);
     }
 
     @GetMapping("/rest/v2/login")
     public ResponseEntity<?> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
-        return tejraj_qhse_8081.loginAPI(username, password);
+        return gem_qhse_8081_service.loginAPI(username, password);
     }
 
     @RequestMapping(value = "/rest/v1/login", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username, @RequestParam("password") String password)
     {
-        return tejraj_qhse_8081.login(username, password);
+        return gem_qhse_8081_service.login(username, password);
     }
 
     @RequestMapping(value = "/rest/v1/media/find", method = RequestMethod.GET)
     public void doDownload(@RequestParam("media_url") String mediaUrl, @RequestParam("user_id") int user_id, @RequestParam("token") String token, HttpServletResponse response)
             throws IOException
     {
-        tejraj_qhse_8081.doDownload(mediaUrl,user_id,token,response);
+        gem_qhse_8081_service.doDownload(mediaUrl,user_id,token,response);
     }
 
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
@@ -170,38 +163,38 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestParam(value = "file") MultipartFile file)
     {
-        return tejraj_qhse_8081.uploadSignature(userId,token,file);
+        return gem_qhse_8081_service.uploadSignature(userId,token,file);
     }
 
-        // NCR API's
+    // NCR API's
 
     @RequestMapping(value = "/qc/ncr", method = RequestMethod.POST)
     public ResponseEntity<Object> createQcNcr(@RequestHeader(value = "userId") Integer userId,
                                               @RequestHeader(value = "token") String token,
                                               @RequestBody Object ncrRequest)
     {
-        return tejraj_qhse_8081.createQcNcr(userId, token,ncrRequest);
+        return gem_qhse_8081_service.createQcNcr(userId, token,ncrRequest);
     }
 
     @RequestMapping(value = "/qc/ncr", method = RequestMethod.GET)
     public ResponseEntity<Object> getNcr( @RequestHeader(value = "userId") Integer userId,
-                                     @RequestHeader(value = "token") String token,
-                                     @RequestParam(value = "companyId") long companyId,
-                                     @RequestParam(value = "projectId") int projectId,
-                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
+                                          @RequestHeader(value = "token") String token,
+                                          @RequestParam(value = "companyId") long companyId,
+                                          @RequestParam(value = "projectId") int projectId,
+                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                          @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
 
     {
-        return tejraj_qhse_8081.getNcr(userId, token,companyId,projectId,pageNum,pageSize);
+        return gem_qhse_8081_service.getNcr(userId, token,companyId,projectId,pageNum,pageSize);
     }
 
     @RequestMapping(value = "/qc/ncrDetails", method = RequestMethod.GET)
     public ResponseEntity<Object> getNcrDetails( @RequestHeader(value = "userId") Integer userId,
-                                     @RequestHeader(value = "token") String token,
-                                     @RequestParam(value = "ncrId") long ncrId)
+                                                 @RequestHeader(value = "token") String token,
+                                                 @RequestParam(value = "ncrId") long ncrId)
 
     {
-        return tejraj_qhse_8081.getNcrDetails(userId, token,ncrId);
+        return gem_qhse_8081_service.getNcrDetails(userId, token,ncrId);
     }
 
     // Safety TBT API's
@@ -212,7 +205,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object safetyTBTRequest)
     {
-        return tejraj_qhse_8081.saveSafetyTBT(userId,token,safetyTBTRequest);
+        return gem_qhse_8081_service.saveSafetyTBT(userId,token,safetyTBTRequest);
     }
 
     @GetMapping(value = "/SafetyTBT")
@@ -221,7 +214,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "projectId", required = false, defaultValue = "0") int projectId)
     {
-        return tejraj_qhse_8081.getSafetyTBT(userId,token,projectId);
+        return gem_qhse_8081_service.getSafetyTBT(userId,token,projectId);
     }
 
     @GetMapping(value = "/getSafetyTbtById/{id}")
@@ -230,7 +223,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "id") Integer tbtId)
     {
-        return tejraj_qhse_8081.getSafetyTbtById(userId,token,tbtId);
+        return gem_qhse_8081_service.getSafetyTbtById(userId,token,tbtId);
     }
 
     // safety controller API's
@@ -241,7 +234,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object obsRequest) {
-        return tejraj_qhse_8081.createSafetyObservation(userId, token, obsRequest);
+        return gem_qhse_8081_service.createSafetyObservation(userId, token, obsRequest);
     }
 
     @PostMapping(value = "/safety/obs/update")
@@ -249,7 +242,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object updateRequest) {
-        return tejraj_qhse_8081.updateSafetyObservation(userId, token, updateRequest);
+        return gem_qhse_8081_service.updateSafetyObservation(userId, token, updateRequest);
     }
 
     @PostMapping(value = "/safety/obs/find")
@@ -258,7 +251,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestBody Object findRequest) {
-        return tejraj_qhse_8081.findSafetyObservation(userId, token, lastSync, findRequest);
+        return gem_qhse_8081_service.findSafetyObservation(userId, token, lastSync, findRequest);
     }
 
     @GetMapping(value = "/safety/obs/find/{obsId}")
@@ -266,7 +259,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "obsId") Integer obsId) {
-        return tejraj_qhse_8081.findSafetyObservationByObsId(userId, token, obsId);
+        return gem_qhse_8081_service.findSafetyObservationByObsId(userId, token, obsId);
     }
 
     @PostMapping(value = "/safety/obs/history/find")
@@ -274,7 +267,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object historyRequest) {
-        return tejraj_qhse_8081.findObservationRequestHistory(userId, token, historyRequest);
+        return gem_qhse_8081_service.findObservationRequestHistory(userId, token, historyRequest);
     }
 
     // MASTER API
@@ -284,7 +277,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return tejraj_qhse_8081.findAllUnsafeAct(userId, token, lastSync);
+        return gem_qhse_8081_service.findAllUnsafeAct(userId, token, lastSync);
     }
 
     @GetMapping(value = "/safety/master/unsafeCondition/findAll")
@@ -292,7 +285,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return tejraj_qhse_8081.findAllUnsafeCondition(userId, token, lastSync);
+        return gem_qhse_8081_service.findAllUnsafeCondition(userId, token, lastSync);
     }
 
     @GetMapping(value = "/safety/master/typeOfWork/findAll")
@@ -300,7 +293,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return tejraj_qhse_8081.findAllTypeOfWork(userId, token, lastSync);
+        return gem_qhse_8081_service.findAllTypeOfWork(userId, token, lastSync);
     }
 
     @GetMapping(value = "/safety/master/checklistQuestions/findAll")
@@ -309,7 +302,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.findAllChecklistQuestions(userId, token, lastSync);
+        return gem_qhse_8081_service.findAllChecklistQuestions(userId, token, lastSync);
     }
 
     @GetMapping(value = "/safety/master/typeOfWorkChecklistMapping")
@@ -318,13 +311,13 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.findAllTypeOfWorkChecklistMapping(userId, token, lastSync);
+        return gem_qhse_8081_service.findAllTypeOfWorkChecklistMapping(userId, token, lastSync);
     }
 
     @RequestMapping(value = "/rest/v1/getRoleMaster", method = RequestMethod.GET)
     ResponseEntity<Object> getRoleMaster()
     {
-        return tejraj_qhse_8081.getRoleMaster();
+        return gem_qhse_8081_service.getRoleMaster();
     }
 
     // FOR PTW API
@@ -334,7 +327,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwRequest) {
-        return tejraj_qhse_8081.createSafetyPTW(userId, token, ptwRequest);
+        return gem_qhse_8081_service.createSafetyPTW(userId, token, ptwRequest);
     }
 
     @PutMapping(value = "/safety/ptw")
@@ -342,7 +335,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwRequest) {
-        return tejraj_qhse_8081.updateSafetyPTW(userId, token, ptwRequest);
+        return gem_qhse_8081_service.updateSafetyPTW(userId, token, ptwRequest);
     }
 
     @PutMapping(value = "/safety/ptwStatus")
@@ -350,12 +343,12 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object request) {
-        return tejraj_qhse_8081.updatePTWStatus(userId, token, request);
+        return gem_qhse_8081_service.updatePTWStatus(userId, token, request);
     }
 
     @PutMapping(value = "/safety/ptwClose")
     public ResponseEntity<Object> updateUnclosedPTW() {
-        return tejraj_qhse_8081.updateUnclosedPTW();
+        return gem_qhse_8081_service.updateUnclosedPTW();
     }
 
     @GetMapping(value = "/safety/ptw/find")
@@ -367,7 +360,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-        return tejraj_qhse_8081.findSafetyPTW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+        return gem_qhse_8081_service.findSafetyPTW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
     }
 
     @GetMapping(value = "/safety/ptw/findsp")
@@ -377,7 +370,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "page_num", defaultValue = "1") Integer page,
             @RequestParam(value = "page_size", defaultValue = "500") Integer pageSize,
             @RequestParam(value = "project_id") Integer projectId) {
-        return tejraj_qhse_8081.findSafetyPTWSP(userId, token, page, pageSize, projectId);
+        return gem_qhse_8081_service.findSafetyPTWSP(userId, token, page, pageSize, projectId);
     }
 
     @GetMapping(value = "/safety/ptw/find/V2")
@@ -389,7 +382,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-        return tejraj_qhse_8081.findSafetyPTWW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+        return gem_qhse_8081_service.findSafetyPTWW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
     }
 
     @GetMapping(value = "/safety/ptw/find/{ptwId}")
@@ -397,7 +390,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "ptwId") Integer ptwId) {
-        return tejraj_qhse_8081.findSafetyPTWById(userId, token, ptwId);
+        return gem_qhse_8081_service.findSafetyPTWById(userId, token, ptwId);
     }
 
     @GetMapping(value = "/safety/ptw/find/V2/{ptwId}")
@@ -405,7 +398,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "ptwId") Integer ptwId) {
-        return tejraj_qhse_8081.findPTWById(userId, token, ptwId);
+        return gem_qhse_8081_service.findPTWById(userId, token, ptwId);
     }
 
     @GetMapping(value = "/safety/findPtwByFilter")
@@ -414,7 +407,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "toDate") String toDate,
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token) {
-        return tejraj_qhse_8081.findPTWByFilter(fromDate, toDate, userId, token);
+        return gem_qhse_8081_service.findPTWByFilter(fromDate, toDate, userId, token);
     }
 
     @PostMapping(value = "/safety/ptw/history/find")
@@ -422,7 +415,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwHistoryFindRequest) {
-        return tejraj_qhse_8081.findPTWHistory(userId, token, ptwHistoryFindRequest);
+        return gem_qhse_8081_service.findPTWHistory(userId, token, ptwHistoryFindRequest);
     }
 
     @PostMapping(value = "/safety/findPtwCount")
@@ -430,7 +423,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return tejraj_qhse_8081.findPtwCount(userId, token, dashboardCountRequest);
+        return gem_qhse_8081_service.findPtwCount(userId, token, dashboardCountRequest);
     }
 
     @PostMapping(value = "/safety/findObsCount")
@@ -438,7 +431,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return tejraj_qhse_8081.findObsCount(userId, token, dashboardCountRequest);
+        return gem_qhse_8081_service.findObsCount(userId, token, dashboardCountRequest);
     }
 
     @PostMapping(value = "/safety/findEcCount")
@@ -446,7 +439,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return tejraj_qhse_8081.findEcCount(userId, token, dashboardCountRequest);
+        return gem_qhse_8081_service.findEcCount(userId, token, dashboardCountRequest);
     }
 
     @PostMapping(value = "/safety/findTbtCount")
@@ -454,7 +447,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return tejraj_qhse_8081.findTbtCount(userId, token, dashboardCountRequest);
+        return gem_qhse_8081_service.findTbtCount(userId, token, dashboardCountRequest);
     }
 
     @PostMapping(value = "/safety/uploadMultipleFiles", consumes = "multipart/form-data")
@@ -464,7 +457,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam("eventId") Integer eventId,
             @RequestParam("eventName") String eventName,
             @RequestPart("file") MultipartFile[] files) {
-        return tejraj_qhse_8081.uploadMultipleFiles(userId, token, eventId, eventName, files);
+        return gem_qhse_8081_service.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
@@ -473,7 +466,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam("checklistAnswerId") Integer checklistAnswerId,
             @RequestPart("file") MultipartFile[] files) {
-        return tejraj_qhse_8081.uploadCheckListMedia(userId, token, checklistAnswerId, files);
+        return gem_qhse_8081_service.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
     @GetMapping(value = "/safety/findUsersByProjectIdAndRoleId")
@@ -483,7 +476,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "roleId") Integer roleId,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return tejraj_qhse_8081.findUsersByProjectIdAndRoleId(userId, token, projectId, roleId, lastSync);
+        return gem_qhse_8081_service.findUsersByProjectIdAndRoleId(userId, token, projectId, roleId, lastSync);
     }
 
     @GetMapping(value = "/safety/sendOBSNotification")
@@ -491,109 +484,109 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "level1LocationId") Integer level1LocationId,
             @RequestHeader(value = "obsId") Integer obsId,
             @RequestHeader(value = "user_id") Integer userId) {
-        return tejraj_qhse_8081.sendOBSNotification(level1LocationId, obsId, userId);
+        return gem_qhse_8081_service.sendOBSNotification(level1LocationId, obsId, userId);
     }
 
     // Equipment
 
-        @PostMapping(value = "/safety/equipment")
-        public ResponseEntity<Object> saveEquipment(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestBody Object equipmentRequest) {
-            return tejraj_qhse_8081.saveEquipment(userId, token, equipmentRequest);
-        }
+    @PostMapping(value = "/safety/equipment")
+    public ResponseEntity<Object> saveEquipment(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object equipmentRequest) {
+        return gem_qhse_8081_service.saveEquipment(userId, token, equipmentRequest);
+    }
 
-        @PutMapping(value = "/safety/equipment")
-        public ResponseEntity<Object> updateEquipment(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestBody Object equipmentRequest) {
-            return tejraj_qhse_8081.updateEquipment(userId, token, equipmentRequest);
-        }
+    @PutMapping(value = "/safety/equipment")
+    public ResponseEntity<Object> updateEquipment(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object equipmentRequest) {
+        return gem_qhse_8081_service.updateEquipment(userId, token, equipmentRequest);
+    }
 
-        @GetMapping(value = "/safety/equipment/find")
-        public ResponseEntity<Object> findSafetyEquipment(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestParam(value = "page_num", defaultValue = "1") Integer page,
-                @RequestParam(value = "page_size", defaultValue = "500") Integer pageSize,
-                @RequestParam(value = "project_id") Integer projectId,
-                @RequestParam(value = "lastSync", required = false) String lastSync,
-                @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-            return tejraj_qhse_8081.findSafetyEquipment(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
-        }
+    @GetMapping(value = "/safety/equipment/find")
+    public ResponseEntity<Object> findSafetyEquipment(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "page_num", defaultValue = "1") Integer page,
+            @RequestParam(value = "page_size", defaultValue = "500") Integer pageSize,
+            @RequestParam(value = "project_id") Integer projectId,
+            @RequestParam(value = "lastSync", required = false) String lastSync,
+            @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
+        return gem_qhse_8081_service.findSafetyEquipment(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+    }
 
-        @PostMapping(value = "/safety/equipment/history/find")
-        public ResponseEntity<Object> findEQHistory(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestBody Object eqHistoryFindRequest) {
-            return tejraj_qhse_8081.findEQHistory(userId, token, eqHistoryFindRequest);
-        }
+    @PostMapping(value = "/safety/equipment/history/find")
+    public ResponseEntity<Object> findEQHistory(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object eqHistoryFindRequest) {
+        return gem_qhse_8081_service.findEQHistory(userId, token, eqHistoryFindRequest);
+    }
 
-        @GetMapping(value = "/safety/equipment/find/{equipmentId}")
-        public ResponseEntity<Object> findSafetyEquipmentById(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @PathVariable(value = "equipmentId") Integer equipmentId) {
-            return tejraj_qhse_8081.findSafetyEquipmentById(userId, token, equipmentId);
-        }
+    @GetMapping(value = "/safety/equipment/find/{equipmentId}")
+    public ResponseEntity<Object> findSafetyEquipmentById(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "equipmentId") Integer equipmentId) {
+        return gem_qhse_8081_service.findSafetyEquipmentById(userId, token, equipmentId);
+    }
 
-        @GetMapping(value = "/safety/findOBSByFilter")
-        public ResponseEntity<Object> findOBSByFilter(
-                @RequestParam(value = "fromDate") String fromDate,
-                @RequestParam(value = "toDate") String toDate,
-                @RequestParam(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token) {
-            return tejraj_qhse_8081.findOBSByFilter(fromDate, toDate, userId, token);
-        }
+    @GetMapping(value = "/safety/findOBSByFilter")
+    public ResponseEntity<Object> findOBSByFilter(
+            @RequestParam(value = "fromDate") String fromDate,
+            @RequestParam(value = "toDate") String toDate,
+            @RequestParam(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token) {
+        return gem_qhse_8081_service.findOBSByFilter(fromDate, toDate, userId, token);
+    }
 
-        @GetMapping(value = "/safety/statistics/{projectId}")
-        public ResponseEntity<Object> findSafetyStatistics(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @PathVariable(value = "projectId") Integer projectId) {
-            return tejraj_qhse_8081.findSafetyStatistics(userId, token, projectId);
-        }
+    @GetMapping(value = "/safety/statistics/{projectId}")
+    public ResponseEntity<Object> findSafetyStatistics(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "projectId") Integer projectId) {
+        return gem_qhse_8081_service.findSafetyStatistics(userId, token, projectId);
+    }
 
-        @PostMapping(value = "/safety/bulletin")
-        public ResponseEntity<Object> sendBulletin(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestBody Object bulletinRequest) {
-            return tejraj_qhse_8081.sendBulletin(userId, token, bulletinRequest);
-        }
+    @PostMapping(value = "/safety/bulletin")
+    public ResponseEntity<Object> sendBulletin(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object bulletinRequest) {
+        return gem_qhse_8081_service.sendBulletin(userId, token, bulletinRequest);
+    }
 
-        @GetMapping(value = "/safety/bulletin/{projectId}")
-        public ResponseEntity<Object> findBulletinByProjectId(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @PathVariable(value = "projectId") Integer projectId) {
-            return tejraj_qhse_8081.findBulletinByProjectId(userId, token, projectId);
-        }
+    @GetMapping(value = "/safety/bulletin/{projectId}")
+    public ResponseEntity<Object> findBulletinByProjectId(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "projectId") Integer projectId) {
+        return gem_qhse_8081_service.findBulletinByProjectId(userId, token, projectId);
+    }
 
-        @GetMapping(value = "/safety/getSafetyDigitalLibrary")
-        public ResponseEntity<Object> getSafetyDigitalLibrary(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestParam(value = "project_id") int projectId) {
-            return tejraj_qhse_8081.getSafetyDigitalLibrary(userId, token, projectId);
-        }
+    @GetMapping(value = "/safety/getSafetyDigitalLibrary")
+    public ResponseEntity<Object> getSafetyDigitalLibrary(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id") int projectId) {
+        return gem_qhse_8081_service.getSafetyDigitalLibrary(userId, token, projectId);
+    }
 
-        @GetMapping(value = "/safety/ptw/getPendingPtw")
-        public ResponseEntity<Object> getPendingPtw(
-                @RequestHeader(value = "userId") Integer userId,
-                @RequestHeader(value = "token") String token,
-                @RequestParam(value = "projectId") int projectId) {
-            return tejraj_qhse_8081.getPendingPtw(userId, token, projectId);
-        }
+    @GetMapping(value = "/safety/ptw/getPendingPtw")
+    public ResponseEntity<Object> getPendingPtw(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "projectId") int projectId) {
+        return gem_qhse_8081_service.getPendingPtw(userId, token, projectId);
+    }
 
     @GetMapping(value = "/safety/findCompanyUsers")
     public ResponseEntity<Object> findCompanyUsers(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token) {
-        return tejraj_qhse_8081.findCompanyUsers(userId, token);
+        return gem_qhse_8081_service.findCompanyUsers(userId, token);
     }
 
     @GetMapping(value = "/safety/obsReport")
@@ -603,7 +596,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "obsId") int obsId,
             @RequestParam(value = "webCall", defaultValue = "false") boolean webCall) {
 
-        return tejraj_qhse_8081.getDataForObsReport(userId, token, obsId, webCall);
+        return gem_qhse_8081_service.getDataForObsReport(userId, token, obsId, webCall);
     }
 
     // Emergency helpline
@@ -613,7 +606,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestBody Object emergencyHelplineRequest)
     {
-        return tejraj_qhse_8081.addEmergencyHelpLine(userId,token,emergencyHelplineRequest);
+        return gem_qhse_8081_service.addEmergencyHelpLine(userId,token,emergencyHelplineRequest);
     }
 
     @GetMapping(value = "/getEmergencyHelpline")
@@ -621,7 +614,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                                 @RequestHeader(value = "token") String token,
                                                                 int projectId)
     {
-        return tejraj_qhse_8081.getAllEmergencyHelpLine(userId,token,projectId);
+        return gem_qhse_8081_service.getAllEmergencyHelpLine(userId,token,projectId);
     }
 
     @PutMapping(value = "/updateEmergencyHelpline")
@@ -629,7 +622,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                           @RequestHeader(value = "token") String token,
                                                           @RequestBody Object emergencyHelplineRequest)
     {
-        return tejraj_qhse_8081.updateEmergencyHelpLine(userId,token,emergencyHelplineRequest);
+        return gem_qhse_8081_service.updateEmergencyHelpLine(userId,token,emergencyHelplineRequest);
     }
 
     @PutMapping(value = "/deleteEmergencyHelpline")
@@ -638,18 +631,18 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                           @RequestParam(value = "id") int id)
 
     {
-        return tejraj_qhse_8081.deleteEmergencyHelpLine(userId,token,id);
+        return gem_qhse_8081_service.deleteEmergencyHelpLine(userId,token,id);
     }
 
     // Hazards
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
     public ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
-                                                               @RequestHeader(value = "token") String token,
-                                                               @PathVariable(value = "projectId") Integer projectId,
-                                                               @RequestParam(value = "file") MultipartFile file)
+                                                @RequestHeader(value = "token") String token,
+                                                @PathVariable(value = "projectId") Integer projectId,
+                                                @RequestParam(value = "file") MultipartFile file)
     {
-        return tejraj_qhse_8081.uploadHazards(userId,token,projectId,file);
+        return gem_qhse_8081_service.uploadHazards(userId,token,projectId,file);
     }
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
@@ -657,7 +650,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                               @RequestHeader(value = "token") String token,
                                                               @PathVariable(value = "project_id") int projectId)
     {
-        return tejraj_qhse_8081.getHazardsByProjectId(userId,token,projectId);
+        return gem_qhse_8081_service.getHazardsByProjectId(userId,token,projectId);
     }
 
     // Location master
@@ -666,7 +659,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
     public ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data,
                                                             @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.findLocation(data,lastSync);
+        return gem_qhse_8081_service.findLocation(data,lastSync);
     }
 
     @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
@@ -678,13 +671,13 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam("user_id") int user_id,
             @RequestParam("token") String token)
     {
-        return tejraj_qhse_8081.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return gem_qhse_8081_service.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
     }
 
     @GetMapping(value = "/getLocationLevel1ByProjectId")
     public ResponseEntity<List<Object>> getLocationLevel1ByProjectId(@RequestParam(value = "projectId") int projectId)
     {
-        return tejraj_qhse_8081.getLocationLevel1ByProjectId(projectId);
+        return gem_qhse_8081_service.getLocationLevel1ByProjectId(projectId);
     }
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
@@ -692,7 +685,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                @RequestParam(value = "file") MultipartFile file,
                                @RequestParam(value = "projectId") int projectId)
     {
-        return tejraj_qhse_8081.addLocations(userId,file,projectId);
+        return gem_qhse_8081_service.addLocations(userId,file,projectId);
     }
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
@@ -700,7 +693,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(value = "userId") int userId)
     {
-        return tejraj_qhse_8081.checklistDataUpload(file,userId);
+        return gem_qhse_8081_service.checklistDataUpload(file,userId);
     }
 
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
@@ -711,7 +704,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                            @RequestHeader(value = "token") String token,
                                                            @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return tejraj_qhse_8081.getAllObservationsFromDB(page,pageSize,request,userId,token,lastSync);
+        return gem_qhse_8081_service.getAllObservationsFromDB(page,pageSize,request,userId,token,lastSync);
     }
 
     // Progress Report
@@ -722,7 +715,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object progressReportRequest)
     {
-        return tejraj_qhse_8081.saveProgressReport(userId,token,progressReportRequest);
+        return gem_qhse_8081_service.saveProgressReport(userId,token,progressReportRequest);
     }
 
     @GetMapping(value = "/progressReport")
@@ -730,7 +723,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                           @RequestHeader(value = "token") String token)
 
     {
-        return tejraj_qhse_8081.getProgressReport(userId,token);
+        return gem_qhse_8081_service.getProgressReport(userId,token);
     }
 
     @GetMapping(value = "/progressReport/{id}")
@@ -738,7 +731,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                         @RequestHeader(value = "token") String token,
                                                         @PathVariable(value = "id") long progressReportId)
     {
-        return tejraj_qhse_8081.getProgressReportById(userId,token,progressReportId);
+        return gem_qhse_8081_service.getProgressReportById(userId,token,progressReportId);
     }
 
     // Projects
@@ -749,7 +742,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                             @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException
 
     {
-        return tejraj_qhse_8081.restProjects(user_id,token,lastSync);
+        return gem_qhse_8081_service.restProjects(user_id,token,lastSync);
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
@@ -757,7 +750,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                              @RequestHeader("token") String token,
                              @RequestBody Object projectCreateRequest)
     {
-        return tejraj_qhse_8081.addProject(userId,token,projectCreateRequest);
+        return gem_qhse_8081_service.addProject(userId,token,projectCreateRequest);
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.PUT)
@@ -765,14 +758,14 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                 @RequestHeader("token") String token,
                                 @RequestBody Object projectUpdateRequest)
     {
-        return tejraj_qhse_8081.updateProject(userId,token,projectUpdateRequest);
+        return gem_qhse_8081_service.updateProject(userId,token,projectUpdateRequest);
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public List<Object> getProjects(@RequestHeader("userId") int userId,
                                     @RequestHeader("token") String token)
     {
-        return tejraj_qhse_8081.getProjects(userId,token);
+        return gem_qhse_8081_service.getProjects(userId,token);
     }
 
     // QC controller
@@ -782,7 +775,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionRequest)
     {
-        return tejraj_qhse_8081.createCRFI(userId,token,activityInspectionRequest);
+        return gem_qhse_8081_service.createCRFI(userId,token,activityInspectionRequest);
     }
 
     @RequestMapping(value = "/crfi", method = RequestMethod.PUT)
@@ -790,7 +783,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionUpdateRequest)
     {
-        return tejraj_qhse_8081.updateCRFI(userId,token,activityInspectionUpdateRequest);
+        return gem_qhse_8081_service.updateCRFI(userId,token,activityInspectionUpdateRequest);
     }
 
     @RequestMapping(value = "/crfi", method = RequestMethod.GET)
@@ -799,7 +792,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                 @RequestParam(value = "crfiId") long crfiId,
                                                 @RequestParam(value = "projectId") long projectId)
     {
-        return tejraj_qhse_8081.getCRFI(userId,token,crfiId,projectId);
+        return gem_qhse_8081_service.getCRFI(userId,token,crfiId,projectId);
     }
 
     @RequestMapping(value = "/crfiDetails", method = RequestMethod.GET)
@@ -807,7 +800,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "crfiId") long crfiId)
     {
-        return tejraj_qhse_8081.getCRFIDetails(userId,token,crfiId);
+        return gem_qhse_8081_service.getCRFIDetails(userId,token,crfiId);
     }
 
     @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
@@ -816,7 +809,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                  @RequestParam(value = "crfiId",required = true) int crfiId,
                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
     {
-        return tejraj_qhse_8081.getDataForRFIReport(userId,token,crfiId,webCall);
+        return gem_qhse_8081_service.getDataForRFIReport(userId,token,crfiId,webCall);
     }
 
     @RequestMapping(value = "/filter/crfi", method = RequestMethod.POST)
@@ -824,7 +817,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterCrfiRequest)
     {
-        return tejraj_qhse_8081.getObsFilter(userId,token,filterCrfiRequest);
+        return gem_qhse_8081_service.getObsFilter(userId,token,filterCrfiRequest);
     }
 
     // QC OBS API
@@ -834,7 +827,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestBody Object obsRequest)
     {
-        return tejraj_qhse_8081.createQCObservation(userId,token,obsRequest);
+        return gem_qhse_8081_service.createQCObservation(userId,token,obsRequest);
     }
 
     @RequestMapping(value = "/obs", method = RequestMethod.GET)
@@ -843,7 +836,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                @RequestParam(value = "obsId") long obsId,
                                                @RequestParam(value = "projectId") long projectId)
     {
-        return tejraj_qhse_8081.getObs(userId,token,obsId,projectId);
+        return gem_qhse_8081_service.getObs(userId,token,obsId,projectId);
     }
 
 
@@ -852,7 +845,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                             @RequestHeader(value = "token") String token,
                                             @RequestBody Object obsUpdateRequest)
     {
-        return tejraj_qhse_8081.updateOBS(userId,token,obsUpdateRequest);
+        return gem_qhse_8081_service.updateOBS(userId,token,obsUpdateRequest);
     }
 
     @RequestMapping(value = "/obsDetails", method = RequestMethod.GET)
@@ -860,7 +853,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam(value = "obsId") long obsId)
     {
-        return tejraj_qhse_8081.getOBSDetails(userId,token,obsId);
+        return gem_qhse_8081_service.getOBSDetails(userId,token,obsId);
     }
 
     // Report controller
@@ -868,13 +861,13 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
     @RequestMapping(value = "/rorReport", method = RequestMethod.GET)
     public void rorReport()
     {
-        tejraj_qhse_8081.rorReport();
+        gem_qhse_8081_service.rorReport();
     }
 
     @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
     public void ptwReport(@RequestBody Object ptwReportRequest)
     {
-        tejraj_qhse_8081.ptwReport(ptwReportRequest);
+        gem_qhse_8081_service.ptwReport(ptwReportRequest);
     }
 
     @RequestMapping(value = "/ptwReportDownload", method = RequestMethod.GET)
@@ -884,7 +877,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "ptwId",required = true) int ptwId,
             @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
     {
-       return tejraj_qhse_8081.ptwReportDownload(userId,token,ptwId,webCall);
+        return gem_qhse_8081_service.ptwReportDownload(userId,token,ptwId,webCall);
     }
 
     @RequestMapping(value = "/equipmentReportDownload", method = RequestMethod.GET)
@@ -894,19 +887,19 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
             @RequestParam(value = "equipmentId") int equipmentId,
             @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
     {
-       return tejraj_qhse_8081.equipmentReportDownload(userId,token,equipmentId,webCall);
+        return gem_qhse_8081_service.equipmentReportDownload(userId,token,equipmentId,webCall);
     }
 
     @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
     public void safetyObsReport()
     {
-        tejraj_qhse_8081.safetyObsReport();
+        gem_qhse_8081_service.safetyObsReport();
     }
 
     @RequestMapping(value = "/escalateOBSReport", method = RequestMethod.GET)
     public void escalateOBSReport()
     {
-        tejraj_qhse_8081.escalateOBSReport();
+        gem_qhse_8081_service.escalateOBSReport();
     }
 
     @RequestMapping(value = "/safetyObsReportByFilter", method = RequestMethod.GET)
@@ -915,7 +908,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                           @RequestParam(value = "userId") Integer userId,
                                                           @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId)
     {
-        return tejraj_qhse_8081.safetyObsReportByFilter(fromDate,toDate,userId,projectId);
+        return gem_qhse_8081_service.safetyObsReportByFilter(fromDate,toDate,userId,projectId);
     }
 
     @GetMapping("/downloadMemoPdf")
@@ -923,7 +916,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId)
     {
-        return tejraj_qhse_8081.downloadMemoPdf(user_id,token,obsId);
+        return gem_qhse_8081_service.downloadMemoPdf(user_id,token,obsId);
     }
 
 
@@ -932,7 +925,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                    @RequestHeader("token") String token,
                                                    @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId)
     {
-        return tejraj_qhse_8081.downloadDebitPdf(user_id,token,debitId);
+        return gem_qhse_8081_service.downloadDebitPdf(user_id,token,debitId);
     }
 
 
@@ -941,7 +934,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
     {
-      return tejraj_qhse_8081.downloadIncidentPdf(user_id,token,incidentId);
+        return gem_qhse_8081_service.downloadIncidentPdf(user_id,token,incidentId);
     }
 
 
@@ -950,7 +943,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
     {
-      return tejraj_qhse_8081.sendIncidentPdf(user_id,token,incidentId);
+        return gem_qhse_8081_service.sendIncidentPdf(user_id,token,incidentId);
     }
 
 
@@ -959,13 +952,13 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                  @RequestHeader("token") String token,
                                                  @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId)
     {
-       return tejraj_qhse_8081.downloadTBTPdf(user_id,token,tbtId);
+        return gem_qhse_8081_service.downloadTBTPdf(user_id,token,tbtId);
     }
 
     @RequestMapping(value = "/equipmentReport", method = RequestMethod.POST)
     public ResponseEntity<Object> equipmentReport(@RequestBody Object equipmentReportRequest)
     {
-        return tejraj_qhse_8081.equipmentReport(equipmentReportRequest);
+        return gem_qhse_8081_service.equipmentReport(equipmentReportRequest);
     }
 
     @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
@@ -973,7 +966,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                             @RequestParam(value = "token") String token,
                                                             @RequestParam(value = "obsId",required = false) int obsId)
     {
-        return tejraj_qhse_8081.getObsReport(userId,token,obsId);
+        return gem_qhse_8081_service.getObsReport(userId,token,obsId);
     }
 
 
@@ -983,7 +976,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                    @RequestParam(value = "toDate") String toDate,
                                    @RequestParam(value = "locationBased") int locationBased)
     {
-        tejraj_qhse_8081.weeklyStatusReport(projectId,fromDate,toDate,locationBased);
+        gem_qhse_8081_service.weeklyStatusReport(projectId,fromDate,toDate,locationBased);
     }
 
     @GetMapping("/downloadWorkerPdf")
@@ -992,7 +985,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                     @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                                     @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
     {
-       return tejraj_qhse_8081.downloadWorkerPdf(user_id,token,workerId,webCall);
+        return gem_qhse_8081_service.downloadWorkerPdf(user_id,token,workerId,webCall);
     }
 
 
@@ -1003,7 +996,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object request)
     {
-        return tejraj_qhse_8081.saveIncident(userId,token,request);
+        return gem_qhse_8081_service.saveIncident(userId,token,request);
     }
 
 
@@ -1014,7 +1007,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                      @RequestParam(value = "page_size", defaultValue = "500", required = false) Integer pageSize,
                                                      @RequestParam(value = "project_id") Integer projectId)
     {
-        return tejraj_qhse_8081.findSafetyIncident(userId,token,page,pageSize,projectId);
+        return gem_qhse_8081_service.findSafetyIncident(userId,token,page,pageSize,projectId);
     }
 
     @RequestMapping(value = "/incident/{incidentId}", method = RequestMethod.GET)
@@ -1022,7 +1015,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                    @RequestHeader(value = "token") String token,
                                                    @PathVariable(value = "incidentId") Integer incidentId)
     {
-        return tejraj_qhse_8081.findIncidentById(userId,token,incidentId);
+        return gem_qhse_8081_service.findIncidentById(userId,token,incidentId);
     }
 
     // Safety worker controller
@@ -1032,7 +1025,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestBody Object safetyWorkersRequest)
     {
-        return tejraj_qhse_8081.saveSafetyWorkers(userId,token,safetyWorkersRequest);
+        return gem_qhse_8081_service.saveSafetyWorkers(userId,token,safetyWorkersRequest);
     }
 
     @GetMapping(value = "/SafetyWorkers")
@@ -1040,7 +1033,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestParam(value = "project_id") long projectId)
     {
-        return tejraj_qhse_8081.getSafetyWorkers(userId,token,projectId);
+        return gem_qhse_8081_service.getSafetyWorkers(userId,token,projectId);
     }
 
     @GetMapping(value = "/SafetyWorkers/{id}")
@@ -1048,7 +1041,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam(value = "id") long workerId)
     {
-        return tejraj_qhse_8081.getSafetyWorkersById(userId,token,workerId);
+        return gem_qhse_8081_service.getSafetyWorkersById(userId,token,workerId);
     }
 
     @PutMapping(value = "/updateSafetyWorker/{id}")
@@ -1057,7 +1050,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                          @RequestParam(value = "id") long workerId,
                                                          @RequestBody Object request)
     {
-        return tejraj_qhse_8081.updateSafetyWorkerById(userId,token,workerId,request);
+        return gem_qhse_8081_service.updateSafetyWorkerById(userId,token,workerId,request);
     }
 
     // Unit Master
@@ -1066,7 +1059,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
     public ResponseEntity<List<Object>> getAllUnitMaster(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token)
     {
-        return tejraj_qhse_8081.getAllUnitMaster(userId,token);
+        return gem_qhse_8081_service.getAllUnitMaster(userId,token);
     }
 
     @GetMapping(value = "/unitMaster/{id}")
@@ -1074,7 +1067,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                     @RequestHeader(value = "token") String token,
                                                     @PathVariable(value = "id") long unitMasterId)
     {
-        return tejraj_qhse_8081.getUnitMasterById(userId,token,unitMasterId);
+        return gem_qhse_8081_service.getUnitMasterById(userId,token,unitMasterId);
     }
 
     // User controller
@@ -1084,7 +1077,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                           @RequestHeader(value = "token") String token,
                                           @RequestBody Object userRequestModel)
     {
-        return tejraj_qhse_8081.addUser(userId,token,userRequestModel);
+        return gem_qhse_8081_service.addUser(userId,token,userRequestModel);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json"})
@@ -1092,7 +1085,7 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object userRequestModel)
     {
-        return tejraj_qhse_8081.UpdateUser(userId,token,userRequestModel);
+        return gem_qhse_8081_service.UpdateUser(userId,token,userRequestModel);
     }
 
     @RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = {"application/json"})
@@ -1103,26 +1096,26 @@ public class TEJRAJ_QHSE_BFF_A1_Controller {
                                                  @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                                  @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize)
     {
-        return tejraj_qhse_8081.getUsers(userId,token,projectId,companyId,pageNum,pageSize);
+        return gem_qhse_8081_service.getUsers(userId,token,projectId,companyId,pageNum,pageSize);
     }
 
     @GetMapping(value = "/getNonProjectUsers")
     public ResponseEntity<List<Object>> getNonProjectUsers(@RequestParam(value = "projectId") int projectId,
                                                            @RequestParam(value = "companyId") int companyId)
     {
-        return tejraj_qhse_8081.getNonProjectUsers(projectId,companyId);
+        return gem_qhse_8081_service.getNonProjectUsers(projectId,companyId);
     }
 
     @RequestMapping(value = "/userMapping", method = RequestMethod.POST)
     public ResponseEntity<Object> userMapping(@RequestBody Object userMappingRequest)
     {
-        return tejraj_qhse_8081.userMapping(userMappingRequest);
+        return gem_qhse_8081_service.userMapping(userMappingRequest);
     }
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE, produces = {"application/json"})
     public ResponseEntity<Object> deleteUser(@RequestParam(value = "user_id") Integer userId)
     {
-        return tejraj_qhse_8081.deleteUser(userId);
+        return gem_qhse_8081_service.deleteUser(userId);
     }
 
 
