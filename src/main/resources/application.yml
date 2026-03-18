@@ -1,0 +1,10 @@
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    # This tells the UI to ask your 9090 app for the dropdown list
+    config-url: /v2/api-docs/swagger-config
+    urls:
+      - name: "Tejraj QHSE"
+        url: /tejraj/v2/api-docs
+      - name: "Ashwinsheth QHSE"
+        url: /ashwinsheth/v2/api-docs

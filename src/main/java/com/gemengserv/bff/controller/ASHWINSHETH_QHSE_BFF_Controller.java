@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/ashwinshethbff")
+@RequestMapping("/ashwinsheth")
 public class ASHWINSHETH_QHSE_BFF_Controller {
 
     @Autowired

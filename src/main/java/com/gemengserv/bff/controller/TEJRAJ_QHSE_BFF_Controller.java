@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 
 @RestController
-@RequestMapping("/tejrajbff")
+@RequestMapping("/tejraj")
 public class TEJRAJ_QHSE_BFF_Controller
 {
 
