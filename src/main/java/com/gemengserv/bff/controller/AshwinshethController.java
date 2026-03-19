@@ -2,7 +2,7 @@ package com.gemengserv.bff.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.gemengserv.bff.service.ASHWINSHETH_QHSE_8082;
+import com.gemengserv.bff.service.AshwinshethService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/ashwinsheth")
-public class ASHWINSHETH_QHSE_BFF_Controller {
+public class AshwinshethController {
 
     @Autowired
-    ASHWINSHETH_QHSE_8082 ashwinsheth_qhse_8082_service;
+    AshwinshethService ashwinshethService;
     
 //    ActivityMasterController
 
@@ -33,7 +33,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
         @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.getActivitiesByUser(userId, projectId, token, pageSize, page, lastSync);
+            return ashwinshethService.getActivitiesByUser(userId, projectId, token, pageSize, page, lastSync);
         }
 
         @RequestMapping(value = "/rest/v1/activity/checklist/master", method = RequestMethod.GET)
@@ -43,27 +43,27 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam("user_id") int user_id, @RequestParam("project_id") int project_id,
         @RequestParam("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.getChecklists(page, pageSize, user_id, project_id, token, lastSync);
+            return ashwinshethService.getChecklists(page, pageSize, user_id, project_id, token, lastSync);
         }
 
         @GetMapping(value = "/getActivities")
         public ResponseEntity<List<Object>> getActivities()
         {
-            return ashwinsheth_qhse_8082_service.getActivities();
+            return ashwinshethService.getActivities();
         }
 
         @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
         public String addActivities(@RequestParam(value = "file") MultipartFile file,
         @RequestParam(value = "userId") int userId)
         {
-            return ashwinsheth_qhse_8082_service.addActivities(file,userId);
+            return ashwinshethService.addActivities(file,userId);
         }
 
         @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
         public String addLocations(@RequestParam(value = "userId") int userId,
         @RequestParam(value = "file") MultipartFile file)
         {
-            return ashwinsheth_qhse_8082_service.addLocations(userId,file);
+            return ashwinshethService.addLocations(userId,file);
         }
 
 //    ActivityTypeOfWorkMappingController
@@ -71,39 +71,39 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         public ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
         @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.getActivityTypeOfWorkMapping(userId, token, lastSync);
+            return ashwinshethService.getActivityTypeOfWorkMapping(userId, token, lastSync);
         }
 
 //   ActivityUnitMappingController
         @GetMapping(value = "activityUnitMapping")
         public List<Object> getAllActivityUnitMapping()
         {
-            return ashwinsheth_qhse_8082_service.getAllActivityUnitMapping();
+            return ashwinshethService.getAllActivityUnitMapping();
         }
 
         //  CommonController
         @RequestMapping(value = "/rest/v1/configuration", method = RequestMethod.GET)
         public ResponseEntity<Object> getConfiguration(@RequestParam("package_id") String package_id) {
-        return ashwinsheth_qhse_8082_service.getConfiguration(package_id);
+        return ashwinshethService.getConfiguration(package_id);
     }
 
         @RequestMapping(value = "/rest/v1/checkotp", method = RequestMethod.GET)
         public ResponseEntity<Map<String, Object>> checkotp(@RequestParam("otp") int otp, @RequestParam("user_id") int user_id, @RequestParam("version") String version,
         @RequestParam("device_code") String device_code) {
-        return ashwinsheth_qhse_8082_service.checkotp(otp, user_id, version, device_code);
+        return ashwinshethService.checkotp(otp, user_id, version, device_code);
     }
 
         @RequestMapping(value = "/rest/v1/logout", method = RequestMethod.GET)
         public ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("version") String version,
         @RequestParam("device_code") String device_code) {
-        return ashwinsheth_qhse_8082_service.logout(user_id, version, device_code);
+        return ashwinshethService.logout(user_id, version, device_code);
     }
 
         @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
         public ResponseEntity<?> userDetails(@RequestParam("user_id") int user_id,
         @RequestParam("token") String token)
         {
-            return ashwinsheth_qhse_8082_service.userDetails(user_id, token);
+            return ashwinshethService.userDetails(user_id, token);
         }
 
         @RequestMapping(value = "/company", method = RequestMethod.POST)
@@ -111,7 +111,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestBody Object companyCreateRequest)
         {
-            return ashwinsheth_qhse_8082_service.addCompany(userId,token,companyCreateRequest);
+            return ashwinshethService.addCompany(userId,token,companyCreateRequest);
         }
 
         @RequestMapping(value = "/company", method = RequestMethod.PUT)
@@ -119,42 +119,42 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestBody Object companyUpdateRequest)
         {
-            return ashwinsheth_qhse_8082_service.updateCompany(userId,token,companyUpdateRequest);
+            return ashwinshethService.updateCompany(userId,token,companyUpdateRequest);
         }
 
         @GetMapping("/company")
         public Object getCombinedResponse(@RequestParam("userId") int userId,
         @RequestParam("token") String token) {
-        return ashwinsheth_qhse_8082_service.getCompanies(userId, token);
+        return ashwinshethService.getCompanies(userId, token);
     }
 
         @RequestMapping(value = "/deleteCompany", method = RequestMethod.DELETE, produces = {"application/json"})
         public ResponseEntity<?> deleteCompany(@RequestParam(value = "companyId") Integer companyId)
         {
-            return ashwinsheth_qhse_8082_service.deleteCompany(companyId);
+            return ashwinshethService.deleteCompany(companyId);
         }
 
         @GetMapping("/registerUser")
         public Object registerUser(@RequestBody Object userRegisterRequest) {
-        return ashwinsheth_qhse_8082_service.registerUser(userRegisterRequest);
+        return ashwinshethService.registerUser(userRegisterRequest);
     }
 
         @GetMapping("/rest/v2/login")
         public ResponseEntity<?> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
-        return ashwinsheth_qhse_8082_service.loginAPI(username, password);
+        return ashwinshethService.loginAPI(username, password);
     }
 
         @RequestMapping(value = "/rest/v1/login", method = RequestMethod.GET)
         public ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username, @RequestParam("password") String password)
         {
-            return ashwinsheth_qhse_8082_service.login(username, password);
+            return ashwinshethService.login(username, password);
         }
 
         @RequestMapping(value = "/rest/v1/media/find", method = RequestMethod.GET)
         public void doDownload(@RequestParam("media_url") String mediaUrl, @RequestParam("user_id") int user_id, @RequestParam("token") String token, HttpServletResponse response)
             throws IOException
         {
-            ashwinsheth_qhse_8082_service.doDownload(mediaUrl,user_id,token,response);
+            ashwinshethService.doDownload(mediaUrl,user_id,token,response);
         }
 
         @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
@@ -162,7 +162,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "file") MultipartFile file)
         {
-            return ashwinsheth_qhse_8082_service.uploadSignature(userId,token,file);
+            return ashwinshethService.uploadSignature(userId,token,file);
         }
 
         // NCR API's
@@ -172,7 +172,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object ncrRequest)
         {
-            return ashwinsheth_qhse_8082_service.createQcNcr(userId, token,ncrRequest);
+            return ashwinshethService.createQcNcr(userId, token,ncrRequest);
         }
 
         @RequestMapping(value = "/qc/ncr", method = RequestMethod.GET)
@@ -184,7 +184,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
 
         {
-            return ashwinsheth_qhse_8082_service.getNcr(userId, token,companyId,projectId,pageNum,pageSize);
+            return ashwinshethService.getNcr(userId, token,companyId,projectId,pageNum,pageSize);
         }
 
         @RequestMapping(value = "/qc/ncrDetails", method = RequestMethod.GET)
@@ -193,7 +193,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "ncrId") long ncrId)
 
         {
-            return ashwinsheth_qhse_8082_service.getNcrDetails(userId, token,ncrId);
+            return ashwinshethService.getNcrDetails(userId, token,ncrId);
         }
 
         // Safety TBT API's
@@ -204,7 +204,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object safetyTBTRequest)
         {
-            return ashwinsheth_qhse_8082_service.saveSafetyTBT(userId,token,safetyTBTRequest);
+            return ashwinshethService.saveSafetyTBT(userId,token,safetyTBTRequest);
         }
 
         @GetMapping(value = "/SafetyTBT")
@@ -213,7 +213,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
         @RequestParam(value = "projectId", required = false, defaultValue = "0") int projectId)
         {
-            return ashwinsheth_qhse_8082_service.getSafetyTBT(userId,token,projectId);
+            return ashwinshethService.getSafetyTBT(userId,token,projectId);
         }
 
         @GetMapping(value = "/getSafetyTbtById/{id}")
@@ -222,7 +222,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "id") Integer tbtId)
         {
-            return ashwinsheth_qhse_8082_service.getSafetyTbtById(userId,token,tbtId);
+            return ashwinshethService.getSafetyTbtById(userId,token,tbtId);
         }
 
         // safety controller API's
@@ -233,7 +233,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object obsRequest) {
-        return ashwinsheth_qhse_8082_service.createSafetyObservation(userId, token, obsRequest);
+        return ashwinshethService.createSafetyObservation(userId, token, obsRequest);
     }
 
         @PostMapping(value = "/safety/obs/update")
@@ -241,7 +241,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object updateRequest) {
-        return ashwinsheth_qhse_8082_service.updateSafetyObservation(userId, token, updateRequest);
+        return ashwinshethService.updateSafetyObservation(userId, token, updateRequest);
     }
 
         @PostMapping(value = "/safety/obs/find")
@@ -250,7 +250,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestBody Object findRequest) {
-        return ashwinsheth_qhse_8082_service.findSafetyObservation(userId, token, lastSync, findRequest);
+        return ashwinshethService.findSafetyObservation(userId, token, lastSync, findRequest);
     }
 
         @GetMapping(value = "/safety/obs/find/{obsId}")
@@ -258,7 +258,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "obsId") Integer obsId) {
-        return ashwinsheth_qhse_8082_service.findSafetyObservationByObsId(userId, token, obsId);
+        return ashwinshethService.findSafetyObservationByObsId(userId, token, obsId);
     }
 
         @PostMapping(value = "/safety/obs/history/find")
@@ -266,7 +266,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object historyRequest) {
-        return ashwinsheth_qhse_8082_service.findObservationRequestHistory(userId, token, historyRequest);
+        return ashwinshethService.findObservationRequestHistory(userId, token, historyRequest);
     }
 
         // MASTER API
@@ -276,7 +276,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return ashwinsheth_qhse_8082_service.findAllUnsafeAct(userId, token, lastSync);
+        return ashwinshethService.findAllUnsafeAct(userId, token, lastSync);
     }
 
         @GetMapping(value = "/safety/master/unsafeCondition/findAll")
@@ -284,7 +284,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return ashwinsheth_qhse_8082_service.findAllUnsafeCondition(userId, token, lastSync);
+        return ashwinshethService.findAllUnsafeCondition(userId, token, lastSync);
     }
 
         @GetMapping(value = "/safety/master/typeOfWork/findAll")
@@ -292,7 +292,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return ashwinsheth_qhse_8082_service.findAllTypeOfWork(userId, token, lastSync);
+        return ashwinshethService.findAllTypeOfWork(userId, token, lastSync);
     }
 
         @GetMapping(value = "/safety/master/checklistQuestions/findAll")
@@ -301,7 +301,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.findAllChecklistQuestions(userId, token, lastSync);
+            return ashwinshethService.findAllChecklistQuestions(userId, token, lastSync);
         }
 
         @GetMapping(value = "/safety/master/typeOfWorkChecklistMapping")
@@ -310,13 +310,13 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.findAllTypeOfWorkChecklistMapping(userId, token, lastSync);
+            return ashwinshethService.findAllTypeOfWorkChecklistMapping(userId, token, lastSync);
         }
 
         @RequestMapping(value = "/rest/v1/getRoleMaster", method = RequestMethod.GET)
         ResponseEntity<Object> getRoleMaster()
         {
-            return ashwinsheth_qhse_8082_service.getRoleMaster();
+            return ashwinshethService.getRoleMaster();
         }
 
         // FOR PTW API
@@ -326,7 +326,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwRequest) {
-        return ashwinsheth_qhse_8082_service.createSafetyPTW(userId, token, ptwRequest);
+        return ashwinshethService.createSafetyPTW(userId, token, ptwRequest);
     }
 
         @PutMapping(value = "/safety/ptw")
@@ -334,7 +334,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwRequest) {
-        return ashwinsheth_qhse_8082_service.updateSafetyPTW(userId, token, ptwRequest);
+        return ashwinshethService.updateSafetyPTW(userId, token, ptwRequest);
     }
 
         @PutMapping(value = "/safety/ptwStatus")
@@ -342,12 +342,12 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object request) {
-        return ashwinsheth_qhse_8082_service.updatePTWStatus(userId, token, request);
+        return ashwinshethService.updatePTWStatus(userId, token, request);
     }
 
         @PutMapping(value = "/safety/ptwClose")
         public ResponseEntity<Object> updateUnclosedPTW() {
-        return ashwinsheth_qhse_8082_service.updateUnclosedPTW();
+        return ashwinshethService.updateUnclosedPTW();
     }
 
         @GetMapping(value = "/safety/ptw/find")
@@ -359,7 +359,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-        return ashwinsheth_qhse_8082_service.findSafetyPTW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+        return ashwinshethService.findSafetyPTW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
     }
 
         @GetMapping(value = "/safety/ptw/findsp")
@@ -369,7 +369,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "page_num", defaultValue = "1") Integer page,
             @RequestParam(value = "page_size", defaultValue = "500") Integer pageSize,
             @RequestParam(value = "project_id") Integer projectId) {
-        return ashwinsheth_qhse_8082_service.findSafetyPTWSP(userId, token, page, pageSize, projectId);
+        return ashwinshethService.findSafetyPTWSP(userId, token, page, pageSize, projectId);
     }
 
         @GetMapping(value = "/safety/ptw/find/V2")
@@ -381,7 +381,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-        return ashwinsheth_qhse_8082_service.findSafetyPTWW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+        return ashwinshethService.findSafetyPTWW(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
     }
 
         @GetMapping(value = "/safety/ptw/find/{ptwId}")
@@ -389,7 +389,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "ptwId") Integer ptwId) {
-        return ashwinsheth_qhse_8082_service.findSafetyPTWById(userId, token, ptwId);
+        return ashwinshethService.findSafetyPTWById(userId, token, ptwId);
     }
 
         @GetMapping(value = "/safety/ptw/find/V2/{ptwId}")
@@ -397,7 +397,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "ptwId") Integer ptwId) {
-        return ashwinsheth_qhse_8082_service.findPTWById(userId, token, ptwId);
+        return ashwinshethService.findPTWById(userId, token, ptwId);
     }
 
         @GetMapping(value = "/safety/findPtwByFilter")
@@ -406,7 +406,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "toDate") String toDate,
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token) {
-        return ashwinsheth_qhse_8082_service.findPTWByFilter(fromDate, toDate, userId, token);
+        return ashwinshethService.findPTWByFilter(fromDate, toDate, userId, token);
     }
 
         @PostMapping(value = "/safety/ptw/history/find")
@@ -414,7 +414,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object ptwHistoryFindRequest) {
-        return ashwinsheth_qhse_8082_service.findPTWHistory(userId, token, ptwHistoryFindRequest);
+        return ashwinshethService.findPTWHistory(userId, token, ptwHistoryFindRequest);
     }
 
         @PostMapping(value = "/safety/findPtwCount")
@@ -422,7 +422,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return ashwinsheth_qhse_8082_service.findPtwCount(userId, token, dashboardCountRequest);
+        return ashwinshethService.findPtwCount(userId, token, dashboardCountRequest);
     }
 
         @PostMapping(value = "/safety/findObsCount")
@@ -430,7 +430,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return ashwinsheth_qhse_8082_service.findObsCount(userId, token, dashboardCountRequest);
+        return ashwinshethService.findObsCount(userId, token, dashboardCountRequest);
     }
 
         @PostMapping(value = "/safety/findEcCount")
@@ -438,7 +438,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return ashwinsheth_qhse_8082_service.findEcCount(userId, token, dashboardCountRequest);
+        return ashwinshethService.findEcCount(userId, token, dashboardCountRequest);
     }
 
         @PostMapping(value = "/safety/findTbtCount")
@@ -446,7 +446,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
-        return ashwinsheth_qhse_8082_service.findTbtCount(userId, token, dashboardCountRequest);
+        return ashwinshethService.findTbtCount(userId, token, dashboardCountRequest);
     }
 
         @PostMapping(value = "/safety/uploadMultipleFiles", consumes = "multipart/form-data")
@@ -456,7 +456,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam("eventId") Integer eventId,
             @RequestParam("eventName") String eventName,
             @RequestPart("file") MultipartFile[] files) {
-        return ashwinsheth_qhse_8082_service.uploadMultipleFiles(userId, token, eventId, eventName, files);
+        return ashwinshethService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
         @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
@@ -465,7 +465,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestParam("checklistAnswerId") Integer checklistAnswerId,
             @RequestPart("file") MultipartFile[] files) {
-        return ashwinsheth_qhse_8082_service.uploadCheckListMedia(userId, token, checklistAnswerId, files);
+        return ashwinshethService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
         @GetMapping(value = "/safety/findUsersByProjectIdAndRoleId")
@@ -475,7 +475,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "roleId") Integer roleId,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
-        return ashwinsheth_qhse_8082_service.findUsersByProjectIdAndRoleId(userId, token, projectId, roleId, lastSync);
+        return ashwinshethService.findUsersByProjectIdAndRoleId(userId, token, projectId, roleId, lastSync);
     }
 
         @GetMapping(value = "/safety/sendOBSNotification")
@@ -483,7 +483,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "level1LocationId") Integer level1LocationId,
             @RequestHeader(value = "obsId") Integer obsId,
             @RequestHeader(value = "user_id") Integer userId) {
-        return ashwinsheth_qhse_8082_service.sendOBSNotification(level1LocationId, obsId, userId);
+        return ashwinshethService.sendOBSNotification(level1LocationId, obsId, userId);
     }
 
         // Equipment
@@ -493,7 +493,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object equipmentRequest) {
-        return ashwinsheth_qhse_8082_service.saveEquipment(userId, token, equipmentRequest);
+        return ashwinshethService.saveEquipment(userId, token, equipmentRequest);
     }
 
         @PutMapping(value = "/safety/equipment")
@@ -501,7 +501,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object equipmentRequest) {
-        return ashwinsheth_qhse_8082_service.updateEquipment(userId, token, equipmentRequest);
+        return ashwinshethService.updateEquipment(userId, token, equipmentRequest);
     }
 
         @GetMapping(value = "/safety/equipment/find")
@@ -513,7 +513,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "project_id") Integer projectId,
             @RequestParam(value = "lastSync", required = false) String lastSync,
             @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id) {
-        return ashwinsheth_qhse_8082_service.findSafetyEquipment(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
+        return ashwinshethService.findSafetyEquipment(userId, token, page, pageSize, projectId, lastSync, locationLevel1Id);
     }
 
         @PostMapping(value = "/safety/equipment/history/find")
@@ -521,7 +521,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object eqHistoryFindRequest) {
-        return ashwinsheth_qhse_8082_service.findEQHistory(userId, token, eqHistoryFindRequest);
+        return ashwinshethService.findEQHistory(userId, token, eqHistoryFindRequest);
     }
 
         @GetMapping(value = "/safety/equipment/find/{equipmentId}")
@@ -529,7 +529,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "equipmentId") Integer equipmentId) {
-        return ashwinsheth_qhse_8082_service.findSafetyEquipmentById(userId, token, equipmentId);
+        return ashwinshethService.findSafetyEquipmentById(userId, token, equipmentId);
     }
 
         @GetMapping(value = "/safety/findOBSByFilter")
@@ -538,7 +538,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "toDate") String toDate,
             @RequestParam(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token) {
-        return ashwinsheth_qhse_8082_service.findOBSByFilter(fromDate, toDate, userId, token);
+        return ashwinshethService.findOBSByFilter(fromDate, toDate, userId, token);
     }
 
         @GetMapping(value = "/safety/statistics/{projectId}")
@@ -546,7 +546,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "projectId") Integer projectId) {
-        return ashwinsheth_qhse_8082_service.findSafetyStatistics(userId, token, projectId);
+        return ashwinshethService.findSafetyStatistics(userId, token, projectId);
     }
 
         @PostMapping(value = "/safety/bulletin")
@@ -554,7 +554,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object bulletinRequest) {
-        return ashwinsheth_qhse_8082_service.sendBulletin(userId, token, bulletinRequest);
+        return ashwinshethService.sendBulletin(userId, token, bulletinRequest);
     }
 
         @GetMapping(value = "/safety/bulletin/{projectId}")
@@ -562,7 +562,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "projectId") Integer projectId) {
-        return ashwinsheth_qhse_8082_service.findBulletinByProjectId(userId, token, projectId);
+        return ashwinshethService.findBulletinByProjectId(userId, token, projectId);
     }
 
         @GetMapping(value = "/safety/getSafetyDigitalLibrary")
@@ -570,7 +570,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
         @RequestParam(value = "project_id") int projectId) {
-        return ashwinsheth_qhse_8082_service.getSafetyDigitalLibrary(userId, token, projectId);
+        return ashwinshethService.getSafetyDigitalLibrary(userId, token, projectId);
     }
 
         @GetMapping(value = "/safety/ptw/getPendingPtw")
@@ -578,14 +578,14 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
         @RequestParam(value = "projectId") int projectId) {
-        return ashwinsheth_qhse_8082_service.getPendingPtw(userId, token, projectId);
+        return ashwinshethService.getPendingPtw(userId, token, projectId);
     }
 
         @GetMapping(value = "/safety/findCompanyUsers")
         public ResponseEntity<Object> findCompanyUsers(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token) {
-        return ashwinsheth_qhse_8082_service.findCompanyUsers(userId, token);
+        return ashwinshethService.findCompanyUsers(userId, token);
     }
 
         @GetMapping(value = "/safety/obsReport")
@@ -595,7 +595,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "obsId") int obsId,
         @RequestParam(value = "webCall", defaultValue = "false") boolean webCall) {
 
-        return ashwinsheth_qhse_8082_service.getDataForObsReport(userId, token, obsId, webCall);
+        return ashwinshethService.getDataForObsReport(userId, token, obsId, webCall);
     }
 
         // Emergency helpline
@@ -605,7 +605,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object emergencyHelplineRequest)
         {
-            return ashwinsheth_qhse_8082_service.addEmergencyHelpLine(userId,token,emergencyHelplineRequest);
+            return ashwinshethService.addEmergencyHelpLine(userId,token,emergencyHelplineRequest);
         }
 
         @GetMapping(value = "/getEmergencyHelpline")
@@ -613,7 +613,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
         int projectId)
         {
-            return ashwinsheth_qhse_8082_service.getAllEmergencyHelpLine(userId,token,projectId);
+            return ashwinshethService.getAllEmergencyHelpLine(userId,token,projectId);
         }
 
         @PutMapping(value = "/updateEmergencyHelpline")
@@ -621,7 +621,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object emergencyHelplineRequest)
         {
-            return ashwinsheth_qhse_8082_service.updateEmergencyHelpLine(userId,token,emergencyHelplineRequest);
+            return ashwinshethService.updateEmergencyHelpLine(userId,token,emergencyHelplineRequest);
         }
 
         @PutMapping(value = "/deleteEmergencyHelpline")
@@ -630,7 +630,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "id") int id)
 
         {
-            return ashwinsheth_qhse_8082_service.deleteEmergencyHelpLine(userId,token,id);
+            return ashwinshethService.deleteEmergencyHelpLine(userId,token,id);
         }
 
         // Hazards
@@ -641,7 +641,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @PathVariable(value = "projectId") Integer projectId,
             @RequestParam(value = "file") MultipartFile file)
         {
-            return ashwinsheth_qhse_8082_service.uploadHazards(userId,token,projectId,file);
+            return ashwinshethService.uploadHazards(userId,token,projectId,file);
         }
 
         @GetMapping(value = "/getHazardsByProjectId/{project_id}")
@@ -649,7 +649,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
         @PathVariable(value = "project_id") int projectId)
         {
-            return ashwinsheth_qhse_8082_service.getHazardsByProjectId(userId,token,projectId);
+            return ashwinshethService.getHazardsByProjectId(userId,token,projectId);
         }
 
         // Location master
@@ -658,7 +658,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         public ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data,
             @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.findLocation(data,lastSync);
+            return ashwinshethService.findLocation(data,lastSync);
         }
 
         @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
@@ -670,13 +670,13 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam("user_id") int user_id,
         @RequestParam("token") String token)
         {
-            return ashwinsheth_qhse_8082_service.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+            return ashwinshethService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
         }
 
         @GetMapping(value = "/getLocationLevel1ByProjectId")
         public ResponseEntity<List<Object>> getLocationLevel1ByProjectId(@RequestParam(value = "projectId") int projectId)
         {
-            return ashwinsheth_qhse_8082_service.getLocationLevel1ByProjectId(projectId);
+            return ashwinshethService.getLocationLevel1ByProjectId(projectId);
         }
 
         @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
@@ -684,7 +684,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "file") MultipartFile file,
         @RequestParam(value = "projectId") int projectId)
         {
-            return ashwinsheth_qhse_8082_service.addLocations(userId,file,projectId);
+            return ashwinshethService.addLocations(userId,file,projectId);
         }
 
         @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
@@ -692,7 +692,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "file") MultipartFile file,
         @RequestParam(value = "userId") int userId)
         {
-            return ashwinsheth_qhse_8082_service.checklistDataUpload(file,userId);
+            return ashwinshethService.checklistDataUpload(file,userId);
         }
 
         @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
@@ -703,7 +703,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestParam(value = "lastSync", required = false) String lastSync)
         {
-            return ashwinsheth_qhse_8082_service.getAllObservationsFromDB(page,pageSize,request,userId,token,lastSync);
+            return ashwinshethService.getAllObservationsFromDB(page,pageSize,request,userId,token,lastSync);
         }
 
         // Progress Report
@@ -714,7 +714,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object progressReportRequest)
         {
-            return ashwinsheth_qhse_8082_service.saveProgressReport(userId,token,progressReportRequest);
+            return ashwinshethService.saveProgressReport(userId,token,progressReportRequest);
         }
 
         @GetMapping(value = "/progressReport")
@@ -722,7 +722,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token)
 
         {
-            return ashwinsheth_qhse_8082_service.getProgressReport(userId,token);
+            return ashwinshethService.getProgressReport(userId,token);
         }
 
         @GetMapping(value = "/progressReport/{id}")
@@ -730,7 +730,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
         @PathVariable(value = "id") long progressReportId)
         {
-            return ashwinsheth_qhse_8082_service.getProgressReportById(userId,token,progressReportId);
+            return ashwinshethService.getProgressReportById(userId,token,progressReportId);
         }
 
         // Projects
@@ -741,7 +741,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException
 
         {
-            return ashwinsheth_qhse_8082_service.restProjects(user_id,token,lastSync);
+            return ashwinshethService.restProjects(user_id,token,lastSync);
         }
 
         @RequestMapping(value = "/project", method = RequestMethod.POST)
@@ -749,7 +749,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestBody Object projectCreateRequest)
         {
-            return ashwinsheth_qhse_8082_service.addProject(userId,token,projectCreateRequest);
+            return ashwinshethService.addProject(userId,token,projectCreateRequest);
         }
 
         @RequestMapping(value = "/project", method = RequestMethod.PUT)
@@ -757,14 +757,14 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestBody Object projectUpdateRequest)
         {
-            return ashwinsheth_qhse_8082_service.updateProject(userId,token,projectUpdateRequest);
+            return ashwinshethService.updateProject(userId,token,projectUpdateRequest);
         }
 
         @RequestMapping(value = "/project", method = RequestMethod.GET)
         public List<Object> getProjects(@RequestHeader("userId") int userId,
         @RequestHeader("token") String token)
         {
-            return ashwinsheth_qhse_8082_service.getProjects(userId,token);
+            return ashwinshethService.getProjects(userId,token);
         }
 
         // QC controller
@@ -774,7 +774,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestBody Object activityInspectionRequest)
         {
-            return ashwinsheth_qhse_8082_service.createCRFI(userId,token,activityInspectionRequest);
+            return ashwinshethService.createCRFI(userId,token,activityInspectionRequest);
         }
 
         @RequestMapping(value = "/crfi", method = RequestMethod.PUT)
@@ -782,7 +782,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestBody Object activityInspectionUpdateRequest)
         {
-            return ashwinsheth_qhse_8082_service.updateCRFI(userId,token,activityInspectionUpdateRequest);
+            return ashwinshethService.updateCRFI(userId,token,activityInspectionUpdateRequest);
         }
 
         @RequestMapping(value = "/crfi", method = RequestMethod.GET)
@@ -791,7 +791,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "crfiId") long crfiId,
         @RequestParam(value = "projectId") long projectId)
         {
-            return ashwinsheth_qhse_8082_service.getCRFI(userId,token,crfiId,projectId);
+            return ashwinshethService.getCRFI(userId,token,crfiId,projectId);
         }
 
         @RequestMapping(value = "/crfiDetails", method = RequestMethod.GET)
@@ -799,7 +799,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestParam(value = "crfiId") long crfiId)
         {
-            return ashwinsheth_qhse_8082_service.getCRFIDetails(userId,token,crfiId);
+            return ashwinshethService.getCRFIDetails(userId,token,crfiId);
         }
 
         @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
@@ -808,7 +808,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "crfiId",required = true) int crfiId,
         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
         {
-            return ashwinsheth_qhse_8082_service.getDataForRFIReport(userId,token,crfiId,webCall);
+            return ashwinshethService.getDataForRFIReport(userId,token,crfiId,webCall);
         }
 
         @RequestMapping(value = "/filter/crfi", method = RequestMethod.POST)
@@ -816,7 +816,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestBody Object filterCrfiRequest)
         {
-            return ashwinsheth_qhse_8082_service.getObsFilter(userId,token,filterCrfiRequest);
+            return ashwinshethService.getObsFilter(userId,token,filterCrfiRequest);
         }
 
         // QC OBS API
@@ -826,7 +826,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object obsRequest)
         {
-            return ashwinsheth_qhse_8082_service.createQCObservation(userId,token,obsRequest);
+            return ashwinshethService.createQCObservation(userId,token,obsRequest);
         }
 
         @RequestMapping(value = "/obs", method = RequestMethod.GET)
@@ -835,7 +835,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "obsId") long obsId,
         @RequestParam(value = "projectId") long projectId)
         {
-            return ashwinsheth_qhse_8082_service.getObs(userId,token,obsId,projectId);
+            return ashwinshethService.getObs(userId,token,obsId,projectId);
         }
 
 
@@ -844,7 +844,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestBody Object obsUpdateRequest)
         {
-            return ashwinsheth_qhse_8082_service.updateOBS(userId,token,obsUpdateRequest);
+            return ashwinshethService.updateOBS(userId,token,obsUpdateRequest);
         }
 
         @RequestMapping(value = "/obsDetails", method = RequestMethod.GET)
@@ -852,7 +852,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestParam(value = "obsId") long obsId)
         {
-            return ashwinsheth_qhse_8082_service.getOBSDetails(userId,token,obsId);
+            return ashwinshethService.getOBSDetails(userId,token,obsId);
         }
 
         // Report controller
@@ -860,13 +860,13 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestMapping(value = "/rorReport", method = RequestMethod.GET)
         public void rorReport()
         {
-            ashwinsheth_qhse_8082_service.rorReport();
+            ashwinshethService.rorReport();
         }
 
         @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
         public void ptwReport(@RequestBody Object ptwReportRequest)
         {
-            ashwinsheth_qhse_8082_service.ptwReport(ptwReportRequest);
+            ashwinshethService.ptwReport(ptwReportRequest);
         }
 
         @RequestMapping(value = "/ptwReportDownload", method = RequestMethod.GET)
@@ -876,7 +876,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "ptwId",required = true) int ptwId,
         @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
         {
-            return ashwinsheth_qhse_8082_service.ptwReportDownload(userId,token,ptwId,webCall);
+            return ashwinshethService.ptwReportDownload(userId,token,ptwId,webCall);
         }
 
         @RequestMapping(value = "/equipmentReportDownload", method = RequestMethod.GET)
@@ -886,19 +886,19 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "equipmentId") int equipmentId,
         @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
         {
-            return ashwinsheth_qhse_8082_service.equipmentReportDownload(userId,token,equipmentId,webCall);
+            return ashwinshethService.equipmentReportDownload(userId,token,equipmentId,webCall);
         }
 
         @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
         public void safetyObsReport()
         {
-            ashwinsheth_qhse_8082_service.safetyObsReport();
+            ashwinshethService.safetyObsReport();
         }
 
         @RequestMapping(value = "/escalateOBSReport", method = RequestMethod.GET)
         public void escalateOBSReport()
         {
-            ashwinsheth_qhse_8082_service.escalateOBSReport();
+            ashwinshethService.escalateOBSReport();
         }
 
         @RequestMapping(value = "/safetyObsReportByFilter", method = RequestMethod.GET)
@@ -907,7 +907,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId)
         {
-            return ashwinsheth_qhse_8082_service.safetyObsReportByFilter(fromDate,toDate,userId,projectId);
+            return ashwinshethService.safetyObsReportByFilter(fromDate,toDate,userId,projectId);
         }
 
         @GetMapping("/downloadMemoPdf")
@@ -915,7 +915,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId)
         {
-            return ashwinsheth_qhse_8082_service.downloadMemoPdf(user_id,token,obsId);
+            return ashwinshethService.downloadMemoPdf(user_id,token,obsId);
         }
 
 
@@ -924,7 +924,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId)
         {
-            return ashwinsheth_qhse_8082_service.downloadDebitPdf(user_id,token,debitId);
+            return ashwinshethService.downloadDebitPdf(user_id,token,debitId);
         }
 
 
@@ -933,7 +933,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
         {
-            return ashwinsheth_qhse_8082_service.downloadIncidentPdf(user_id,token,incidentId);
+            return ashwinshethService.downloadIncidentPdf(user_id,token,incidentId);
         }
 
 
@@ -942,7 +942,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
         {
-            return ashwinsheth_qhse_8082_service.sendIncidentPdf(user_id,token,incidentId);
+            return ashwinshethService.sendIncidentPdf(user_id,token,incidentId);
         }
 
 
@@ -951,13 +951,13 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader("token") String token,
         @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId)
         {
-            return ashwinsheth_qhse_8082_service.downloadTBTPdf(user_id,token,tbtId);
+            return ashwinshethService.downloadTBTPdf(user_id,token,tbtId);
         }
 
         @RequestMapping(value = "/equipmentReport", method = RequestMethod.POST)
         public ResponseEntity<Object> equipmentReport(@RequestBody Object equipmentReportRequest)
         {
-            return ashwinsheth_qhse_8082_service.equipmentReport(equipmentReportRequest);
+            return ashwinshethService.equipmentReport(equipmentReportRequest);
         }
 
         @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
@@ -965,7 +965,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "token") String token,
         @RequestParam(value = "obsId",required = false) int obsId)
         {
-            return ashwinsheth_qhse_8082_service.getObsReport(userId,token,obsId);
+            return ashwinshethService.getObsReport(userId,token,obsId);
         }
 
 
@@ -975,7 +975,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "toDate") String toDate,
         @RequestParam(value = "locationBased") int locationBased)
         {
-            ashwinsheth_qhse_8082_service.weeklyStatusReport(projectId,fromDate,toDate,locationBased);
+            ashwinshethService.weeklyStatusReport(projectId,fromDate,toDate,locationBased);
         }
 
         @GetMapping("/downloadWorkerPdf")
@@ -984,7 +984,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
         @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
         {
-            return ashwinsheth_qhse_8082_service.downloadWorkerPdf(user_id,token,workerId,webCall);
+            return ashwinshethService.downloadWorkerPdf(user_id,token,workerId,webCall);
         }
 
 
@@ -995,7 +995,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object request)
         {
-            return ashwinsheth_qhse_8082_service.saveIncident(userId,token,request);
+            return ashwinshethService.saveIncident(userId,token,request);
         }
 
 
@@ -1006,7 +1006,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestParam(value = "page_size", defaultValue = "500", required = false) Integer pageSize,
             @RequestParam(value = "project_id") Integer projectId)
         {
-            return ashwinsheth_qhse_8082_service.findSafetyIncident(userId,token,page,pageSize,projectId);
+            return ashwinshethService.findSafetyIncident(userId,token,page,pageSize,projectId);
         }
 
         @RequestMapping(value = "/incident/{incidentId}", method = RequestMethod.GET)
@@ -1014,7 +1014,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "incidentId") Integer incidentId)
         {
-            return ashwinsheth_qhse_8082_service.findIncidentById(userId,token,incidentId);
+            return ashwinshethService.findIncidentById(userId,token,incidentId);
         }
 
         // Safety worker controller
@@ -1024,7 +1024,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestBody Object safetyWorkersRequest)
         {
-            return ashwinsheth_qhse_8082_service.saveSafetyWorkers(userId,token,safetyWorkersRequest);
+            return ashwinshethService.saveSafetyWorkers(userId,token,safetyWorkersRequest);
         }
 
         @GetMapping(value = "/SafetyWorkers")
@@ -1032,7 +1032,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestParam(value = "project_id") long projectId)
         {
-            return ashwinsheth_qhse_8082_service.getSafetyWorkers(userId,token,projectId);
+            return ashwinshethService.getSafetyWorkers(userId,token,projectId);
         }
 
         @GetMapping(value = "/SafetyWorkers/{id}")
@@ -1040,7 +1040,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestHeader(value = "token") String token,
         @RequestParam(value = "id") long workerId)
         {
-            return ashwinsheth_qhse_8082_service.getSafetyWorkersById(userId,token,workerId);
+            return ashwinshethService.getSafetyWorkersById(userId,token,workerId);
         }
 
         @PutMapping(value = "/updateSafetyWorker/{id}")
@@ -1049,7 +1049,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "id") long workerId,
         @RequestBody Object request)
         {
-            return ashwinsheth_qhse_8082_service.updateSafetyWorkerById(userId,token,workerId,request);
+            return ashwinshethService.updateSafetyWorkerById(userId,token,workerId,request);
         }
 
         // Unit Master
@@ -1058,7 +1058,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         public ResponseEntity<List<Object>> getAllUnitMaster(@RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token)
         {
-            return ashwinsheth_qhse_8082_service.getAllUnitMaster(userId,token);
+            return ashwinshethService.getAllUnitMaster(userId,token);
         }
 
         @GetMapping(value = "/unitMaster/{id}")
@@ -1066,7 +1066,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
         @PathVariable(value = "id") long unitMasterId)
         {
-            return ashwinsheth_qhse_8082_service.getUnitMasterById(userId,token,unitMasterId);
+            return ashwinshethService.getUnitMasterById(userId,token,unitMasterId);
         }
 
         // User controller
@@ -1076,7 +1076,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object userRequestModel)
         {
-            return ashwinsheth_qhse_8082_service.addUser(userId,token,userRequestModel);
+            return ashwinshethService.addUser(userId,token,userRequestModel);
         }
 
         @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json"})
@@ -1084,7 +1084,7 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
             @RequestHeader(value = "token") String token,
             @RequestBody Object userRequestModel)
         {
-            return ashwinsheth_qhse_8082_service.UpdateUser(userId,token,userRequestModel);
+            return ashwinshethService.UpdateUser(userId,token,userRequestModel);
         }
 
         @RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = {"application/json"})
@@ -1095,26 +1095,26 @@ public class ASHWINSHETH_QHSE_BFF_Controller {
         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
         @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize)
         {
-            return ashwinsheth_qhse_8082_service.getUsers(userId,token,projectId,companyId,pageNum,pageSize);
+            return ashwinshethService.getUsers(userId,token,projectId,companyId,pageNum,pageSize);
         }
 
         @GetMapping(value = "/getNonProjectUsers")
         public ResponseEntity<List<Object>> getNonProjectUsers(@RequestParam(value = "projectId") int projectId,
         @RequestParam(value = "companyId") int companyId)
         {
-            return ashwinsheth_qhse_8082_service.getNonProjectUsers(projectId,companyId);
+            return ashwinshethService.getNonProjectUsers(projectId,companyId);
         }
 
         @RequestMapping(value = "/userMapping", method = RequestMethod.POST)
         public ResponseEntity<Object> userMapping(@RequestBody Object userMappingRequest)
         {
-            return ashwinsheth_qhse_8082_service.userMapping(userMappingRequest);
+            return ashwinshethService.userMapping(userMappingRequest);
         }
 
         @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE, produces = {"application/json"})
         public ResponseEntity<Object> deleteUser(@RequestParam(value = "user_id") Integer userId)
         {
-            return ashwinsheth_qhse_8082_service.deleteUser(userId);
+            return ashwinshethService.deleteUser(userId);
         }
 
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @FeignClient(name = "gem", url = "http://localhost:8083", configuration = FeignConfig.class)
-public interface GEM_QHSE_8083
+public interface GemService
 {
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getActivitiesByUser(
