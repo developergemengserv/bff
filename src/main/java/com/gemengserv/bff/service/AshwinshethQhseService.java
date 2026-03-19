@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @FeignClient(name = "ashwinsheth", url = "http://localhost:8082", configuration = FeignConfig.class)
-public interface AshwinshethService
+public interface AshwinshethQhseService
 {
 
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
