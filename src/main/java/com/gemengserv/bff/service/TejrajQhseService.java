@@ -1,6 +1,5 @@
 package com.gemengserv.bff.service;
 
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.gemengserv.bff.config.FeignConfig;
@@ -16,9 +15,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "gem", url = "http://localhost:8083", configuration = FeignConfig.class)
-public interface GemService
-{
+
+@FeignClient(name = "tejraj", url = "http://localhost:8081", configuration = FeignConfig.class)
+public interface TejrajQhseService {
+
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getActivitiesByUser(
             @RequestParam("user_id") int userId,
@@ -40,28 +40,28 @@ public interface GemService
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addActivities(@RequestParam(value = "file") MultipartFile file,
-                         @RequestParam(value = "userId") int userId);
+                                @RequestParam(value = "userId") int userId);
 
     @GetMapping(value = "/rest/v1/activityTypeOfWork", produces = "application/json")
     ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
-                                                        @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);
+                                                               @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addLocations(@RequestParam(value = "userId") int userId,
-                        @RequestParam(value = "file") MultipartFile file);
+                               @RequestParam(value = "file") MultipartFile file);
 
     @GetMapping(value = "activityUnitMapping")
     List<Object> getAllActivityUnitMapping();
 
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     Object addCompany(@RequestHeader("userId") int userId,
-                      @RequestHeader("token") String token,
-                      @RequestBody Object companyCreateRequest);
+                                      @RequestHeader("token") String token,
+                                      @RequestBody Object companyCreateRequest);
 
     @RequestMapping(value = "/company", method = RequestMethod.PUT)
     Object updateCompany(@RequestHeader("userId") int userId,
-                         @RequestHeader("token") String token,
-                         @RequestBody Object companyUpdateRequest);
+                                         @RequestHeader("token") String token,
+                                         @RequestBody Object companyUpdateRequest);
 
     @GetMapping("/company")
     List<Object> getCompanies( @RequestHeader("userId") int userId,  @RequestHeader("token") String token);
@@ -83,16 +83,16 @@ public interface GemService
 
     @RequestMapping(value = "/rest/v1/checkotp", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> checkotp(@RequestParam("otp") int otp, @RequestParam("user_id") int user_id, @RequestParam("version") String version,
-                                                 @RequestParam("device_code") String device_code);
+                                                        @RequestParam("device_code") String device_code);
 
     @RequestMapping(value = "/rest/v1/logout", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("version") String version,
-                                               @RequestParam("device_code") String device_code);
+                                                      @RequestParam("device_code") String device_code);
 
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
     ResponseEntity<?> userDetails(@RequestParam("user_id") int user_id,
-                                  @RequestParam("token") String token);
+                                         @RequestParam("token") String token);
 
 
     @RequestMapping(value = "/rest/v1/media/find", method = RequestMethod.GET)
@@ -101,10 +101,10 @@ public interface GemService
 
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
-                                           @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                                  @RequestHeader(value = "token") String token,
+                                                  @RequestParam(value = "file") MultipartFile file);
 
-    // NCR API's
+                                                  // NCR API's
 
     @RequestMapping(value = "/qc/ncr", method = RequestMethod.POST)
     ResponseEntity<Object> createQcNcr(
@@ -237,12 +237,12 @@ public interface GemService
     @RequestMapping(value = "/rest/v1/getRoleMaster", method = RequestMethod.GET)
     ResponseEntity<Object> getRoleMaster();
 
-    // FOR PTW API
-    @PostMapping(value = "/safety/ptw")
-    ResponseEntity<Object> createSafetyPTW(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestBody Object ptwRequest);
+// FOR PTW API
+@PostMapping(value = "/safety/ptw")
+ResponseEntity<Object> createSafetyPTW(
+        @RequestHeader(value = "userId") Integer userId,
+        @RequestHeader(value = "token") String token,
+        @RequestBody Object ptwRequest);
 
     @PutMapping(value = "/safety/ptw")
     ResponseEntity<Object> updateSafetyPTW(
@@ -367,90 +367,90 @@ public interface GemService
 
     // Equipment
 
-    @PostMapping(value = "/safety/equipment")
-    ResponseEntity<Object> saveEquipment(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestBody Object equipmentRequest);
+        @PostMapping(value = "/safety/equipment")
+        ResponseEntity<Object> saveEquipment(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestBody Object equipmentRequest);
 
-    @PutMapping(value = "/safety/equipment")
-    ResponseEntity<Object> updateEquipment(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestBody Object equipmentRequest);
+        @PutMapping(value = "/safety/equipment")
+        ResponseEntity<Object> updateEquipment(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestBody Object equipmentRequest);
 
-    @GetMapping(value = "/safety/equipment/find")
-    ResponseEntity<Object> findSafetyEquipment(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestParam(value = "page_num") Integer page,
-            @RequestParam(value = "page_size") Integer pageSize,
-            @RequestParam(value = "project_id") Integer projectId,
-            @RequestParam(value = "lastSync", required = false) String lastSync,
-            @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id);
+        @GetMapping(value = "/safety/equipment/find")
+        ResponseEntity<Object> findSafetyEquipment(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestParam(value = "page_num") Integer page,
+                @RequestParam(value = "page_size") Integer pageSize,
+                @RequestParam(value = "project_id") Integer projectId,
+                @RequestParam(value = "lastSync", required = false) String lastSync,
+                @RequestParam(value = "locationLevel1Id", required = false) Integer locationLevel1Id);
 
-    @PostMapping(value = "/safety/equipment/history/find")
-    ResponseEntity<Object> findEQHistory(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestBody Object eqHistoryFindRequest);
+        @PostMapping(value = "/safety/equipment/history/find")
+        ResponseEntity<Object> findEQHistory(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestBody Object eqHistoryFindRequest);
 
-    @GetMapping(value = "/safety/equipment/find/{equipmentId}")
-    ResponseEntity<Object> findSafetyEquipmentById(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @PathVariable(value = "equipmentId") Integer equipmentId);
+        @GetMapping(value = "/safety/equipment/find/{equipmentId}")
+        ResponseEntity<Object> findSafetyEquipmentById(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @PathVariable(value = "equipmentId") Integer equipmentId);
 
-    @GetMapping(value = "/safety/findOBSByFilter")
-    ResponseEntity<Object> findOBSByFilter(
-            @RequestParam(value = "fromDate") String fromDate,
-            @RequestParam(value = "toDate") String toDate,
-            @RequestParam(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token);
+        @GetMapping(value = "/safety/findOBSByFilter")
+        ResponseEntity<Object> findOBSByFilter(
+                @RequestParam(value = "fromDate") String fromDate,
+                @RequestParam(value = "toDate") String toDate,
+                @RequestParam(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token);
 
-    @GetMapping(value = "/safety/statistics/{projectId}")
-    ResponseEntity<Object> findSafetyStatistics(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @PathVariable(value = "projectId") Integer projectId);
+        @GetMapping(value = "/safety/statistics/{projectId}")
+        ResponseEntity<Object> findSafetyStatistics(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @PathVariable(value = "projectId") Integer projectId);
 
-    @PostMapping(value = "/safety/bulletin")
-    ResponseEntity<Object> sendBulletin(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestBody Object bulletinRequest);
+        @PostMapping(value = "/safety/bulletin")
+        ResponseEntity<Object> sendBulletin(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestBody Object bulletinRequest);
 
-    @GetMapping(value = "/safety/bulletin/{projectId}")
-    ResponseEntity<Object> findBulletinByProjectId(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @PathVariable(value = "projectId") Integer projectId);
+        @GetMapping(value = "/safety/bulletin/{projectId}")
+        ResponseEntity<Object> findBulletinByProjectId(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @PathVariable(value = "projectId") Integer projectId);
 
-    @GetMapping(value = "/safety/getSafetyDigitalLibrary")
-    ResponseEntity<Object> getSafetyDigitalLibrary(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestParam(value = "project_id") int projectId);
+        @GetMapping(value = "/safety/getSafetyDigitalLibrary")
+        ResponseEntity<Object> getSafetyDigitalLibrary(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestParam(value = "project_id") int projectId);
 
-    @GetMapping(value = "/safety/ptw/getPendingPtw")
-    ResponseEntity<Object> getPendingPtw(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
-            @RequestParam(value = "projectId") int projectId);
+        @GetMapping(value = "/safety/ptw/getPendingPtw")
+        ResponseEntity<Object> getPendingPtw(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token,
+                @RequestParam(value = "projectId") int projectId);
 
-    @GetMapping(value = "/safety/findCompanyUsers")
-    ResponseEntity<Object> findCompanyUsers(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token);
+        @GetMapping(value = "/safety/findCompanyUsers")
+        ResponseEntity<Object> findCompanyUsers(
+                @RequestHeader(value = "userId") Integer userId,
+                @RequestHeader(value = "token") String token);
 
-    @GetMapping(value = "/safety/obsReport")
-    ResponseEntity<Object> getDataForObsReport(
-            @RequestParam(value = "user_id") int userId,
-            @RequestParam(value = "token") String token,
-            @RequestParam(value = "obsId") int obsId,
-            @RequestParam(value = "webCall") boolean webCall);
+        @GetMapping(value = "/safety/obsReport")
+        ResponseEntity<Object> getDataForObsReport(
+                @RequestParam(value = "user_id") int userId,
+                @RequestParam(value = "token") String token,
+                @RequestParam(value = "obsId") int obsId,
+                @RequestParam(value = "webCall") boolean webCall);
 
-    // Emergency helpline
+        // Emergency helpline
 
     @PostMapping(value = "/addEmergencyHelpline")
     ResponseEntity<Object> addEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
@@ -464,27 +464,27 @@ public interface GemService
 
     @PutMapping(value = "/updateEmergencyHelpline")
     ResponseEntity<Object> updateEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                   @RequestHeader(value = "token") String token,
-                                                   @RequestBody Object emergencyHelplineRequest);
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestBody Object emergencyHelplineRequest);
 
 
     @PutMapping(value = "/deleteEmergencyHelpline")
     ResponseEntity<Object> deleteEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                   @RequestHeader(value = "token") String token,
-                                                   @RequestParam(value = "id") int id);
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestParam(value = "id") int id);
 
     // Hazards
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
-                                         @RequestHeader(value = "token") String token,
-                                         @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                                               @RequestHeader(value = "token") String token,
+                                                               @PathVariable(value = "projectId") Integer projectId,
+                                                               @RequestParam(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
-                                                       @RequestHeader(value = "token") String token,
-                                                       @PathVariable(value = "project_id") int projectId);
+                                                              @RequestHeader(value = "token") String token,
+                                                              @PathVariable(value = "project_id") int projectId);
 
     // Location master
 
@@ -506,8 +506,8 @@ public interface GemService
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addLocations(@RequestParam(value = "userId") int userId,
-                        @RequestParam(value = "file") MultipartFile file,
-                        @RequestParam(value = "projectId") int projectId);
+                               @RequestParam(value = "file") MultipartFile file,
+                               @RequestParam(value = "projectId") int projectId);
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
     Map<String, Integer> checklistDataUpload(
@@ -717,9 +717,9 @@ public interface GemService
 // Incident controller
 
     @RequestMapping(value = "/incident", method = RequestMethod.POST)
-    ResponseEntity<Object> saveIncident(@RequestHeader(value = "userId") Integer userId,
-                                        @RequestHeader(value = "token") String token,
-                                        @RequestBody Object request);
+     ResponseEntity<Object> saveIncident(@RequestHeader(value = "userId") Integer userId,
+                                         @RequestHeader(value = "token") String token,
+                                         @RequestBody Object request);
 
     @RequestMapping(value = "/incident", method = RequestMethod.GET)
     ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,

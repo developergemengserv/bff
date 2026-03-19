@@ -2,7 +2,7 @@ package com.gemengserv.bff.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.gemengserv.bff.service.AshwinshethService;
+import com.gemengserv.bff.service.AshwinshethQhseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/ashwinsheth")
-public class AshwinshethController {
+public class AshwinshethQhseController {
 
     @Autowired
-    AshwinshethService ashwinshethService;
+    AshwinshethQhseService ashwinshethService;
     
 //    ActivityMasterController
 
