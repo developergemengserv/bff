@@ -2,16 +2,22 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     # This tells the browser: "Ask the BFF for the menu list here"
-    config-url: /v2/api-docs/swagger-config
+    config-url: /v3/api-docs/swagger-config
     urls:
       - name: "Tejraj QHSE"
-        url: /tejraj/v2/api-docs
+        url: /tejraj/v3/api-docs
       - name: "Ashwinsheth QHSE"
-        url: /ashwinsheth/v2/api-docs
+        url: /ashwinsheth/v3/api-docs
       - name: "GEM QHSE"
-        url: /gemqhse/v2/api-docs
+        url: /gemqhse/v3/api-docs
+      - name: "Indospace Admin"
+        url: /indospaceadmin/v3/api-docs
+      - name: "Raymond Safety Admin"
+        url: /raymondsafetyadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
     ashwinsheth: "8082"
     gemqhse: "8083"
+    indospaceadmin: "8084"
+    raymondsafetyadmin: "8085"

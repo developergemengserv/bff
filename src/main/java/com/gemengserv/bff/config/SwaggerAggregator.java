@@ -26,7 +26,7 @@ public class SwaggerAggregator {
 
     // This handles the DROPDOWN menu configuration
     // This MUST match 'config-url' in your YAML
-    @GetMapping("/v2/api-docs/swagger-config")
+    @GetMapping("/v3/api-docs/swagger-config")
     public Map<String, Object> swaggerConfig() {
         List<Map<String, String>> uiUrls = new ArrayList<>();
 
@@ -34,18 +34,18 @@ public class SwaggerAggregator {
         swaggerRoutes.getRoutes().forEach((name, port) -> {
             uiUrls.add(Map.of(
                     "name", name.toUpperCase(),
-                    "url", "/" + name + "/v2/api-docs" // This path must exist below
+                    "url", "/" + name + "/v3/api-docs" // This path must exist below
             ));
         });
 
         return Map.of(
-                "configUrl", "/v2/api-docs/swagger-config",
+                "configUrl", "/v3/api-docs/swagger-config",
                 "urls", uiUrls
         );
     }
 
     // This handles fetching the ACTUAL JSON from your microservices
-    @GetMapping("/{appName}/v2/api-docs")
+    @GetMapping("/{appName}/v3/api-docs")
     public Object getApiDocs(@PathVariable String appName) {
         String port = swaggerRoutes.getRoutes().get(appName.toLowerCase());
 
@@ -53,8 +53,8 @@ public class SwaggerAggregator {
             return "Error: App " + appName + " not found in YAML routes";
         }
 
-        // BFF calls the microservice on its v2 endpoint
-        String url = "http://localhost:" + port + "/v2/api-docs";
+        // BFF calls the microservice on its v3 endpoint
+        String url = "http://localhost:" + port + "/v3/api-docs";
         return restTemplate.getForObject(url, Object.class);
     }
 }
