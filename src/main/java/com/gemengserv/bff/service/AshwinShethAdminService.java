@@ -42,16 +42,16 @@ public interface AshwinShethAdminService {
     ResponseEntity<Map<String, Object>> updateActivityMasterData(@RequestBody Map<String, Object> paramObj);
 
     //Common Controller
-    @RequestMapping(value = "rest/api/v1/common/login", method = GET)
+    @RequestMapping(value = "/rest/api/v1/common/login", method = GET)
     ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username,
                                               @RequestParam("password") String password);
 
-    @RequestMapping(value = "rest/api/v1/common/checkotp", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/common/checkotp", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> checkotp(@RequestParam("otp") int otp,
                                                  @RequestParam("user_id") int user_id,
                                                  @RequestParam("version") String version);
 
-    @RequestMapping(value = "rest/api/v1/common/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/common/logout", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id,
                                                @RequestParam("version") String version);
 

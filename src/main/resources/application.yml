@@ -14,6 +14,14 @@ springdoc:
         url: /indospaceadmin/v3/api-docs
       - name: "Raymond Safety Admin"
         url: /raymondsafetyadmin/v3/api-docs
+      - name: "Ground Holding Safety Admin"
+        url: /ghsafetyadmin/v3/api-docs
+      - name: "Ground Holding QC Admin"
+        url: /groundholdingqcadmin/v3/api-docs
+      - name: "Tejraj Admin"
+        url: /tejrajadmin/v3/api-docs
+      - name: "Ashwin Sheth Admin"
+        url: /ashwinshethadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -21,3 +29,7 @@ app-routes:
     gemqhse: "8083"
     indospaceadmin: "8084"
     raymondsafetyadmin: "8085"
+    ghsafetyadmin: "8086"
+    groundholdingqcadmin: "8087"
+    tejrajadmin: "8088"
+    ashwinshethadmin: "8089"
