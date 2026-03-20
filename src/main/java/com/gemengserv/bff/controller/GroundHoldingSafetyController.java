@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/indospacesafety")
+@RequestMapping("/groundholdingsafety")
 public class GroundHoldingSafetyController
 {
     @Autowired
