@@ -52,13 +52,13 @@ public class IndospaceAdminController {
         return indospaceAdminService.updateActivityMasterData(paramObj);
     }
 
-    @RequestMapping(value = "rest/api/v1/common/login", method = GET)
+    @RequestMapping(value = "/rest/api/v1/common/login", method = GET)
     public ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username,
                                                      @RequestParam("password") String password) {
         return indospaceAdminService.login(username, password);
     }
 
-    @RequestMapping(value = "rest/api/v1/common/checkotp", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/common/checkotp", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> checkotp(@RequestParam("otp") int otp,
                                                         @RequestParam("user_id") int user_id,
                                                         @RequestParam("version") String version) {

@@ -17,9 +17,8 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "tejrajadmin", url = "http://localhost:8086", configuration = FeignConfig.class)
-public interface TejrajAdminService
-{
+@FeignClient(name = "groundholdingqcadmin", url = "http://localhost:8089", configuration = FeignConfig.class)
+public interface GroundHoldingQCAdminService {
 
     @RequestMapping(value = "/rest/api/v1/activity/master/findAll", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllActivities(
@@ -41,6 +40,37 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/api/v1/activity/master/update", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> updateActivityMasterData(@RequestBody Map<String, Object> paramObj);
 
+    @RequestMapping(value = "/rest/api/v1/activity/master/createActivity", method = RequestMethod.POST)
+    public ResponseEntity<?> saveActivity(@RequestHeader(value = "user_id") Integer userId,
+                                          @RequestHeader(value = "token") String token,
+                                          @RequestBody Object activityMasterRequest);
+
+    @RequestMapping(value = "/rest/api/v1/activity/master/createActivityChecklist", method = RequestMethod.POST)
+    public ResponseEntity<?> saveActivityChecklist(@RequestHeader(value = "user_id") Integer userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestBody Object activityChecklistMasterRequest);
+
+    @RequestMapping(value = "/rest/api/v1/activity/master/updateActivityChecklist", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> updateActivityChecklist(@RequestHeader(value = "user_id") Integer userId,
+                                                                       @RequestHeader(value = "token") String token,
+                                                                       @RequestBody Map<String, Object> paramObj);
+
+    @RequestMapping(value = "/rest/api/v1/activity/master/removeActivityChecklist", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> removeActivityChecklist(@RequestHeader(value = "user_id") Integer userId,
+                                                                       @RequestHeader(value = "token") String token,
+                                                                       @RequestBody Map<String, Object> paramObj);
+
+    @PostMapping(value = "/rest/api/v1/activity/master/checklists/upload", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadChecklists(@RequestHeader(value = "user_id") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestParam(value = "activity_code") String activityCode,
+                                              @RequestParam(value = "file") MultipartFile file);
+
+    @GetMapping(value = "/rest/api/v1/activity/master/getChecklistsByActivityCode/{activity_code}")
+    public ResponseEntity<List<Object>> getChecklistsByActivityCode(@RequestHeader(value = "user_id") Integer userId,
+                                                                                     @RequestHeader(value = "token") String token,
+                                                                                     @RequestParam(value = "activity_code") String activityCode);
+
     //Common Controller
     @RequestMapping(value = "/rest/api/v1/common/login", method = GET)
     ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username,
@@ -58,18 +88,15 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/v1/common/getUnitMaster", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getUnitMaster(@RequestParam("user_id") int userId, @RequestParam("token") String token);
 
-    @RequestMapping(value = "rest/api/v1/common/getStatus", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> getStatus(@RequestParam("user_id") int user_id, @RequestParam("token") String token, @RequestParam("eventType") String eventType);
+    /*@RequestMapping(value = "rest/api/v1/common/getStatus", method = RequestMethod.GET)
+     ResponseEntity<Map<String, Object>> getStatus(@RequestParam("user_id") int user_id, @RequestParam("token") String token, @RequestParam("eventType") String eventType);
 
     @RequestMapping(value = "rest/api/v1/common/getObservationType", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> getObservationType(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
+     ResponseEntity<Map<String, Object>> getObservationType(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
     @RequestMapping(value = "rest/api/v1/common/getTopics", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> getTopics(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
-
-    @RequestMapping(value = "/getYears", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getYears();
-
+     ResponseEntity<Map<String, Object>> getTopics(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
+*/
     @RequestMapping(value = "/rest/api/v1/mapping/company/activity/create", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> addCompanyActivityMapping(@RequestBody Map<String, Object> paramObj);
 
@@ -105,27 +132,27 @@ public interface TejrajAdminService
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getQCChartInfo", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getQCChartInfo(@RequestParam("user_id") int user_id,
-                                                       @RequestParam("token") String token,@RequestParam("project_id") String project_id,@RequestParam("periodicalType") String periodicalType) throws JsonParseException, JsonMappingException, IOException;
+                                                       @RequestParam("token") String token, @RequestParam("project_id") String project_id, @RequestParam("periodicalType") String periodicalType) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getQCRejectionChartInfo", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getQCRejectionChartInfo(@RequestParam("user_id") int user_id,
-                                                                @RequestParam("token") String token,@RequestParam("project_id") String project_id,@RequestParam("periodicalType") String periodicalType,@RequestParam("activityIds") String activityIds) throws JsonParseException, JsonMappingException, IOException;
+                                                                @RequestParam("token") String token, @RequestParam("project_id") String project_id, @RequestParam("periodicalType") String periodicalType, @RequestParam("activityIds") String activityIds) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getQCTATChartInfo", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getQCTATChartInfo(@RequestParam("user_id") int user_id,
-                                                          @RequestParam("token") String token,@RequestParam("project_id") String project_id,@RequestParam("periodicalType") String periodicalType,@RequestParam("activityIds") String activityIds)  throws JsonParseException, JsonMappingException, IOException;
+                                                          @RequestParam("token") String token, @RequestParam("project_id") String project_id, @RequestParam("periodicalType") String periodicalType, @RequestParam("activityIds") String activityIds) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getLocationForProject", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getLocationForProject(@RequestParam("user_id") int user_id,
-                                                              @RequestParam("token") String token,@RequestParam("project_id") String project_id) throws IOException;
+                                                              @RequestParam("token") String token, @RequestParam("project_id") String project_id) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getQCIssueChartInfo", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getQCIssueChartInfo(@RequestParam("user_id") int user_id,
-                                                            @RequestParam("token") String token,@RequestParam("project_id") String project_id,@RequestParam("periodicalType") String periodicalType,@RequestParam("location") String location,@RequestParam("issue") String issue,@RequestParam("status") String status) throws IOException;
+                                                            @RequestParam("token") String token, @RequestParam("project_id") String project_id, @RequestParam("periodicalType") String periodicalType, @RequestParam("location") String location, @RequestParam("issue") String issue, @RequestParam("status") String status) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getActivitiesList", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getActivities(@RequestParam("user_id") int user_id,
-                                                      @RequestParam("token") String token,@RequestParam("project_id") String project_id) throws IOException;
+                                                      @RequestParam("token") String token, @RequestParam("project_id") String project_id) throws IOException;
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
@@ -137,14 +164,18 @@ public interface TejrajAdminService
                                                                     @RequestHeader(value = "token") String token,
                                                                     @RequestParam(value = "project_id") int project_id,
                                                                     @RequestParam(value = "fromDate") String fromDate,
-                                                                    @RequestParam(value = "toDate") String toDate);
+                                                                    @RequestParam(value = "toDate") String toDate,
+                                                                    @RequestParam(value = "filterType", required = false, defaultValue = "") String filterType,
+                                                                    @RequestParam(value = "contractorId", required = false, defaultValue = "") int contractorId);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportExcel", method = RequestMethod.GET)
     ResponseEntity<Resource> getDateRangeReportExcel(@RequestHeader(value = "user_id") int user_id,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "project_id") int project_id,
                                                      @RequestParam(value = "fromDate") String fromDate,
-                                                     @RequestParam(value = "toDate") String toDate);
+                                                     @RequestParam(value = "toDate") String toDate,
+                                                     @RequestParam(value = "filterType", required = false, defaultValue = "") String filterType,
+                                                     @RequestParam(value = "contractorId", required = false, defaultValue = "") int contractorId);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getContractorwiseCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getContractorwiseCounts(@RequestHeader("user_id") int user_id,
@@ -152,21 +183,6 @@ public interface TejrajAdminService
                                                    @RequestParam("project_id") int projectId,
                                                    @RequestParam(value = "fromDate") String fromDate,
                                                    @RequestParam(value = "toDate") String toDate);
-
-    @RequestMapping(value = "/getDateRangeAddReportDashboard", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getDateRangeAddReportDashboard(@RequestHeader(value = "user_id") int user_id,
-                                                                              @RequestHeader(value = "token") String token,
-                                                                              @RequestParam(value = "project_id") int project_id,
-                                                                              @RequestParam(value = "term") String term,
-                                                                              @RequestParam(value = "period") int period);
-
-    @RequestMapping(value = "/getDashboardReportData", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDashboardReportData(@RequestHeader(value = "user_id") int user_id,
-                                                         @RequestHeader(value = "token") String token,
-                                                         @RequestParam(value = "type") String type,
-                                                         @RequestParam(value = "project_id") int project_id,
-                                                         @RequestParam(value = "term") String term,
-                                                         @RequestParam(value = "period") int period);
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadHazards(@RequestParam(value = "user_id") Integer userId,
@@ -227,7 +243,7 @@ public interface TejrajAdminService
     //ProjectControlller
     @RequestMapping(value = "/rest/api/v1/project/findAll", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
-                                                     @RequestParam("token") String token) throws IOException;
+                                                     @RequestParam("token") String token) throws JsonParseException, JsonMappingException, IOException;
 
     @RequestMapping(value = "/rest/api/v1/project/create", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> addProject(@RequestBody Map<String, Object> paramObj);
@@ -268,7 +284,7 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/api/v1/project/member/update", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> updateProjectMember(@RequestBody Map<String, Object> paramObj);
 
-    @RequestMapping(value = "/rest/api/v1/ui/report/find/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/api/v1/ui/report/find/crfiList", method = RequestMethod.POST)
     ResponseEntity<Map<String, Object>> getAllActivityInspectionDataForUIReport(@RequestHeader(value = "user_id") int userId,
                                                                                 @RequestHeader(value = "token") String token,
                                                                                 @RequestBody Object request);
@@ -284,8 +300,7 @@ public interface TejrajAdminService
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "project_id") int projectId,
                                                     @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
-                                                    @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    @RequestParam(value = "checkDebitNote", defaultValue = "0", required = false) int checkDebitNote);
+                                                    @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/find/mrfi", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllMRFIDataForUIReport(@RequestParam(value = "user_id") int userId,
@@ -316,8 +331,8 @@ public interface TejrajAdminService
     ResponseEntity<Map<String, Object>> getAllObservationDataForPDFReport(@RequestParam(value = "user_id") int userId,
                                                                           @RequestParam(value = "token") String token,
                                                                           @RequestParam(value = "project_id") int projectId,
-                                                                          @RequestParam(value = "fromDate",required = false) String fromDate,
-                                                                          @RequestParam(value = "toDate",required = false) String toDate);
+                                                                          @RequestParam(value = "fromDate", required = false) String fromDate,
+                                                                          @RequestParam(value = "toDate", required = false) String toDate);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/find/tbt", method = RequestMethod.GET)
     ResponseEntity<Object> getAllTbtDataForUIReport(@RequestHeader(value = "user_id") int userId,
@@ -395,7 +410,7 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadObsReport", method = RequestMethod.GET)
     ResponseEntity<Object> getObsReport(@RequestHeader(value = "user_id") int userId,
                                         @RequestHeader(value = "token") String token,
-                                        @RequestParam(value = "obsId",required = true, defaultValue = "0") int obsId);
+                                        @RequestParam(value = "obsId", required = true, defaultValue = "0") int obsId);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/meetingReportPdf", method = RequestMethod.GET)
     ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
@@ -408,11 +423,11 @@ public interface TejrajAdminService
 
     @GetMapping("/rest/api/v1/ui/report/downloadGPPdf")
     ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
-                                         @RequestHeader("token") String token,@RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId);
+                                         @RequestHeader("token") String token, @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId);
 
-    @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
-                                             @RequestHeader("token") String token,@RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds);
+                                             @RequestHeader("token") String token, @RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds);
 
 
     @RequestMapping(value = "/rest/api/v1/ui/report/getHSEDashboardReportData", method = RequestMethod.POST)
@@ -465,7 +480,7 @@ public interface TejrajAdminService
                                                     @RequestParam(value = "token") String token,
                                                     @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    @RequestParam(value = "company_id", required = false) List<Integer> companyId);
+                                                    @RequestParam(value = "companyId", required = false) List<Integer> companyId);
 
     @RequestMapping(value = "/rest/api/v1/user/create", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> addUser(@RequestBody Map<String, Object> paramObj);
@@ -499,4 +514,17 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/api/v1/mapping/user/location/update", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> updateUserLocationMappingForGivenUser(@RequestBody Map<String, Object> paramObj);
 
+    @RequestMapping(value = "/rest/api/v1/ui/report/RFIReport", method = RequestMethod.POST)
+    public ResponseEntity<?> getDataForRFIReport(@RequestHeader(value = "user_id") int userId,
+                                                 @RequestHeader(value = "token") String token,
+                                                 @RequestParam(value = "project_id") int projectId,
+                                                 @RequestParam(value = "crfiId",required = true) int crfiId);
+
+    @RequestMapping(value = "/rest/api/v1/ui/report/MRFIPdfReport", method = RequestMethod.POST)
+    public ResponseEntity<?> getDataForMRFIPdfReport(@RequestHeader(value = "user_id") int userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "project_id") int projectId,
+                                                     @RequestParam(value = "mrfiId",required = true) int mrfiId);
+
 }
+
