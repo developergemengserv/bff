@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "snagging", url = "http://localhost:8087", configuration = FeignConfig.class)
+@FeignClient(name = "snagging", url = "http://localhost:8097", configuration = FeignConfig.class)
 public interface SnaggingService
 {
     // Activity controller

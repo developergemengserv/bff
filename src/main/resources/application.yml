@@ -26,6 +26,22 @@ springdoc:
         url: /gemsafetyadmin/v3/api-docs
       - name: "Gem QC Admin"
         url: /gemqcadmin/v3/api-docs
+      - name: "Gem Safety"
+        url: /gemsafety/v3/api-docs
+      - name: "Raymond Safety"
+        url: /raymondsafety/v3/api-docs
+      - name: "Indospace Safety"
+        url: /indospacesafety/v3/api-docs
+      - name: "Ground Holding Safety"
+        url: /groundholdingsafety/v3/api-docs
+      - name: "Ground Holding QC"
+        url: /groundholding/v3/api-docs
+      - name: "Snagging"
+        url: /snagging/v3/api-docs
+      - name: "Structural Audit"
+        url: /structuralaudit/v3/api-docs
+      - name: "LVM"
+        url: /lvm/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -38,4 +54,12 @@ app-routes:
     tejrajadmin: "8088"
     ashwinshethadmin: "8089"
     gemsafetyadmin: "8090"
-    gemqcadmin: "8091"
+    gemadmin: "8091"
+    gemqcsafety: "8092"
+    raymondsafety: "8093"
+    indospacesafety: "8094"
+    groundholdingsafety: "8095"
+    groundholding: "8096"
+    snagging: "8097"
+    structuralaudit: "8098"
+    lvm: "8099"

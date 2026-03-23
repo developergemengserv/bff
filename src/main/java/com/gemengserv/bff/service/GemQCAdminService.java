@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "gemqcadmin", url = "http://localhost:8091", configuration = FeignConfig.class)
+@FeignClient(name = "gemadmin", url = "http://localhost:8091", configuration = FeignConfig.class)
 public interface GemQCAdminService {
 
     @RequestMapping(value = "/rest/api/v1/activity/master/findAll", method = RequestMethod.GET)

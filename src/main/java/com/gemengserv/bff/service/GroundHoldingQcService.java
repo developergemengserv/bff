@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "groundhldingsafety", url = "http://localhost:8086", configuration = FeignConfig.class)
+@FeignClient(name = "groundholding", url = "http://localhost:8096", configuration = FeignConfig.class)
 public interface GroundHoldingQcService
 {
     // Activity Inspection Controller

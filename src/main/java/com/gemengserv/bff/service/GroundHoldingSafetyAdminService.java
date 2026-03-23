@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "ghsafetyadmin", url = "http://localhost:8088", configuration = FeignConfig.class)
+@FeignClient(name = "ghsafetyadmin", url = "http://localhost:8086", configuration = FeignConfig.class)
 public interface GroundHoldingSafetyAdminService {
 
     @RequestMapping(value = "/rest/api/v1/activity/master/findAll", method = RequestMethod.GET)

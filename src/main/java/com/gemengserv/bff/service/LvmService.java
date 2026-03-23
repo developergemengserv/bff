@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-@FeignClient(name = "lvm", url = "http://localhost:8089", configuration = FeignConfig.class)
+@FeignClient(name = "lvm", url = "http://localhost:8099", configuration = FeignConfig.class)
 public interface LvmService
 {
     // Attendance Controller

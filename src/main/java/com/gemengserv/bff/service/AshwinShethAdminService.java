@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "ashwinshethadmin", url = "http://localhost:8087", configuration = FeignConfig.class)
+@FeignClient(name = "ashwinshethadmin", url = "http://localhost:8089", configuration = FeignConfig.class)
 public interface AshwinShethAdminService {
 
     @RequestMapping(value = "/rest/api/v1/activity/master/findAll", method = RequestMethod.GET)

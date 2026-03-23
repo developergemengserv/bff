@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 
-@FeignClient(name = "structuralaudit", url = "http://localhost:8088", configuration = FeignConfig.class)
+@FeignClient(name = "structuralaudit", url = "http://localhost:8098", configuration = FeignConfig.class)
 public interface StructuralAuditService
 {
     // File Upload Controller

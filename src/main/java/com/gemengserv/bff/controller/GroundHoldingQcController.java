@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.*;
 
 @RestController
-@RequestMapping("/groundholdingqc")
+@RequestMapping("/groundholding")
 public class GroundHoldingQcController
 {
     @Autowired

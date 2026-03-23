@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "gem", url = "http://localhost:8083", configuration = FeignConfig.class)
+@FeignClient(name = "gemqhse", url = "http://localhost:8083", configuration = FeignConfig.class)
 public interface GemQhseService
 {
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)

@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "indospacesafety", url = "http://localhost:8084", configuration = FeignConfig.class)
+@FeignClient(name = "indospacesafety", url = "http://localhost:8094", configuration = FeignConfig.class)
 public interface IndospaceSafetyService
 {
     // Activity controller

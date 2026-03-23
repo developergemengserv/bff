@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping("/gemqcadmin")
+@RequestMapping("/gemadmin")
 public class GemQCAdminController {
 
     @Autowired
