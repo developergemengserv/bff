@@ -12,12 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "groundhldingsafety", url = "http://localhost:8095", configuration = FeignConfig.class)
-public interface GroundHoldingSafetyService
+@FeignClient(name = "hccsafety", url = "http://localhost:8100", configuration = FeignConfig.class)
+public interface HccSafetyService
 {
     // Activity controller
 
@@ -89,6 +90,10 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Object> loginAPI(@RequestParam("username") String username,
                                     @RequestParam("password") String password);
 
+    @PostMapping("/rest/v1/loginAD")
+    ResponseEntity<Object> loginADAPI(@RequestParam("username") String username,
+                                      @RequestParam("password") String password);
+
     @PostMapping("/rest/v1/users/userinfo")
     ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
                                                        @RequestHeader("token") String token,
@@ -100,6 +105,14 @@ public interface GroundHoldingSafetyService
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE, produces = {"application/json"})
     ResponseEntity<Object> registerUser(@RequestParam(value = "user_id") Integer userId);
+
+    @RequestMapping(value = "/gatePassEntry", method = RequestMethod.POST, produces = {"application/json"})
+    ResponseEntity<Map<String, Object>> gatePassEntry(@RequestBody Object gatePassRequest) throws Exception;
+
+    @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
+    ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
+                                                     @RequestParam("gp_id") int gpId,
+                                                     @RequestParam(value = "file") MultipartFile file);
 
     // Emergency HelpLine Controller
 
@@ -125,6 +138,7 @@ public interface GroundHoldingSafetyService
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestBody Object emergencyHelplineRequest);
 
+
     // Hazards Controller
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
@@ -145,13 +159,20 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data,
                                                      @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/v1/location/db/findall_old", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
                                                               HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
+
+    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
+    ResponseEntity<Object> getAllLocationsFromSP(@RequestParam(value = "project_id", required = true) int pid,
+                                                 @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
+                                                 @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
+                                                 @RequestParam("user_id") int user_id, @RequestParam("token") String token);
+
 
     // Observation Master Controller
 
@@ -184,9 +205,7 @@ public interface GroundHoldingSafetyService
     @RequestMapping(value = "/rest/v1/projects", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
                                                      @RequestParam("token") String token,
-                                                     @RequestParam(value = "lastSync", required = false) String lastSync,
-                                                     @RequestParam(value = "zoneId", required = false, defaultValue = "0") int zoneId,
-                                                     @RequestParam(value = "fundId", required = false, defaultValue = "0") int fundId) throws JsonParseException, JsonMappingException, IOException;
+                                                     @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException;
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     ModelAndView projectById(@RequestParam("pid") int project_id);
@@ -196,8 +215,11 @@ public interface GroundHoldingSafetyService
     @RequestMapping(value = "/rorReport", method = RequestMethod.GET)
     void rorReport();
 
+    @RequestMapping(value = "/ptwOldReport", method = RequestMethod.POST)
+    void ptwReportOld(@RequestBody Object ptwReportRequest);
+
     @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
-    ResponseEntity<Object> ptwReport(@RequestBody Object ptwReportRequest);
+    void ptwReport(@RequestBody Object ptwReportRequest);
 
     @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
     void safetyObsReport();
@@ -316,21 +338,6 @@ public interface GroundHoldingSafetyService
                                              @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(name = "requestType", required = true, defaultValue = "Mobile") String requestType);
 
-    @GetMapping("/downloadDebitPdf")
-    ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
-                                            @RequestHeader("token") String token,
-                                            @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId);
-
-    @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
-                                                     @RequestParam(value = "token") String token,
-                                                     @RequestParam(value = "obsId",required = false) int obsId);
-    @GetMapping(value = "/findCompanyUsers")
-    ResponseEntity<List<Object>> findCompanyUsers(@RequestHeader(value = "userId") Integer userId,
-                                                  @RequestHeader(value = "token") String token);
-
-
-
     // Safe Man Hours Controller
 
     @PostMapping(value = "/safety/safeManHrs")
@@ -374,11 +381,17 @@ public interface GroundHoldingSafetyService
                                                    @RequestHeader(value = "token") String token,
                                                    @RequestBody Object updateRequest);
 
-    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find_old", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservation(@RequestHeader(value = "userId") Integer userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
                                                  @RequestBody Object request);
+
+    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
+    ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
+                                                  @RequestHeader(value = "token") String token,
+                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
+                                                  @RequestBody Object request);
 
 
     @RequestMapping(value = "/safety/obs/find/{obsId}", method = RequestMethod.GET)
@@ -661,6 +674,7 @@ public interface GroundHoldingSafetyService
                                          @RequestParam int projectId);
 
     // Good Practices
+
     @PostMapping(value = "/safety/safetyGoodPractices")
     ResponseEntity<Object> saveGoodPractices(@RequestHeader(value = "userId") Integer userId,
                                              @RequestHeader(value = "token") String token,
@@ -669,6 +683,16 @@ public interface GroundHoldingSafetyService
     @GetMapping(value = "/safety/safetyGoodPractices")
     ResponseEntity<List<Object>> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token);
+
+    @GetMapping(value = "/safetyGoodPracticesByProjectId")
+    ResponseEntity<List<Object>> getGoodPracticesByProjectId(@RequestHeader(value = "userId") Integer userId,
+                                                             @RequestHeader(value = "token") String token,
+                                                             @RequestParam(value = "project_id") Integer projectId);
+
+    @GetMapping(value = "/safetyGoodPracticesById")
+    ResponseEntity<Object> getGoodPracticesById(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "goodPracticesId") Integer goodPracticesId);
 
     // Master Data (Zones, Funds, Workers)
     @GetMapping(value = "/safety/zones")
@@ -844,6 +868,10 @@ public interface GroundHoldingSafetyService
                                             @RequestParam(value = "project_id") long projectId,
                                             @RequestParam(value = "company_id", required = false, defaultValue = "0") long companyId);
 
+    @GetMapping(value = "/trades")
+    ResponseEntity<List<Object>> getWorkersTrades(@RequestHeader(value = "user_id") int userId,
+                                                  @RequestHeader(value = "token") String token);
+
     @GetMapping(value = "/SafetyWorkersByPagination")
     ResponseEntity<Object> getSafetyWorkersWithPagination(@RequestHeader(value = "user_id") int userId,
                                                           @RequestHeader(value = "token") String token,
@@ -867,6 +895,11 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Object> updateSafetyWorkerById(@RequestHeader(value = "user_id") int userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestBody Object request);
+
+    @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
+    String addWorkers(@RequestParam(value = "userId") int userId,
+                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestParam(value = "projectId") int projectId);
 
     // Unit master controller
 

@@ -42,6 +42,10 @@ springdoc:
         url: /structuralaudit/v3/api-docs
       - name: "LVM"
         url: /lvm/v3/api-docs
+      - name: "HCC Safety"
+        url: /hccsafety/v3/api-docs
+      - name: "Gem Safety"
+        url: /hccsafety/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -63,3 +67,5 @@ app-routes:
     snagging: "8097"
     structuralaudit: "8098"
     lvm: "8099"
+    hccsafety: "8100"
+    gemsafety: "8101"
