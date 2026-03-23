@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -851,8 +852,170 @@ public class GroundHoldingQcController
     }
 
 
-
-
     // Report Controller
 
+    @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
+//  public String buildCRFIReport(ActivityInspection activityInspection, List<Integer> userIds, ProjectService projectService, UserService userService, CommonService commonService, ActivityMasterService activityMasterService, LocationMasterService locationMasterService, ActivityRequestService activityRequestService, ConfigProperties configProperties) {
+    public String buildCRFIReport(Object projectService, Object userService,
+                                  Object commonService, Object activityMasterService,
+                                  Object locationMasterService, Object activityRequestService,
+                                  Object configProperties)
+
+    {
+        return groundHoldingQcService.buildCRFIReport(projectService, userService, commonService, activityMasterService, locationMasterService, activityRequestService, configProperties);
+    }
+
+    @RequestMapping(value = "/rest/v1/ncr/report", method = RequestMethod.GET)
+    public String buildNCRReport()
+    {
+        return groundHoldingQcService.buildNCRReport();
+    }
+
+    @RequestMapping(value = "/rest/v1/obs/report", method = RequestMethod.GET)
+    public String buildOBSReport() throws Exception
+    {
+        return groundHoldingQcService.buildOBSReport();
+    }
+
+    @RequestMapping(value = "/rest/v1/obs/filter/report", method = RequestMethod.GET)
+    public ResponseEntity<Object> safetyObsReportByFilter(@RequestParam(value = "fromDate") String fromDate,
+                                                          @RequestParam(value = "toDate") String toDate,
+                                                          @RequestParam(value = "userId") Integer userId)
+    {
+        return groundHoldingQcService.safetyObsReportByFilter(fromDate, toDate, userId);
+    }
+
+    @RequestMapping(value = "/rest/v1/obs/escalation/report", method = RequestMethod.GET)
+    public void escalationOBSReport() throws Exception
+    {
+        groundHoldingQcService.escalationOBSReport();
+    }
+
+    @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
+//  public String ORLMonthlyReport() {
+    public String ORLMonthlyReport(Object projectService, Object userService,
+                            Object activityRequestService, Object materialInspectionRequestService,
+                            Object commonService, Object ncrMainService, Object observationRequestService,
+                            Object activityMasterService, Object locationMasterService, Object observationMasterService,
+                            Object materialMasterService, Object configProperties, Object commonController)
+    {
+        return groundHoldingQcService.ORLMonthlyReport(projectService, userService, activityRequestService, materialInspectionRequestService, commonService, ncrMainService, observationRequestService, activityMasterService, locationMasterService, observationMasterService, materialMasterService, configProperties, commonController);
+    }
+
+    @RequestMapping(value = "/rest/v1/crfi/RFIReport", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
+                                                                   @RequestParam(value = "token") String token,
+                                                                   @RequestParam(value = "project_id") int projectId,
+                                                                   @RequestParam(value = "crfiId",required = false) int crfiId)
+    {
+        return groundHoldingQcService.getDataForRFIReport(userId, token, projectId, crfiId);
+    }
+
+    @RequestMapping(value = "/rest/v1/obsreport", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
+                                                            @RequestParam(value = "token") String token,
+                                                            @RequestParam(value = "obsId",required = false) int obsId)
+    {
+        return groundHoldingQcService.getObsReport(userId, token, obsId);
+    }
+
+    @RequestMapping(value = "/rest/v1/downloadNcrPdf", method = RequestMethod.GET)
+    public ResponseEntity<Object> downloadNcrPdf(@RequestHeader("user_id") int user_id,
+                                            @RequestHeader("token") String token,
+                                            @RequestParam(name = "ncrId", required = true, defaultValue = "0") int ncrId)
+    {
+        return groundHoldingQcService.downloadNcrPdf(user_id, token, ncrId);
+    }
+
+    // User Controller
+
+    @RequestMapping(value = "/user/{uid}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUser(@PathVariable("uid") int user_id)
+    {
+        return groundHoldingQcService.getUser(user_id);
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response)
+    {
+        return groundHoldingQcService.logoutPage(request, response);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ModelAndView users()
+    {
+        return groundHoldingQcService.users();
+    }
+
+    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView userById(@PathVariable("uid") String user_ids,
+                                 @PathVariable("pid") int project_id,
+                                 HttpServletRequest request)
+    {
+        return groundHoldingQcService.userById(user_ids, project_id, request);
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public ModelAndView addUser(@ModelAttribute("user") Object user,
+                                BindingResult result,
+                                @RequestParam("pid") int project_id,
+                                @RequestParam("role_id") int role_id,
+                                HttpServletRequest request)
+    {
+        return groundHoldingQcService.addUser(user, result, project_id, role_id, request);
+    }
+
+    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView deleteUser(@RequestParam("uid") int user_id,
+                                   @RequestParam("pid") int project_id,
+                                   RedirectAttributes redirectAttributes)
+    {
+        return groundHoldingQcService.deleteUser(user_id, project_id, redirectAttributes);
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public ModelAndView updateUser(@ModelAttribute("user") Object user,
+                                   BindingResult bindingResult,
+                                   @RequestParam("pid") int project_id)
+    {
+        return groundHoldingQcService.updateUser(user, bindingResult, project_id);
+    }
+
+    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView usersByProject(@PathVariable("id") int project_id)
+    {
+        return groundHoldingQcService.usersByProject(project_id);
+    }
+
+    @RequestMapping(value = "/updateProjectMembers", method = RequestMethod.POST)
+    public ModelAndView updateProjectMembers(@ModelAttribute("project_Members") Object project_Members,
+                                             BindingResult result, @RequestParam("userIds") String userIds)
+    {
+        return groundHoldingQcService.updateProjectMembers(project_Members, result, userIds);
+    }
+
+    @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
+    public ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
+                                          @RequestParam("pid") int project_id,
+                                          @RequestParam("role_id") int role_id,
+                                          HttpServletRequest request)
+    {
+        return groundHoldingQcService.addProjectMembers(user_id, project_id, role_id, request);
+    }
+
+    @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)
+    public String checkEmailPhoneNo(@RequestParam("name") String name,
+                                    @RequestParam("value") String value)
+    {
+        return groundHoldingQcService.checkEmailPhoneNo(name, value);
+    }
+
+    // Weekly Report Controller
+
+    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
+    public void WeeklyReport(Object projectService, Object activityRequestService,
+                             Object configProperties) throws Exception
+    {
+        groundHoldingQcService.WeeklyReport(projectService, activityRequestService, configProperties);
+    }
 }

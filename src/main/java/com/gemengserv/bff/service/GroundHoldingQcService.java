@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -579,12 +580,108 @@ public interface GroundHoldingQcService
             @PathVariable(value = "id") Integer tbtId);
 
 
-
-
-
-
-
     // Report Controller
+
+    @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
+//  String buildCRFIReport(ActivityInspection activityInspection, List<Integer> userIds, ProjectService projectService, UserService userService, CommonService commonService, ActivityMasterService activityMasterService, LocationMasterService locationMasterService, ActivityRequestService activityRequestService, ConfigProperties configProperties) {
+    String buildCRFIReport(Object projectService, Object userService,
+                           Object commonService, Object activityMasterService,
+                           Object locationMasterService, Object activityRequestService,
+                           Object configProperties);
+
+    @RequestMapping(value = "/rest/v1/ncr/report", method = RequestMethod.GET)
+    String buildNCRReport();
+
+    @RequestMapping(value = "/rest/v1/obs/report", method = RequestMethod.GET)
+    String buildOBSReport() throws Exception;
+
+    @RequestMapping(value = "/rest/v1/obs/filter/report", method = RequestMethod.GET)
+    ResponseEntity<Object> safetyObsReportByFilter(@RequestParam(value = "fromDate") String fromDate,
+                                                   @RequestParam(value = "toDate") String toDate,
+                                                   @RequestParam(value = "userId") Integer userId);
+
+    @RequestMapping(value = "/rest/v1/obs/escalation/report", method = RequestMethod.GET)
+    void escalationOBSReport() throws Exception;
+
+    @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
+//  String ORLMonthlyReport() {
+    String ORLMonthlyReport(Object projectService, Object userService,
+                            Object activityRequestService, Object materialInspectionRequestService,
+                            Object commonService, Object ncrMainService, Object observationRequestService,
+                            Object activityMasterService, Object locationMasterService, Object observationMasterService,
+                            Object materialMasterService, Object configProperties, Object commonController);
+
+    @RequestMapping(value = "/rest/v1/crfi/RFIReport", method = RequestMethod.GET)
+    ResponseEntity<Map<String, Object>> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
+                                                            @RequestParam(value = "token") String token,
+                                                            @RequestParam(value = "project_id") int projectId,
+                                                            @RequestParam(value = "crfiId",required = false) int crfiId);
+
+    @RequestMapping(value = "/rest/v1/obsreport", method = RequestMethod.GET)
+    ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
+                                                     @RequestParam(value = "token") String token,
+                                                     @RequestParam(value = "obsId",required = false) int obsId);
+
+    @RequestMapping(value = "/rest/v1/downloadNcrPdf", method = RequestMethod.GET)
+    ResponseEntity<Object> downloadNcrPdf(@RequestHeader("user_id") int user_id,
+                                          @RequestHeader("token") String token,
+                                          @RequestParam(name = "ncrId", required = true, defaultValue = "0") int ncrId);
+
+    // User Controller
+
+    @RequestMapping(value = "/user/{uid}", method = RequestMethod.GET)
+    ResponseEntity<Object> getUser(@PathVariable("uid") int user_id);
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response);
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    ModelAndView users();
+
+    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET, RequestMethod.POST })
+    ModelAndView userById(@PathVariable("uid") String user_ids,
+                          @PathVariable("pid") int project_id,
+                          HttpServletRequest request);
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    ModelAndView addUser(@ModelAttribute("user") Object user,
+                         BindingResult result,
+                         @RequestParam("pid") int project_id,
+                         @RequestParam("role_id") int role_id,
+                         HttpServletRequest request);
+
+    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET, RequestMethod.POST })
+    ModelAndView deleteUser(@RequestParam("uid") int user_id,
+                            @RequestParam("pid") int project_id,
+                            RedirectAttributes redirectAttributes);
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    ModelAndView updateUser(@ModelAttribute("user") Object user,
+                            BindingResult bindingResult,
+                            @RequestParam("pid") int project_id);
+
+    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    ModelAndView usersByProject(@PathVariable("id") int project_id);
+
+    @RequestMapping(value = "/updateProjectMembers", method = RequestMethod.POST)
+    ModelAndView updateProjectMembers(@ModelAttribute("project_Members") Object project_Members,
+                                      BindingResult result, @RequestParam("userIds") String userIds);
+
+    @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
+    ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
+                                   @RequestParam("pid") int project_id,
+                                   @RequestParam("role_id") int role_id,
+                                   HttpServletRequest request);
+
+    @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)
+    String checkEmailPhoneNo(@RequestParam("name") String name,
+                             @RequestParam("value") String value);
+
+    // Weekly Report Controller
+
+    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
+    void WeeklyReport(Object projectService, Object activityRequestService,
+                      Object configProperties) throws Exception;
 
 
 }
