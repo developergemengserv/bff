@@ -17,8 +17,8 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "gemhccsafetyadmin", url = "http://localhost:8102", configuration = FeignConfig.class)
-public interface GemHccSafetyAdminService
+@FeignClient(name = "hccadmin", url = "http://localhost:8102", configuration = FeignConfig.class)
+public interface HccAdminService
 {
     // Activity Master Controller
 

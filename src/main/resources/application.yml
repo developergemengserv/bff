@@ -46,8 +46,8 @@ springdoc:
         url: /hccsafety/v3/api-docs
       - name: "Gem Safety"
         url: /gemsafety/v3/api-docs
-      - name: "Gem Hcc Safety Admin"
-        url: /gemhccsafetyadmin/v3/api-docs
+      - name: "Hcc Admin"
+        url: /hccadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -71,4 +71,4 @@ app-routes:
     lvm: "8099"
     hccsafety: "8100"
     gemsafety: "8101"
-    gemhccsafetyadmin: "8102"
+    hccadmin: "8102"
