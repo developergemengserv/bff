@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping("/gemhccsafetyadmin")
+@RequestMapping("/hccadmin")
 public class HccAdminController {
 
     @Autowired
