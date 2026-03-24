@@ -443,7 +443,7 @@ public class LvmController
     public void exportToExcelTimesheetReport(HttpServletResponse httpServletResponse,
                                              @RequestBody Object timesheetReportRequest) throws IOException
     {
-        lvmService.exportToExcelTimesheetReport(httpServletResponse, timesheetReportRequest);
+        lvmService.exportToExcelTimesheetReport(timesheetReportRequest);
     }
 
     @RequestMapping(value = "/getTimesheetReport", method = RequestMethod.POST)
@@ -456,7 +456,7 @@ public class LvmController
     public void exportToExcelLeaveReport(HttpServletResponse httpServletResponse,
                                          @RequestBody Object leaveReportRequest) throws IOException
     {
-        lvmService.exportToExcelLeaveReport(httpServletResponse, leaveReportRequest);
+        lvmService.exportToExcelLeaveReport( leaveReportRequest);
     }
 
     @RequestMapping(value = "/getLeaveReport", method = RequestMethod.POST)
@@ -469,7 +469,7 @@ public class LvmController
     public void exportToExcelAttendanceReport(HttpServletResponse httpServletResponse,
                                               @RequestBody Object timesheetReportRequest) throws IOException
     {
-        lvmService.exportToExcelAttendanceReport(httpServletResponse, timesheetReportRequest);
+        lvmService.exportToExcelAttendanceReport( timesheetReportRequest);
     }
 
     @RequestMapping(value = "/getAttendanceReport", method = RequestMethod.POST)
@@ -507,21 +507,21 @@ public class LvmController
     public void projectWiseTimesheetReport(HttpServletResponse httpServletResponse,
                                            @RequestBody Object timesheetReportRequest) throws IOException
     {
-        lvmService.projectWiseTimesheetReport(httpServletResponse, timesheetReportRequest);
+        lvmService.projectWiseTimesheetReport( timesheetReportRequest);
     }
 
     @RequestMapping(value = "/employeeStatusReport", method = RequestMethod.POST)
     public void exportToExcelEmployeeStatusReport(HttpServletResponse httpServletResponse,
                                                   @RequestBody Object employeeStatusReportRequest) throws IOException
     {
-        lvmService.exportToExcelEmployeeStatusReport(httpServletResponse, employeeStatusReportRequest);
+        lvmService.exportToExcelEmployeeStatusReport( employeeStatusReportRequest);
     }
 
     @RequestMapping(value = "/employeeDetailsReport", method = RequestMethod.POST)
     public void exportToExcelEmployeeDetailsReport(HttpServletResponse httpServletResponse,
                                                    @RequestBody Object employeeDetailsReportRequest) throws IOException
     {
-        lvmService.exportToExcelEmployeeDetailsReport(httpServletResponse, employeeDetailsReportRequest);
+        lvmService.exportToExcelEmployeeDetailsReport( employeeDetailsReportRequest);
     }
 
     @RequestMapping(value = "/getEmployeeDetailsReport", method = RequestMethod.POST)
@@ -546,7 +546,7 @@ public class LvmController
     public ResponseEntity<Object> exportToExcelOverheadReport(HttpServletResponse httpServletResponse,
                                                          @RequestBody Object departmentWiseOverheadReportRequest) throws IOException
     {
-        return lvmService.exportToExcelOverheadReport(httpServletResponse, departmentWiseOverheadReportRequest);
+        return lvmService.exportToExcelOverheadReport( departmentWiseOverheadReportRequest);
     }
 
     @RequestMapping(value = "/getOverheadReport", method = RequestMethod.POST)
@@ -565,7 +565,7 @@ public class LvmController
     public ResponseEntity<Object> getProfitabilityReportDownload(HttpServletResponse httpServletResponse,
                                                                  @RequestBody Object profitabilityRequest)
     {
-        return lvmService.getProfitabilityReportDownload(httpServletResponse, profitabilityRequest);
+        return lvmService.getProfitabilityReportDownload( profitabilityRequest);
     }
 
     // Timesheet Controller

@@ -522,17 +522,6 @@ public interface GroundHoldingQcService
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
 
-    // Observation Master Controller
-
-    @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
-    ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-                                                    @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
-                                                    @RequestHeader(value = "userId") Integer userId,
-                                                    @RequestHeader(value = "token") String token,
-                                                    @RequestParam(value = "lastSync", required = false) String lastSync);
-
-
     // Project Controller
 
     @RequestMapping(value = "/rest/v1/projects", method = RequestMethod.GET)
@@ -548,10 +537,10 @@ public interface GroundHoldingQcService
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
     ModelAndView projects(HttpServletRequest request);
 
-    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
-    ModelAndView addProject(@ModelAttribute("project") Object project,
-                            BindingResult result,
-                            HttpServletRequest request);
+//    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
+//    ModelAndView addProject(@RequestParam("project") Object project,
+//                            BindingResult result,
+//                            HttpServletRequest request);
 
     @RequestMapping(value = "/deleteProject", method = RequestMethod.GET)
     ModelAndView deleteProject(@RequestParam("pid") int project_id);

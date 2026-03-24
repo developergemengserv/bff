@@ -239,22 +239,19 @@ public interface LvmService
     // Report Controller
 
     @RequestMapping(value = "/timesheetReport", method = RequestMethod.POST)
-    void exportToExcelTimesheetReport(HttpServletResponse httpServletResponse,
-                                             @RequestBody Object timesheetReportRequest) throws IOException;
+    void exportToExcelTimesheetReport(@RequestBody Object timesheetReportRequest) throws IOException;
 
     @RequestMapping(value = "/getTimesheetReport", method = RequestMethod.POST)
     ResponseEntity<List<Object>> getTimesheetReport(@RequestBody Object timesheetReportRequest);
 
     @RequestMapping(value = "/leaveReport", method = RequestMethod.POST)
-    void exportToExcelLeaveReport(HttpServletResponse httpServletResponse,
-                                         @RequestBody Object leaveReportRequest) throws IOException;
+    void exportToExcelLeaveReport( @RequestBody Object leaveReportRequest) throws IOException;
 
     @RequestMapping(value = "/getLeaveReport", method = RequestMethod.POST)
     ResponseEntity<List<Object>> getLeaveReport(@RequestBody Object leaveReportRequest);
 
     @RequestMapping(value = "/attendanceReport", method = RequestMethod.POST)
-    void exportToExcelAttendanceReport(HttpServletResponse httpServletResponse,
-                                              @RequestBody Object timesheetReportRequest) throws IOException;
+    void exportToExcelAttendanceReport(@RequestBody Object timesheetReportRequest) throws IOException;
 
     @RequestMapping(value = "/getAttendanceReport", method = RequestMethod.POST)
     ResponseEntity<List<Object>> getAttendanceReport(@RequestBody Object timesheetReportRequest);
@@ -273,16 +270,13 @@ public interface LvmService
     ResponseEntity<List<Object>> getSuperiorUsersForReport();
 
     @RequestMapping(value = "/projectWiseTimesheetReport", method = RequestMethod.POST)
-    void projectWiseTimesheetReport(HttpServletResponse httpServletResponse,
-                                           @RequestBody Object timesheetReportRequest) throws IOException;
+    void projectWiseTimesheetReport(@RequestBody Object timesheetReportRequest) throws IOException;
 
     @RequestMapping(value = "/employeeStatusReport", method = RequestMethod.POST)
-    void exportToExcelEmployeeStatusReport(HttpServletResponse httpServletResponse,
-                                                  @RequestBody Object employeeStatusReportRequest) throws IOException;
+    void exportToExcelEmployeeStatusReport(@RequestBody Object employeeStatusReportRequest) throws IOException;
 
     @RequestMapping(value = "/employeeDetailsReport", method = RequestMethod.POST)
-    void exportToExcelEmployeeDetailsReport(HttpServletResponse httpServletResponse,
-                                                   @RequestBody Object employeeDetailsReportRequest) throws IOException;
+    void exportToExcelEmployeeDetailsReport(@RequestBody Object employeeDetailsReportRequest) throws IOException;
 
     @RequestMapping(value = "/getEmployeeDetailsReport", method = RequestMethod.POST)
     ResponseEntity<List<Object>> getEmployeeDetailsReport(@RequestBody Object employeeDetailsReportRequest);
@@ -294,8 +288,7 @@ public interface LvmService
     ResponseEntity<Object> generateWeeklyTimesheetSummaryReports();
 
     @RequestMapping(value = "/overheadReport", method = RequestMethod.POST)
-    ResponseEntity<Object> exportToExcelOverheadReport(HttpServletResponse httpServletResponse,
-                                                              @RequestBody Object departmentWiseOverheadReportRequest) throws IOException;
+    ResponseEntity<Object> exportToExcelOverheadReport(@RequestBody Object departmentWiseOverheadReportRequest) throws IOException;
 
     @RequestMapping(value = "/getOverheadReport", method = RequestMethod.POST)
     ResponseEntity<List<Object>> getOverheadReport(@RequestBody Object departmentWiseOverheadReportRequest);
@@ -304,8 +297,7 @@ public interface LvmService
     ResponseEntity<Object> getProfitabilityReport(@RequestBody Object profitabilityRequest);
 
     @RequestMapping(value = "/profitabilityReportDownload", method = RequestMethod.POST)
-    ResponseEntity<Object> getProfitabilityReportDownload(HttpServletResponse httpServletResponse,
-                                                          @RequestBody Object profitabilityRequest);
+    ResponseEntity<Object> getProfitabilityReportDownload(@RequestBody Object profitabilityRequest);
 
     // Timesheet Controller
 
