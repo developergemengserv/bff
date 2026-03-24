@@ -384,7 +384,7 @@ public interface LvmService
                                                     @RequestParam("user_id") int userId);
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE)
-    ResponseEntity<Object> deleteUser(@RequestParam(value = "userId") int userId);
+    ResponseEntity<Object> deleteUser(@RequestBody Object deleteUserRequest);
 
     @RequestMapping(value = "/getUsersOfProject", method = RequestMethod.GET)
     ResponseEntity<List<Object>> getUsersOfProject(@RequestParam(value = "projectManagerId") int projectManagerId);

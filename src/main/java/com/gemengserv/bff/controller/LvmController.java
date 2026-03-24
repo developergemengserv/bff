@@ -711,9 +711,9 @@ public class LvmController
     }
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteUser(@RequestParam(value = "userId") int userId)
+    public ResponseEntity<Object> deleteUser(@RequestBody Object deleteUserRequest)
     {
-        return lvmService.deleteUser(userId);
+        return lvmService.deleteUser(deleteUserRequest);
     }
 
     @RequestMapping(value = "/getUsersOfProject", method = RequestMethod.GET)
