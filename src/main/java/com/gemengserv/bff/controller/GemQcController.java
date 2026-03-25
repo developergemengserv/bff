@@ -116,10 +116,10 @@ public class GemQcController
         return gemQcService.getAllActivityRequestsBySP(requestParam);
     }
 
-    @RequestMapping(value = "/rest/v1/activity/request/find", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> getAllActivityRequestBySP(@RequestBody Map<String, Object> requestParam) {
-        return gemQcService.getAllActivityRequestBySP(requestParam);
-    }
+//    @RequestMapping(value = "/rest/v1/activity/request/find", method = RequestMethod.POST)
+//    public ResponseEntity<Map<String, Object>> getAllActivityRequestBySP(@RequestBody Map<String, Object> requestParam) {
+//        return gemQcService.getAllActivityRequestBySP(requestParam);
+//    }
 
     @RequestMapping(value = "/rest/v1/activity/request/findHistory_Old", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> getAllActivityRequestHistoryByIds(@RequestBody Map<String, Object> requestParam) {
@@ -551,15 +551,15 @@ public class GemQcController
         return view;
     }
 
-    @RequestMapping(value = "/location/db/find", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/location/db/find", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data) {
         return gemQcService.findLocation(data);
-    }
+    }*/
 
-    @RequestMapping(value = "/location/db/findAll", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/location/db/findAll", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> findLocationAll(@RequestBody String data) {
         return gemQcService.findLocationAll(data);
-    }
+    }*/
 
     @RequestMapping(value = "/location/db/create", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> createLocationDB(@RequestBody String data) {
@@ -746,16 +746,16 @@ public class GemQcController
     public synchronized ResponseEntity<Map<String, Object>> createPartialObs(@RequestBody Map<String, Object> requestParam) {
         return gemQcService.createPartialObs(requestParam);
     }
-    
+
 
     // Location Master Controller
 
-    @RequestMapping(value = "/location/db/find", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/location/db/find", method = RequestMethod.POST)
     ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data,
                                                      @RequestParam(value = "lastSync", required = false) String lastSync)
     {
         return gemQcService.findLocation(data, lastSync);
-    }
+    }*/
 
     @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
@@ -770,7 +770,7 @@ public class GemQcController
 
     // Observation Master Controller
 
-    @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
                                                     HttpServletRequest request,
@@ -779,7 +779,7 @@ public class GemQcController
                                                     @RequestParam(value = "lastSync", required = false) String lastSync)
     {
         return gemQcService.getAllObservationsFromDB(page, pageSize, request, userId, token, lastSync);
-    }
+    }*/
 
 
     // Project Controller
@@ -807,11 +807,9 @@ public class GemQcController
     }
 
     @RequestMapping(value = "/addProject", method = RequestMethod.POST)
-    public ModelAndView addProject(@ModelAttribute("project") Object
-                                               project, BindingResult result,
-                                   HttpServletRequest request)
+    public ModelAndView addProject(@ModelAttribute("project") Object project)
     {
-        return gemQcService.addProject(project, result, request);
+        return gemQcService.addProject(project);
     }
 
     @RequestMapping(value = "/deleteProject", method = RequestMethod.GET)
@@ -858,7 +856,7 @@ public class GemQcController
 
     // Report Controller
 
-    @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
 //  public String buildCRFIReport(ActivityInspection activityInspection, List<Integer> userIds, ProjectService projectService, UserService userService, CommonService commonService, ActivityMasterService activityMasterService, LocationMasterService locationMasterService, ActivityRequestService activityRequestService, ConfigProperties configProperties) {
     public String buildCRFIReport(Object projectService, Object userService,
                                   Object commonService, Object activityMasterService,
@@ -867,7 +865,7 @@ public class GemQcController
 
     {
         return gemQcService.buildCRFIReport(projectService, userService, commonService, activityMasterService, locationMasterService, activityRequestService, configProperties);
-    }
+    }*/
 
     @RequestMapping(value = "/rest/v1/ncr/report", method = RequestMethod.GET)
     public String buildNCRReport()
@@ -895,7 +893,7 @@ public class GemQcController
         gemQcService.escalationOBSReport();
     }
 
-    @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
 //  public String ORLMonthlyReport() {
     public String ORLMonthlyReport(Object projectService, Object userService,
                             Object activityRequestService, Object materialInspectionRequestService,
@@ -904,7 +902,7 @@ public class GemQcController
                             Object materialMasterService, Object configProperties, Object commonController)
     {
         return gemQcService.ORLMonthlyReport(projectService, userService, activityRequestService, materialInspectionRequestService, commonService, ncrMainService, observationRequestService, activityMasterService, locationMasterService, observationMasterService, materialMasterService, configProperties, commonController);
-    }
+    }*/
 
     @RequestMapping(value = "/rest/v1/crfi/RFIReport", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
@@ -950,9 +948,9 @@ public class GemQcController
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response)
+    public ModelAndView logoutPage (HttpServletRequest request)
     {
-        return gemQcService.logoutPage(request, response);
+        return gemQcService.logoutPage(request);
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -961,7 +959,7 @@ public class GemQcController
         return gemQcService.users();
     }
 
-    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET})
     public ModelAndView userById(@PathVariable("uid") String user_ids,
                                  @PathVariable("pid") int project_id,
                                  HttpServletRequest request)
@@ -971,15 +969,13 @@ public class GemQcController
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public ModelAndView addUser(@ModelAttribute("user") Object user,
-                                BindingResult result,
                                 @RequestParam("pid") int project_id,
-                                @RequestParam("role_id") int role_id,
-                                HttpServletRequest request)
+                                @RequestParam("role_id") int role_id)
     {
-        return gemQcService.addUser(user, result, project_id, role_id, request);
+        return gemQcService.addUser(user, project_id, role_id);
     }
 
-    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET})
     public ModelAndView deleteUser(@RequestParam("uid") int user_id,
                                    @RequestParam("pid") int project_id,
                                    RedirectAttributes redirectAttributes)
@@ -989,13 +985,12 @@ public class GemQcController
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public ModelAndView updateUser(@ModelAttribute("user") Object user,
-                                   BindingResult bindingResult,
                                    @RequestParam("pid") int project_id)
     {
-        return gemQcService.updateUser(user, bindingResult, project_id);
+        return gemQcService.updateUser(user, project_id);
     }
 
-    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET})
     public ModelAndView usersByProject(@PathVariable("id") int project_id)
     {
         return gemQcService.usersByProject(project_id);
@@ -1003,9 +998,9 @@ public class GemQcController
 
     @RequestMapping(value = "/updateProjectMembers", method = RequestMethod.POST)
     public ModelAndView updateProjectMembers(@ModelAttribute("project_Members") Object project_Members,
-                                             BindingResult result, @RequestParam("userIds") String userIds)
+                                              @RequestParam("userIds") String userIds)
     {
-        return gemQcService.updateProjectMembers(project_Members, result, userIds);
+        return gemQcService.updateProjectMembers(project_Members, userIds);
     }
 
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
@@ -1026,10 +1021,10 @@ public class GemQcController
 
     // Weekly Report Controller
 
-    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
-    public void WeeklyReport(Object projectService, Object activityRequestService,
-                             Object configProperties) throws Exception
-    {
-        gemQcService.WeeklyReport(projectService, activityRequestService, configProperties);
-    }
+//    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
+//    public void WeeklyReport(Object projectService, Object activityRequestService,
+//                             Object configProperties) throws Exception
+//    {
+//        gemQcService.WeeklyReport(projectService, activityRequestService, configProperties);
+//    }
 }

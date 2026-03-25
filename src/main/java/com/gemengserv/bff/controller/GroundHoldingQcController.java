@@ -839,7 +839,7 @@ public class GroundHoldingQcController
 
     // Report Controller
 
-    @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
 //  public String buildCRFIReport(ActivityInspection activityInspection, List<Integer> userIds, ProjectService projectService, UserService userService, CommonService commonService, ActivityMasterService activityMasterService, LocationMasterService locationMasterService, ActivityRequestService activityRequestService, ConfigProperties configProperties) {
     public String buildCRFIReport(Object projectService, Object userService,
                                   Object commonService, Object activityMasterService,
@@ -848,7 +848,7 @@ public class GroundHoldingQcController
 
     {
         return groundHoldingQcService.buildCRFIReport(projectService, userService, commonService, activityMasterService, locationMasterService, activityRequestService, configProperties);
-    }
+    }*/
 
     @RequestMapping(value = "/rest/v1/ncr/report", method = RequestMethod.GET)
     public String buildNCRReport()
@@ -876,7 +876,7 @@ public class GroundHoldingQcController
         groundHoldingQcService.escalationOBSReport();
     }
 
-    @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
 //  public String ORLMonthlyReport() {
     public String ORLMonthlyReport(Object projectService, Object userService,
                             Object activityRequestService, Object materialInspectionRequestService,
@@ -885,7 +885,7 @@ public class GroundHoldingQcController
                             Object materialMasterService, Object configProperties, Object commonController)
     {
         return groundHoldingQcService.ORLMonthlyReport(projectService, userService, activityRequestService, materialInspectionRequestService, commonService, ncrMainService, observationRequestService, activityMasterService, locationMasterService, observationMasterService, materialMasterService, configProperties, commonController);
-    }
+    }*/
 
     @RequestMapping(value = "/rest/v1/crfi/RFIReport", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
@@ -923,7 +923,7 @@ public class GroundHoldingQcController
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response)
     {
-        return groundHoldingQcService.logoutPage(request, response);
+        return groundHoldingQcService.logoutPage(request);
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -932,7 +932,7 @@ public class GroundHoldingQcController
         return groundHoldingQcService.users();
     }
 
-    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET})
     public ModelAndView userById(@PathVariable("uid") String user_ids,
                                  @PathVariable("pid") int project_id,
                                  HttpServletRequest request)
@@ -940,7 +940,7 @@ public class GroundHoldingQcController
         return groundHoldingQcService.userById(user_ids, project_id, request);
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public ModelAndView addUser(@ModelAttribute("user") Object user,
                                 BindingResult result,
                                 @RequestParam("pid") int project_id,
@@ -948,9 +948,9 @@ public class GroundHoldingQcController
                                 HttpServletRequest request)
     {
         return groundHoldingQcService.addUser(user, result, project_id, role_id, request);
-    }
+    }*/
 
-    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET })
     public ModelAndView deleteUser(@RequestParam("uid") int user_id,
                                    @RequestParam("pid") int project_id,
                                    RedirectAttributes redirectAttributes)
@@ -960,13 +960,12 @@ public class GroundHoldingQcController
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public ModelAndView updateUser(@ModelAttribute("user") Object user,
-                                   BindingResult bindingResult,
                                    @RequestParam("pid") int project_id)
     {
-        return groundHoldingQcService.updateUser(user, bindingResult, project_id);
+        return groundHoldingQcService.updateUser(user, project_id);
     }
 
-    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET})
     public ModelAndView usersByProject(@PathVariable("id") int project_id)
     {
         return groundHoldingQcService.usersByProject(project_id);
@@ -974,9 +973,9 @@ public class GroundHoldingQcController
 
     @RequestMapping(value = "/updateProjectMembers", method = RequestMethod.POST)
     public ModelAndView updateProjectMembers(@ModelAttribute("project_Members") Object project_Members,
-                                             BindingResult result, @RequestParam("userIds") String userIds)
+                                            @RequestParam("userIds") String userIds)
     {
-        return groundHoldingQcService.updateProjectMembers(project_Members, result, userIds);
+        return groundHoldingQcService.updateProjectMembers(project_Members, userIds);
     }
 
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
@@ -997,10 +996,10 @@ public class GroundHoldingQcController
 
     // Weekly Report Controller
 
-    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
-    public void WeeklyReport(Object projectService, Object activityRequestService,
-                             Object configProperties) throws Exception
-    {
-        groundHoldingQcService.WeeklyReport(projectService, activityRequestService, configProperties);
-    }
+//    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
+//    public void WeeklyReport(Object projectService, Object activityRequestService,
+//                             Object configProperties) throws Exception
+//    {
+//        groundHoldingQcService.WeeklyReport(projectService, activityRequestService, configProperties);
+//    }
 }
