@@ -2,7 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.18'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	//id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.gemengserv.bff'
@@ -23,18 +22,20 @@ ext {
 }
 
 dependencies {
+	// Core Spring Boot & Cloud Dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	// --- FIX: Upgraded Swagger 2 dependencies from 2.7.0 to 2.9.2 ---
+	implementation 'io.springfox:springfox-swagger2:2.7.0'
+	implementation 'io.springfox:springfox-swagger-ui:2.7.0'
+
+	// Testing Dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-// Remove the 2.5.0 starter version and use 1.7.0
-	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-
 }
 
 dependencyManagement {
