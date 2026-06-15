@@ -140,7 +140,7 @@ public class GemQhseController
         return gemService.registerUser(userRegisterRequest);
     }
 
-    @GetMapping("/rest/v2/login")
+    @PostMapping("/rest/v2/login")
     public ResponseEntity<?> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
         return gemService.loginAPI(username, password);
     }

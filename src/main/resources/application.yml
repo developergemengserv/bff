@@ -2,10 +2,10 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     # This tells the browser: "Ask the BFF for the menu list here"
-    config-url: /v3/api-docs/swagger-config
+    config-url: /v2/api-docs/swagger-config
     urls:
       - name: "Tejraj QHSE"
-        url: /tejraj/v3/api-docs
+        url: /tejraj/v2/api-docs
       - name: "Ashwinsheth QHSE"
         url: /ashwinsheth/v3/api-docs
       - name: "GEM QHSE"

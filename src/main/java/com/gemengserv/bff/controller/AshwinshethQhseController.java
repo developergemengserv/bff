@@ -139,7 +139,7 @@ public class AshwinshethQhseController {
         return ashwinshethService.registerUser(userRegisterRequest);
     }
 
-        @GetMapping("/rest/v2/login")
+        @PostMapping("/rest/v2/login")
         public ResponseEntity<?> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
         return ashwinshethService.loginAPI(username, password);
     }
