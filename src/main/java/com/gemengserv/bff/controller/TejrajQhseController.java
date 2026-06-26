@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.gemengserv.bff.service.TejrajQhseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,7 +67,23 @@ public class TejrajQhseController
         return tejrajService.addLocations(userId,file);
     }
 
-//    ActivityTypeOfWorkMappingController
+    @RequestMapping(value = "/addActivity", method = RequestMethod.POST)
+    public ResponseEntity<Object> addActivity(@RequestHeader(value = "userId") Integer userId,
+                                                             @RequestHeader(value = "token") String token,
+                                                             @RequestBody Object activityRequest)
+    {
+        return tejrajService.addActivity(userId, token, activityRequest);
+    }
+
+    @RequestMapping(value = "/editActivity", method = RequestMethod.POST)
+    public ResponseEntity<Object> editActivity(@RequestHeader(value = "userId") Integer userId,
+                                                              @RequestHeader(value = "token") String token,
+                                                              @RequestBody Object activityRequest)
+    {
+        return tejrajService.editActivity(userId, token, activityRequest);
+    }
+
+    //    ActivityTypeOfWorkMappingController
     @GetMapping(value = "/rest/v1/activityTypeOfWork", produces = "application/json")
     public ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
                                                                @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
@@ -99,7 +117,7 @@ public class TejrajQhseController
     }
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
-    public ResponseEntity<?> userDetails(@RequestParam("user_id") int user_id,
+    public ResponseEntity<Object> userDetails(@RequestParam("user_id") int user_id,
                                          @RequestParam("token") String token)
     {
         return tejrajService.userDetails(user_id, token);
@@ -121,16 +139,33 @@ public class TejrajQhseController
         return tejrajService.updateCompany(userId,token,companyUpdateRequest);
     }
 
-    @GetMapping("/company")
-    public Object getCombinedResponse(@RequestParam("userId") int userId,
-                                      @RequestParam("token") String token) {
+    @RequestMapping(value = "/companyProjectWise", method = RequestMethod.GET)
+    public List<Object> getCompaniesProjectWise(@RequestHeader("userId") int userId,
+                                                 @RequestHeader("token") String token)
+    {
+        return tejrajService.getCompaniesProjectWise(userId, token);
+    }
+
+    @RequestMapping(value = "/company", method = RequestMethod.GET)
+    public List<Object> getCompanies(@RequestHeader("userId") int userId,
+                                      @RequestHeader("token") String token) {
         return tejrajService.getCompanies(userId, token);
     }
 
     @RequestMapping(value = "/deleteCompany", method = RequestMethod.DELETE, produces = {"application/json"})
-    public ResponseEntity<?> deleteCompany(@RequestParam(value = "companyId") Integer companyId)
+    public ResponseEntity<Object> deleteCompany(@RequestParam(value = "companyId") Integer companyId)
     {
         return tejrajService.deleteCompany(companyId);
+    }
+
+    @RequestMapping(value = "/downloadCompanies", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadCompaniesExcel(
+            @RequestParam(value = "userId")   Integer userId,
+            @RequestParam(value = "token")    String  token,
+            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
+            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize)
+    {
+        return tejrajService.downloadCompaniesExcel(userId, token, pageNum, pageSize);
     }
 
     @GetMapping("/registerUser")
@@ -139,7 +174,7 @@ public class TejrajQhseController
     }
 
     @PostMapping("/rest/v2/login")
-    public ResponseEntity<?> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<Object> loginV2(@RequestParam("username") String username, @RequestParam("password") String password) {
         return tejrajService.loginAPI(username, password);
     }
 
@@ -193,6 +228,31 @@ public class TejrajQhseController
 
     {
         return tejrajService.getNcrDetails(userId, token,ncrId);
+    }
+
+    @RequestMapping(value = "/ncr", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateNcr(@RequestHeader(value = "userId") int userId,
+                                                         @RequestHeader(value = "token") String token,
+                                                         @RequestBody Object qcNcrUpdateRequest)
+    {
+        return tejrajService.updateNcr(userId, token, qcNcrUpdateRequest);
+    }
+
+    @RequestMapping(value = "/filter/ncr", method = RequestMethod.POST)
+    public ResponseEntity<Object> getNcrFilter(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object ncrFilterRequest)
+    {
+        return tejrajService.getNcrFilter(userId, token, ncrFilterRequest);
+    }
+
+    @RequestMapping(value = "/ncrReport", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDataForNcrReport(@RequestParam(value = "user_id") int userId,
+                                                 @RequestParam(value = "token") String token,
+                                                 @RequestParam(value = "ncrId",required = true) int ncrId,
+                                                 @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
+    {
+        return tejrajService.getDataForNcrReport(userId, token, ncrId, webCall);
     }
 
     // Safety TBT API's
@@ -485,8 +545,20 @@ public class TejrajQhseController
         return tejrajService.sendOBSNotification(level1LocationId, obsId, userId);
     }
 
-    // Equipment
+    @RequestMapping(value = "/master/answerType/findAll", method = RequestMethod.GET)
+    public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
+                                                                      @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync) {
+       return tejrajService.findAllAnswerType(userId, token, lastSync);
+    }
 
+    @RequestMapping(value = "/master/checklistQuestions/findAll", method = RequestMethod.GET)
+    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
+                                                                                    @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
+    {
+        return tejrajService.findAllChecklistQestions(userId, token, lastSync);
+    }
+
+    // Equipment
         @PostMapping(value = "/safety/equipment")
         public ResponseEntity<Object> saveEquipment(
                 @RequestHeader(value = "userId") Integer userId,
@@ -705,6 +777,14 @@ public class TejrajQhseController
         return tejrajService.getAllObservationsFromDB(page,pageSize,request,userId,token,lastSync);
     }
 
+    @RequestMapping(value = "/getRelatedLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> getRelatedLocation(@RequestHeader("user_id") int user_id,
+                                                @RequestHeader("token") String token,
+                                                @RequestBody(required = false) Object relatedLocationRequest)
+    {
+        return tejrajService.getRelatedLocation(user_id, token, relatedLocationRequest);
+    }
+
     // Progress Report
 
     @PostMapping(value = "/progressReport")
@@ -766,8 +846,17 @@ public class TejrajQhseController
         return tejrajService.getProjects(userId,token);
     }
 
-    // QC controller
+    @RequestMapping(value = "/downloadProjects", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadUsersExcel(
+            @RequestParam(value = "userId")   Integer userId,
+            @RequestParam(value = "token")    String  token,
+            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
+            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize)
+    {
+        return tejrajService.downloadProjects(userId, token, pageNum, pageSize);
+    }
 
+    // QC controller
     @RequestMapping(value = "/crfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createCRFI(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
@@ -802,7 +891,7 @@ public class TejrajQhseController
     }
 
     @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
-    public ResponseEntity<?> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<Object> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                  @RequestParam(value = "token") String token,
                                                  @RequestParam(value = "crfiId",required = true) int crfiId,
                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
@@ -820,7 +909,7 @@ public class TejrajQhseController
 
     // QC OBS API
 
-    @RequestMapping(value = "/obs", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.POST)
     public ResponseEntity<Object> createQCObservation(@RequestHeader(value = "userId") Integer userId,
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestBody Object obsRequest)
@@ -828,7 +917,7 @@ public class TejrajQhseController
         return tejrajService.createQCObservation(userId,token,obsRequest);
     }
 
-    @RequestMapping(value = "/obs", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.GET)
     public ResponseEntity<List<Object>> getObs(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam(value = "obsId") long obsId,
@@ -838,7 +927,7 @@ public class TejrajQhseController
     }
 
 
-    @RequestMapping(value = "/obs", method = RequestMethod.PUT)
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateOBS(@RequestHeader(value = "userId") int userId,
                                             @RequestHeader(value = "token") String token,
                                             @RequestBody Object obsUpdateRequest)
@@ -846,12 +935,33 @@ public class TejrajQhseController
         return tejrajService.updateOBS(userId,token,obsUpdateRequest);
     }
 
-    @RequestMapping(value = "/obsDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/obsDetails", method = RequestMethod.GET)
     public ResponseEntity<Object> getOBSDetails(@RequestHeader(value = "userId") int userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam(value = "obsId") long obsId)
     {
         return tejrajService.getOBSDetails(userId,token,obsId);
+    }
+
+    @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDataForQCObsReport(@RequestParam(value = "user_id") int userId,
+                                                 @RequestParam(value = "token") String token,
+                                                 @RequestParam(value = "obsId",required = true) int obsId,
+                                                 @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
+    {
+        return tejrajService.getDataForQCObsReport(userId, token, obsId, webCall);
+    }
+
+    @RequestMapping(value = "/qcStages", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getAll()
+    {
+        return tejrajService.getAll();
+    }
+
+    @RequestMapping(value = "/qcStages", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> create(@RequestParam String stageName)
+    {
+        return tejrajService.create(stageName);
     }
 
     // Report controller
@@ -935,7 +1045,13 @@ public class TejrajQhseController
       return tejrajService.downloadIncidentPdf(user_id,token,incidentId);
     }
 
-
+    @RequestMapping(value = "/downloadSnagingPdf", method = RequestMethod.POST)
+    public ResponseEntity<Object> downloadSnagingPdf(@RequestHeader("user_id") int user_id,
+                                                @RequestHeader("token") String token,
+                                                @RequestBody Object filterRequest)
+    {
+        return tejrajService.downloadSnagingPdf(user_id,token,filterRequest);
+    }
     @GetMapping("/sendIncidentPdf")
     public ResponseEntity<Object> sendIncidentPdf(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
@@ -1068,9 +1184,56 @@ public class TejrajQhseController
         return tejrajService.getUnitMasterById(userId,token,unitMasterId);
     }
 
-    // User controller
+    //Snag Controller
+    @RequestMapping(value = "/snag/create", method = RequestMethod.POST)
+    public ResponseEntity<Object> createSnag(@RequestHeader(value = "userId") Integer userId,
+                                                         @RequestHeader(value = "token") String token, @RequestBody Object snagRequest)
+    {
+        return tejrajService.createSnag(userId, token, snagRequest);
+    }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json"})
+    @RequestMapping(value = "/snag/find", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getSnag(@RequestHeader(value = "userId") int userId,
+                                                  @RequestHeader(value = "token") String token,
+                                                  @RequestParam(value = "snagId") long snagId,
+                                                  @RequestParam(value = "projectId") long projectId)
+    {
+        return tejrajService.getSnag(userId, token, snagId, projectId);
+    }
+
+    @RequestMapping(value = "/snag/filter", method = RequestMethod.POST)
+    public ResponseEntity<Object> getSnagFilter(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object filterObsRequest)
+    {
+        return tejrajService.getSnagFilter(userId, token, filterObsRequest);
+    }
+
+    @RequestMapping(value = "/snag/update", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateSnag(@RequestHeader(value = "userId") int userId,
+                                                         @RequestHeader(value = "token") String token,
+                                                         @RequestBody Object obsUpdateRequest){
+        return tejrajService.updateSnag(userId, token, obsUpdateRequest);
+    }
+
+    @RequestMapping(value = "/snag/details", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSnagDetails(@RequestHeader(value = "userId") int userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestParam(value = "snagId") long obsId){
+        return tejrajService.getSnagDetails(userId, token, obsId);
+    }
+
+    @RequestMapping(value = "/snag/report", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDataForSnagReport(@RequestParam(value = "user_id") int userId,
+                                                  @RequestParam(value = "token") String token,
+                                                  @RequestParam(value = "snagId",required = true) int snagId,
+                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
+    {
+        return tejrajService.getDataForSnagReport(userId, token, snagId, webCall);
+    }
+
+    // User controller
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<Object> addUser(@RequestHeader(value = "userId") Integer userId,
                                           @RequestHeader(value = "token") String token,
                                           @RequestBody Object userRequestModel)
@@ -1078,7 +1241,7 @@ public class TejrajQhseController
         return tejrajService.addUser(userId,token,userRequestModel);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json"})
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<Object> UpdateUser(@RequestHeader(value = "userId") Integer userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object userRequestModel)
@@ -1086,7 +1249,7 @@ public class TejrajQhseController
         return tejrajService.UpdateUser(userId,token,userRequestModel);
     }
 
-    @RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = {"application/json"})
+    @RequestMapping(value = "/user/fetch", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity<List<Object>> getUsers(@RequestHeader(value = "userId") Integer userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "projectId", required = false, defaultValue = "0") int projectId,
@@ -1097,14 +1260,22 @@ public class TejrajQhseController
         return tejrajService.getUsers(userId,token,projectId,companyId,pageNum,pageSize);
     }
 
-    @GetMapping(value = "/getNonProjectUsers")
+    @PostMapping(value = "/user/filter")
+    public ResponseEntity<Object> filterUsers(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token")  String  token,
+            @RequestBody Object filterRequest){
+        return tejrajService.filterUsers(userId, token, filterRequest);
+    }
+
+    @GetMapping(value = "/user/getNonProjectUsers")
     public ResponseEntity<List<Object>> getNonProjectUsers(@RequestParam(value = "projectId") int projectId,
                                                            @RequestParam(value = "companyId") int companyId)
     {
         return tejrajService.getNonProjectUsers(projectId,companyId);
     }
 
-    @RequestMapping(value = "/userMapping", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/userMapping", method = RequestMethod.POST)
     public ResponseEntity<Object> userMapping(@RequestBody Object userMappingRequest)
     {
         return tejrajService.userMapping(userMappingRequest);
@@ -1116,5 +1287,21 @@ public class TejrajQhseController
         return tejrajService.deleteUser(userId);
     }
 
+    @RequestMapping(value = "/user/updateUserStatus", method = RequestMethod.PUT, produces = {"application/json"})
+    public ResponseEntity<Object> updateUserStatus(@RequestParam(value = "user_id") Integer userId,
+                                                   @RequestParam(value = "active") int active)
+    {
+        return tejrajService.updateUserStatus(userId, active);
+    }
 
+    @RequestMapping(value = "/user/downloadUsers", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadUsersExcel(
+            @RequestParam(value = "userId")   Integer userId,
+            @RequestParam(value = "token")    String  token,
+            @RequestParam(value = "projectId",  required = false, defaultValue = "0")    int projectId,
+            @RequestParam(value = "companyId",  required = false, defaultValue = "0")    int companyId,
+            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
+            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize){
+            return tejrajService.downloadUsersExcel(userId, token, projectId, companyId, pageNum, pageSize);
+    }
 }
