@@ -48,6 +48,10 @@ springdoc:
         url: /gemsafety/v3/api-docs
       - name: "Hcc Admin"
         url: /hccadmin/v3/api-docs
+      - name: "Ashray QHSE"
+        url: /ashray/v3/api-docs
+      - name: "Ashray Admin"
+        url: /ashrayadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -72,3 +76,5 @@ app-routes:
     hccsafety: "8100"
     gemsafety: "8101"
     hccadmin: "8102"
+    ashray: "8103"
+    ashrayadmin: "8104"
