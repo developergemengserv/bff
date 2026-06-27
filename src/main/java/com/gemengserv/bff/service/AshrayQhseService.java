@@ -1,6 +1,5 @@
 package com.gemengserv.bff.service;
 
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.gemengserv.bff.config.FeignConfig;
@@ -17,9 +16,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "gemqhse", url = "http://localhost:8083", configuration = FeignConfig.class)
-public interface GemQhseService {
-
+@FeignClient(name = "ashray", url = "http://localhost:8103", configuration = FeignConfig.class)
+public interface AshrayQhseService
+{
 
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getActivitiesByUser(
@@ -904,5 +903,4 @@ public interface GemQhseService {
             @RequestParam(value = "companyId",  required = false, defaultValue = "0")    int companyId,
             @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
-
 }
