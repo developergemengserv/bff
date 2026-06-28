@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "gemqhse", url = "http://localhost:8083", configuration = FeignConfig.class)
+@FeignClient(name = "gemqhsebe", url = "http://localhost:8083", configuration = FeignConfig.class)
 public interface GemQhseService {
 
 

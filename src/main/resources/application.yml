@@ -9,7 +9,7 @@ springdoc:
       - name: "Ashwinsheth QHSE"
         url: /ashwinsheth/v3/api-docs
       - name: "GEM QHSE"
-        url: /gemqhse/v3/api-docs
+        url: /gemqhsebe/v3/api-docs
       - name: "Indospace Admin"
         url: /indospaceadmin/v3/api-docs
       - name: "Raymond Safety Admin"
@@ -56,7 +56,7 @@ app-routes:
   routes:
     tejraj: "8081"
     ashwinsheth: "8082"
-    gemqhse: "8083"
+    gemqhsebe: "8083"
     indospaceadmin: "8084"
     raymondsafetyadmin: "8085"
     ghsafetyadmin: "8086"

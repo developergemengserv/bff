@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/gemqhse")
+@RequestMapping("/gemqhsebe")
 public class GemQhseController
 {
 
