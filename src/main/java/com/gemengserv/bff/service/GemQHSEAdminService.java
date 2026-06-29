@@ -10,15 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "ashrayadmin", url = "http://localhost:8088", configuration = FeignConfig.class)
-public interface AshrayAdminService
+@FeignClient(name = "gemqhseadmin", url = "http://localhost:8105", configuration = FeignConfig.class)
+public interface GemQHSEAdminService
 {
 
     @RequestMapping(value = "/rest/api/v1/activity/master/findAll", method = RequestMethod.GET)
@@ -184,7 +184,7 @@ public interface AshrayAdminService
             @RequestParam(value = "project_id", required = true) int pid,
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
             @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-            @RequestParam("user_id") int user_id, @RequestParam("token") String token);
+             @RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
     @RequestMapping(value = "/rest/api/v1/location/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationMaster(

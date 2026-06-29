@@ -435,7 +435,7 @@ public interface GemQcService
     ResponseEntity<LinkedHashMap<String, Object>> getMaterials(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page, @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize, @RequestParam(value = "project_id", defaultValue = "0", required = false) int project_id, @RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
     @RequestMapping(value = "/material/master/{pid}", method = RequestMethod.GET)
-    ModelAndView materialMaster(@PathVariable("pid") int project_id, HttpServletRequest request);
+    ModelAndView materialMaster(@PathVariable("pid") int project_id);
 
     @RequestMapping(value = "/material_test/find", method = RequestMethod.GET)
     Object getAllMaterialTests();
@@ -481,7 +481,6 @@ public interface GemQcService
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                                         @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                                        HttpServletRequest request,
                                                                         @RequestParam("user_id") int user_id,
                                                                         @RequestParam("token") String token);
 
@@ -518,7 +517,6 @@ public interface GemQcService
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
 
@@ -548,7 +546,7 @@ public interface GemQcService
     ModelAndView projectById(@RequestParam("pid") int project_id);
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    ModelAndView projects(HttpServletRequest request);
+    ModelAndView projects();
 
     @RequestMapping(value = "/addProject", method = RequestMethod.POST)
     ModelAndView addProject(@ModelAttribute("project") Object project);
@@ -639,15 +637,14 @@ public interface GemQcService
     ResponseEntity<Object> getUser(@PathVariable("uid") int user_id);
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
-    ModelAndView logoutPage (HttpServletRequest request);
+    ModelAndView logoutPage ();
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     ModelAndView users();
 
     @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET })
     ModelAndView userById(@PathVariable("uid") String user_ids,
-                          @PathVariable("pid") int project_id,
-                          HttpServletRequest request);
+                          @PathVariable("pid") int project_id);
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     ModelAndView addUser(@ModelAttribute("user") Object user,
@@ -673,8 +670,7 @@ public interface GemQcService
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
     ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
                                    @RequestParam("pid") int project_id,
-                                   @RequestParam("role_id") int role_id,
-                                   HttpServletRequest request);
+                                   @RequestParam("role_id") int role_id);
 
     @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)
     String checkEmailPhoneNo(@RequestParam("name") String name,

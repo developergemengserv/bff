@@ -633,8 +633,8 @@ public class GemQcController
     }
 
     @RequestMapping(value = "/material/master/{pid}", method = RequestMethod.GET)
-    public ModelAndView materialMaster(@PathVariable("pid") int project_id, HttpServletRequest request) {
-        return gemQcService.materialMaster(project_id, request);
+    public ModelAndView materialMaster(@PathVariable("pid") int project_id) {
+        return gemQcService.materialMaster(project_id);
     }
 
     @RequestMapping(value = "/material_test/find", method = RequestMethod.GET)
@@ -705,11 +705,10 @@ public class GemQcController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                                         @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                                        HttpServletRequest request,
                                                                         @RequestParam("user_id") int user_id,
                                                                         @RequestParam("token") String token)
     {
-        return gemQcService.getAllObservationsFromDB(page, pageSize, request, user_id, token);
+        return gemQcService.getAllObservationsFromDB(page, pageSize, user_id, token);
     }
 
     // Observation Request Controller
@@ -761,11 +760,10 @@ public class GemQcController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return gemQcService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return gemQcService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
     // Observation Master Controller
@@ -801,9 +799,9 @@ public class GemQcController
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public ModelAndView projects(HttpServletRequest request)
+    public ModelAndView projects()
     {
-        return gemQcService.projects(request);
+        return gemQcService.projects();
     }
 
     @RequestMapping(value = "/addProject", method = RequestMethod.POST)
@@ -948,9 +946,9 @@ public class GemQcController
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ModelAndView logoutPage (HttpServletRequest request)
+    public ModelAndView logoutPage ()
     {
-        return gemQcService.logoutPage(request);
+        return gemQcService.logoutPage();
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -961,10 +959,10 @@ public class GemQcController
 
     @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET})
     public ModelAndView userById(@PathVariable("uid") String user_ids,
-                                 @PathVariable("pid") int project_id,
-                                 HttpServletRequest request)
+                                 @PathVariable("pid") int project_id
+                                 )
     {
-        return gemQcService.userById(user_ids, project_id, request);
+        return gemQcService.userById(user_ids, project_id);
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
@@ -1006,10 +1004,10 @@ public class GemQcController
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
     public ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
                                           @RequestParam("pid") int project_id,
-                                          @RequestParam("role_id") int role_id,
-                                          HttpServletRequest request)
+                                          @RequestParam("role_id") int role_id
+                                         )
     {
-        return gemQcService.addProjectMembers(user_id, project_id, role_id, request);
+        return gemQcService.addProjectMembers(user_id, project_id, role_id);
     }
 
     @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)

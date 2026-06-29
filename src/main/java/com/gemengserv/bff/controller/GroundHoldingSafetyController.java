@@ -216,11 +216,10 @@ public class GroundHoldingSafetyController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return groundHoldingSafetyService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return groundHoldingSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
 // Observation Master Controller
@@ -228,12 +227,11 @@ public class GroundHoldingSafetyController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return groundHoldingSafetyService.getAllObservationsFromDB(page, pageSize, request, userId, token, lastSync);
+        return groundHoldingSafetyService.getAllObservationsFromDB(page, pageSize, userId, token, lastSync);
     }
 
     // Progress Report Controller

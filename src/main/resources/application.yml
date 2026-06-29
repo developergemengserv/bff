@@ -26,8 +26,8 @@ springdoc:
         url: /gemsafetyadmin/v3/api-docs
       - name: "Gem QC Admin"
         url: /gemqcadmin/v3/api-docs
-      - name: "Gem Safety"
-        url: /gemsafety/v3/api-docs
+      - name: "Gem QC"
+        url: /gemqc/v3/api-docs
       - name: "Raymond Safety"
         url: /raymondsafety/v3/api-docs
       - name: "Indospace Safety"
@@ -52,6 +52,8 @@ springdoc:
         url: /ashray/v3/api-docs
       - name: "Ashray Admin"
         url: /ashrayadmin/v3/api-docs
+      - name: "Gem QHSE Admin"
+        url: /gemqhseadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -65,7 +67,7 @@ app-routes:
     ashwinshethadmin: "8089"
     gemsafetyadmin: "8090"
     gemadmin: "8091"
-    gemqcsafety: "8092"
+    gemqc: "8092"
     raymondsafety: "8093"
     indospacesafety: "8094"
     groundholdingsafety: "8095"
@@ -78,3 +80,8 @@ app-routes:
     hccadmin: "8102"
     ashray: "8103"
     ashrayadmin: "8104"
+    gemqhseadmin: "8105"
+
+app:
+  cors:
+    allowed-origins: "http://13.232.224.37:8080,http://localhost:4200,http://192.168.1.4:4200"

@@ -629,8 +629,8 @@ public class GroundHoldingQcController
     }
 
     @RequestMapping(value = "/material/master/{pid}", method = RequestMethod.GET)
-    public ModelAndView materialMaster(@PathVariable("pid") int project_id, HttpServletRequest request) {
-        return groundHoldingQcService.materialMaster(project_id, request);
+    public ModelAndView materialMaster(@PathVariable("pid") int project_id) {
+        return groundHoldingQcService.materialMaster(project_id);
     }
 
     @RequestMapping(value = "/material_test/find", method = RequestMethod.GET)
@@ -701,11 +701,10 @@ public class GroundHoldingQcController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                                         @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                                        HttpServletRequest request,
                                                                         @RequestParam("user_id") int user_id,
                                                                         @RequestParam("token") String token)
     {
-        return groundHoldingQcService.getAllObservationsFromDB(page, pageSize, request, user_id, token);
+        return groundHoldingQcService.getAllObservationsFromDB(page, pageSize, user_id, token);
     }
 
     // Observation Request Controller
@@ -757,11 +756,10 @@ public class GroundHoldingQcController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return groundHoldingQcService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return groundHoldingQcService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
     // Project Controller
@@ -783,9 +781,9 @@ public class GroundHoldingQcController
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public ModelAndView projects(HttpServletRequest request)
+    public ModelAndView projects()
     {
-        return groundHoldingQcService.projects(request);
+        return groundHoldingQcService.projects();
     }
 
 //    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
@@ -921,9 +919,9 @@ public class GroundHoldingQcController
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response)
+    public ModelAndView logoutPage ()
     {
-        return groundHoldingQcService.logoutPage(request);
+        return groundHoldingQcService.logoutPage();
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -934,10 +932,10 @@ public class GroundHoldingQcController
 
     @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET})
     public ModelAndView userById(@PathVariable("uid") String user_ids,
-                                 @PathVariable("pid") int project_id,
-                                 HttpServletRequest request)
+                                 @PathVariable("pid") int project_id
+                                )
     {
-        return groundHoldingQcService.userById(user_ids, project_id, request);
+        return groundHoldingQcService.userById(user_ids, project_id);
     }
 
    /* @RequestMapping(value = "/addUser", method = RequestMethod.POST)
@@ -981,10 +979,9 @@ public class GroundHoldingQcController
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
     public ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
                                           @RequestParam("pid") int project_id,
-                                          @RequestParam("role_id") int role_id,
-                                          HttpServletRequest request)
+                                          @RequestParam("role_id") int role_id)
     {
-        return groundHoldingQcService.addProjectMembers(user_id, project_id, role_id, request);
+        return groundHoldingQcService.addProjectMembers(user_id, project_id, role_id);
     }
 
     @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)
