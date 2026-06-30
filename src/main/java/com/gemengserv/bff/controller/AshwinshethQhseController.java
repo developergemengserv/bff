@@ -550,12 +550,12 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.findAllAnswerType(userId, token, lastSync);
     }
 
-    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
-    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
-                                                           @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
-    {
-        return ashwinshethQhseService.findAllChecklistQestions(userId, token, lastSync);
-    }
+//    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
+//    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
+//                                                           @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
+//    {
+//        return ashwinshethQhseService.findAllChecklistQestions(userId, token, lastSync);
+//    }
 
     // Equipment
     @PostMapping(value = "/safety/equipment")
@@ -1102,7 +1102,7 @@ public class AshwinshethQhseController {
 
     // Incident controller
 
-    @RequestMapping(value = "/incident", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.POST)
     public ResponseEntity<Object> saveIncident(@RequestHeader(value = "userId") Integer userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object request)

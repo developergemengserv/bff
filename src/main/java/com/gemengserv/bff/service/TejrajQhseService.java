@@ -263,10 +263,10 @@ public interface TejrajQhseService {
     public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
-    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
-                                                                                    @RequestHeader(value = "token") String token,
-                                                                                    @RequestParam(value = "lastSync", required = false) String lastSync);
+//    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
+//    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
+//                                                                                    @RequestHeader(value = "token") String token,
+//                                                                                    @RequestParam(value = "lastSync", required = false) String lastSync);
 
     // FOR PTW API
     @PostMapping(value = "/safety/ptw")
@@ -771,19 +771,19 @@ public interface TejrajQhseService {
 
 // Incident controller
 
-    @RequestMapping(value = "/incident", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.POST)
      ResponseEntity<Object> saveIncident(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @RequestBody Object request);
 
-    @RequestMapping(value = "/incident", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                               @RequestHeader(value = "token") String token,
                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
                                               @RequestParam(value = "page_size", defaultValue = "500", required = false) Integer pageSize,
                                               @RequestParam(value = "project_id") Integer projectId);
 
-    @RequestMapping(value = "/incident/{incidentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident/{incidentId}", method = RequestMethod.GET)
     ResponseEntity<Object> findIncidentById(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token,
                                             @PathVariable(value = "incidentId") Integer incidentId);
