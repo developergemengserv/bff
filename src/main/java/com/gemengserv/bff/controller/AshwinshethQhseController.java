@@ -854,7 +854,7 @@ public class AshwinshethQhseController {
     }
 
     // QC controller
-    @RequestMapping(value = "/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createCRFI(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionRequest)
@@ -862,7 +862,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.createCRFI(userId,token,activityInspectionRequest);
     }
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.PUT)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateCRFI(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionUpdateRequest)
@@ -870,7 +870,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.updateCRFI(userId,token,activityInspectionUpdateRequest);
     }
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.GET)
     public ResponseEntity<List<Object>> getCRFI(@RequestHeader(value = "userId") int userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam(value = "crfiId") long crfiId,
@@ -879,7 +879,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.getCRFI(userId,token,crfiId,projectId);
     }
 
-    @RequestMapping(value = "/crfiDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiDetails", method = RequestMethod.GET)
     public ResponseEntity<Object> getCRFIDetails(@RequestHeader(value = "userId") int userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "crfiId") long crfiId)
@@ -887,7 +887,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.getCRFIDetails(userId,token,crfiId);
     }
 
-    @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiReport", method = RequestMethod.GET)
     public ResponseEntity<Object> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                       @RequestParam(value = "token") String token,
                                                       @RequestParam(value = "crfiId",required = true) int crfiId,
@@ -896,7 +896,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.getDataForRFIReport(userId,token,crfiId,webCall);
     }
 
-    @RequestMapping(value = "/filter/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/crfi", method = RequestMethod.POST)
     public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterCrfiRequest)
@@ -1111,7 +1111,7 @@ public class AshwinshethQhseController {
     }
 
 
-    @RequestMapping(value = "/incident", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     public ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
@@ -1121,7 +1121,7 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.findSafetyIncident(userId,token,page,pageSize,projectId);
     }
 
-    @RequestMapping(value = "/incident/{incidentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident/{incidentId}", method = RequestMethod.GET)
     public ResponseEntity<Object> findIncidentById(@RequestHeader(value = "userId") Integer userId,
                                                    @RequestHeader(value = "token") String token,
                                                    @PathVariable(value = "incidentId") Integer incidentId)

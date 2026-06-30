@@ -855,7 +855,7 @@ public class TejrajQhseController
     }
 
     // QC controller
-    @RequestMapping(value = "/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createCRFI(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionRequest)
@@ -863,7 +863,7 @@ public class TejrajQhseController
         return tejrajService.createCRFI(userId,token,activityInspectionRequest);
     }
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.PUT)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateCRFI(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object activityInspectionUpdateRequest)
@@ -871,7 +871,7 @@ public class TejrajQhseController
         return tejrajService.updateCRFI(userId,token,activityInspectionUpdateRequest);
     }
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.GET)
     public ResponseEntity<List<Object>> getCRFI(@RequestHeader(value = "userId") int userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam(value = "crfiId") long crfiId,
@@ -880,7 +880,7 @@ public class TejrajQhseController
         return tejrajService.getCRFI(userId,token,crfiId,projectId);
     }
 
-    @RequestMapping(value = "/crfiDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiDetails", method = RequestMethod.GET)
     public ResponseEntity<Object> getCRFIDetails(@RequestHeader(value = "userId") int userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "crfiId") long crfiId)
@@ -888,7 +888,7 @@ public class TejrajQhseController
         return tejrajService.getCRFIDetails(userId,token,crfiId);
     }
 
-    @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiReport", method = RequestMethod.GET)
     public ResponseEntity<Object> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                  @RequestParam(value = "token") String token,
                                                  @RequestParam(value = "crfiId",required = true) int crfiId,
@@ -897,7 +897,7 @@ public class TejrajQhseController
         return tejrajService.getDataForRFIReport(userId,token,crfiId,webCall);
     }
 
-    @RequestMapping(value = "/filter/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/crfi", method = RequestMethod.POST)
     public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterCrfiRequest)

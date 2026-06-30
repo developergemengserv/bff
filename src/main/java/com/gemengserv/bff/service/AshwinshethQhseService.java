@@ -602,39 +602,39 @@ public interface AshwinshethQhseService
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
 
     // QC controller
-    @RequestMapping(value = "/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.POST)
     ResponseEntity<Object> createCRFI(@RequestHeader(value = "userId") int userId,
                                       @RequestHeader(value = "token") String token,
                                       @RequestBody Object activityInspectionRequest);
 
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.PUT)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.PUT)
     ResponseEntity<Object> updateCRFI(@RequestHeader(value = "userId") int userId,
                                       @RequestHeader(value = "token") String token,
                                       @RequestBody Object activityInspectionUpdateRequest);
 
 
-    @RequestMapping(value = "/crfi", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfi", method = RequestMethod.GET)
     ResponseEntity<List<Object>> getCRFI(@RequestHeader(value = "userId") int userId,
                                          @RequestHeader(value = "token") String token,
                                          @RequestParam(value = "crfiId") long crfiId,
                                          @RequestParam(value = "projectId") long projectId);
 
 
-    @RequestMapping(value = "/crfiDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiDetails", method = RequestMethod.GET)
     ResponseEntity<Object> getCRFIDetails(@RequestHeader(value = "userId") int userId,
                                           @RequestHeader(value = "token") String token,
                                           @RequestParam(value = "crfiId") long crfiId);
 
 
-    @RequestMapping(value = "/crfiReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/crfiReport", method = RequestMethod.GET)
     ResponseEntity<Object> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                @RequestParam(value = "token") String token,
                                                @RequestParam(value = "crfiId",required = true) int crfiId,
                                                @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
 
-    @RequestMapping(value = "/filter/crfi", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/crfi", method = RequestMethod.POST)
     ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                         @RequestHeader(value = "token") String token,
                                         @RequestBody Object filterCrfiRequest);
