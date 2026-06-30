@@ -238,10 +238,10 @@ public interface AshrayQhseService
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @GetMapping(value = "/safety/master/typeOfWork/findAll")
-    ResponseEntity<Object> findAllTypeOfWork(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
+    @RequestMapping(value = "/safety/master/typeOfWork/findAll", method = RequestMethod.GET)
+    ResponseEntity<Map<String, Object>> findAllTypeOfWork(
+            @RequestParam(value = "user_id") int userId,
+            @RequestParam(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync);
 
     @GetMapping(value = "/safety/master/checklistQuestions/findAll")
@@ -259,11 +259,11 @@ public interface AshrayQhseService
     @RequestMapping(value = "/rest/v1/getRoleMaster", method = RequestMethod.GET)
     ResponseEntity<Object> getRoleMaster();
 
-    @RequestMapping(value = "/master/answerType/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/answerType/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @RequestMapping(value = "/master/checklistQuestions/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
                                                            @RequestHeader(value = "token") String token,
                                                            @RequestParam(value = "lastSync", required = false) String lastSync);

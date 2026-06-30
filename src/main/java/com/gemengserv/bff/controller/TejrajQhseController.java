@@ -346,10 +346,10 @@ public class TejrajQhseController
         return tejrajService.findAllUnsafeCondition(userId, token, lastSync);
     }
 
-    @GetMapping(value = "/safety/master/typeOfWork/findAll")
-    public ResponseEntity<Object> findAllTypeOfWork(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
+    @RequestMapping(value = "/safety/master/typeOfWork/findAll", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> findAllTypeOfWork(
+            @RequestParam(value = "user_id") int userId,
+            @RequestParam(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
         return tejrajService.findAllTypeOfWork(userId, token, lastSync);
     }
@@ -545,13 +545,13 @@ public class TejrajQhseController
         return tejrajService.sendOBSNotification(level1LocationId, obsId, userId);
     }
 
-    @RequestMapping(value = "/master/answerType/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/answerType/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
                                                                       @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync) {
        return tejrajService.findAllAnswerType(userId, token, lastSync);
     }
 
-    @RequestMapping(value = "/master/checklistQuestions/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
                                                                                     @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
     {

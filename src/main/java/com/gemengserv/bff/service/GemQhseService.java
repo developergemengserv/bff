@@ -20,7 +20,6 @@ import java.util.Map;
 @FeignClient(name = "gemqhsebe", url = "http://localhost:8083", configuration = FeignConfig.class)
 public interface GemQhseService {
 
-
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getActivitiesByUser(
             @RequestParam("user_id") int userId,
@@ -239,10 +238,10 @@ public interface GemQhseService {
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @GetMapping(value = "/safety/master/typeOfWork/findAll")
-    ResponseEntity<Object> findAllTypeOfWork(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
+    @RequestMapping(value = "/safety/master/typeOfWork/findAll", method = RequestMethod.GET)
+    ResponseEntity<Map<String, Object>> findAllTypeOfWork(
+            @RequestParam(value = "user_id") int userId,
+            @RequestParam(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync);
 
     @GetMapping(value = "/safety/master/checklistQuestions/findAll")
@@ -260,11 +259,11 @@ public interface GemQhseService {
     @RequestMapping(value = "/rest/v1/getRoleMaster", method = RequestMethod.GET)
     ResponseEntity<Object> getRoleMaster();
 
-    @RequestMapping(value = "/master/answerType/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/answerType/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @RequestMapping(value = "/master/checklistQuestions/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
                                                            @RequestHeader(value = "token") String token,
                                                            @RequestParam(value = "lastSync", required = false) String lastSync);
@@ -528,8 +527,7 @@ public interface GemQhseService {
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(
             @RequestParam(value = "project_id", required = true) int pid,
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-            @RequestParam("user_id") int user_id,
+            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,@RequestParam("user_id") int user_id,
             @RequestParam("token") String token);
 
 

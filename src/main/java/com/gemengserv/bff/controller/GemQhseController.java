@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -20,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/gemqhsebe")
 public class GemQhseController
 {
-
     @Autowired
     GemQhseService gemQhseService;
 
@@ -347,10 +345,10 @@ public class GemQhseController
         return gemQhseService.findAllUnsafeCondition(userId, token, lastSync);
     }
 
-    @GetMapping(value = "/safety/master/typeOfWork/findAll")
-    public ResponseEntity<Object> findAllTypeOfWork(
-            @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token") String token,
+    @RequestMapping(value = "/safety/master/typeOfWork/findAll", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> findAllTypeOfWork(
+            @RequestParam(value = "user_id") int userId,
+            @RequestParam(value = "token") String token,
             @RequestParam(value = "lastSync", required = false) String lastSync) {
         return gemQhseService.findAllTypeOfWork(userId, token, lastSync);
     }
@@ -546,13 +544,13 @@ public class GemQhseController
         return gemQhseService.sendOBSNotification(level1LocationId, obsId, userId);
     }
 
-    @RequestMapping(value = "/master/answerType/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/answerType/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllAnswerType(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync) {
         return gemQhseService.findAllAnswerType(userId, token, lastSync);
     }
 
-    @RequestMapping(value = "/master/checklistQuestions/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/master/checklistQuestions/findAll", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
                                                            @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
     {
