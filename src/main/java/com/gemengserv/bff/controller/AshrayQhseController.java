@@ -19,12 +19,10 @@ import java.util.Map;
 @RequestMapping("/ashray")
 public class AshrayQhseController
 {
-
     @Autowired
     AshrayQhseService ashrayQhseService;
 
 //    ActivityMasterController
-
     @RequestMapping(value = "/rest/v1/activity/master", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getActivitiesByUser(
             @RequestParam("user_id") int userId,
@@ -230,7 +228,7 @@ public class AshrayQhseController
         return ashrayQhseService.getNcrDetails(userId, token,ncrId);
     }
 
-    @RequestMapping(value = "/ncr", method = RequestMethod.PUT)
+    @RequestMapping(value = "/qc/ncr", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateNcr(@RequestHeader(value = "userId") int userId,
                                             @RequestHeader(value = "token") String token,
                                             @RequestBody Object qcNcrUpdateRequest)
@@ -238,7 +236,7 @@ public class AshrayQhseController
         return ashrayQhseService.updateNcr(userId, token, qcNcrUpdateRequest);
     }
 
-    @RequestMapping(value = "/filter/ncr", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc//filter/ncr", method = RequestMethod.POST)
     public ResponseEntity<Object> getNcrFilter(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object ncrFilterRequest)
@@ -246,8 +244,8 @@ public class AshrayQhseController
         return ashrayQhseService.getNcrFilter(userId, token, ncrFilterRequest);
     }
 
-    @RequestMapping(value = "/ncrReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDataForNcrReport(@RequestParam(value = "user_id") int userId,
+    @RequestMapping(value = "/qc/ncrReport", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDataForNcrReport(@RequestParam(value = "user_id") int userId,
                                                       @RequestParam(value = "token") String token,
                                                       @RequestParam(value = "ncrId",required = true) int ncrId,
                                                       @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
@@ -555,7 +553,7 @@ public class AshrayQhseController
 //    public ResponseEntity<Object> findAllChecklistQestions(@RequestHeader(value = "userId") Integer userId,
 //                                                           @RequestHeader(value = "token") String token, @RequestParam(value = "lastSync", required = false) String lastSync)
 //    {
-//        return ashrayQhseService.findAllChecklistQestions(userId, token, lastSync);
+//        return ashwinshethQhseService.findAllChecklistQestions(userId, token, lastSync);
 //    }
 
     // Equipment
@@ -660,7 +658,7 @@ public class AshrayQhseController
     }
 
     @GetMapping(value = "/safety/obsReport")
-    public ResponseEntity<Object> getDataForObsReport(
+    public ResponseEntity<byte[]> getDataForObsReport(
             @RequestParam(value = "user_id") int userId,
             @RequestParam(value = "token") String token,
             @RequestParam(value = "obsId") int obsId,
@@ -889,7 +887,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/qc/crfiReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                       @RequestParam(value = "token") String token,
                                                       @RequestParam(value = "crfiId",required = true) int crfiId,
                                                       @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
@@ -942,7 +940,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDataForQCObsReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getDataForQCObsReport(@RequestParam(value = "user_id") int userId,
                                                         @RequestParam(value = "token") String token,
                                                         @RequestParam(value = "obsId",required = true) int obsId,
                                                         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
@@ -977,7 +975,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/ptwReportDownload", method = RequestMethod.GET)
-    public ResponseEntity<Object> ptwReportDownload(
+    public ResponseEntity<byte[]> ptwReportDownload(
             @RequestParam(value = "user_id") int userId,
             @RequestParam(value = "token") String token,
             @RequestParam(value = "ptwId",required = true) int ptwId,
@@ -987,7 +985,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/equipmentReportDownload", method = RequestMethod.GET)
-    public ResponseEntity<Object> equipmentReportDownload(
+    public ResponseEntity<byte[]> equipmentReportDownload(
             @RequestParam(value = "user_id") int userId,
             @RequestParam(value = "token") String token,
             @RequestParam(value = "equipmentId") int equipmentId,
@@ -1051,7 +1049,7 @@ public class AshrayQhseController
         return ashrayQhseService.downloadSnagingPdf(user_id,token,filterRequest);
     }
     @GetMapping("/sendIncidentPdf")
-    public ResponseEntity<Object> sendIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> sendIncidentPdf(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
     {
@@ -1060,7 +1058,7 @@ public class AshrayQhseController
 
 
     @GetMapping("/downloadTBTPdf")
-    public ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                                  @RequestHeader("token") String token,
                                                  @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId)
     {
@@ -1092,7 +1090,7 @@ public class AshrayQhseController
     }
 
     @GetMapping("/downloadWorkerPdf")
-    public ResponseEntity<Object> downloadWorkerPdf(@RequestParam("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadWorkerPdf(@RequestParam("user_id") int user_id,
                                                     @RequestParam("token") String token,
                                                     @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                                     @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall)
@@ -1222,7 +1220,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/snag/report", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDataForSnagReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getDataForSnagReport(@RequestParam(value = "user_id") int userId,
                                                        @RequestParam(value = "token") String token,
                                                        @RequestParam(value = "snagId",required = true) int snagId,
                                                        @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
