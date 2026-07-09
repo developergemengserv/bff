@@ -199,7 +199,7 @@ public interface GroundHoldingQcService
     @RequestMapping(value = "/rest/v1/upload/signature", method = RequestMethod.POST)
     ResponseEntity<Object> uploadSignature(@RequestParam("user_id") int user_id,
                                            @RequestParam("token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/rest/v1/common/getUnitMaster", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getUnitMaster(@RequestParam("user_id") int userId,
@@ -216,7 +216,7 @@ public interface GroundHoldingQcService
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Map<String, Object>> loginAPI(@RequestParam("username") String username,

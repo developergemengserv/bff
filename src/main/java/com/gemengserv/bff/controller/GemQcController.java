@@ -296,7 +296,7 @@ public class GemQcController
     }
 
     @RequestMapping(value = "/rest/v1/upload/signature", method = RequestMethod.POST)
-    public ResponseEntity<Object> uploadSignature(@RequestParam("user_id") int user_id, @RequestParam("token") String token, @RequestParam(value = "file") MultipartFile file) {
+    public ResponseEntity<Object> uploadSignature(@RequestParam("user_id") int user_id, @RequestParam("token") String token, @RequestPart(value = "file") MultipartFile file) {
         return gemQcService.uploadSignature(user_id, token, file);
     }
 
@@ -324,7 +324,7 @@ public class GemQcController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file)
+                                           @RequestPart(value = "file") MultipartFile file)
     {
         return gemQcService.uploadSignature(userId, token, file);
     }

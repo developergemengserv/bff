@@ -116,7 +116,7 @@ public class IndospaceSafetyController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file)
+                                           @RequestPart(value = "file") MultipartFile file)
     {
         return indospaceSafetyService.uploadSignature(userId, token, file);
     }
