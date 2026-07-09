@@ -606,7 +606,7 @@ public class HccSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return hccSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
