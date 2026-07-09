@@ -191,7 +191,7 @@ public class TejrajQhseController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     public ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token,
-                                                  @RequestParam(value = "file") MultipartFile file)
+                                                  @RequestPart(value = "file") MultipartFile file)
     {
         return tejrajQhseService.uploadSignature(userId,token,file);
     }
@@ -1298,5 +1298,32 @@ public class TejrajQhseController
             @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize){
         return tejrajQhseService.downloadUsersExcel(userId, token, projectId, companyId, pageNum, pageSize);
+    }
+
+    @RequestMapping(value = "/addTypeOfWork", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> addTypeOfWork(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "type") String type)
+    {
+        return tejrajQhseService.addTypeOfWork(label, type);
+    }
+
+    @RequestMapping(value = "/updateTypeOfWork", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateTypeOfWork(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "type") String type,
+            @RequestParam(value = "id") int id)
+    {
+        return tejrajQhseService.updateTypeOfWork(label, type, id);
+    }
+
+    @RequestMapping(value = "/addEQPTWChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> addEQPTWChecklist(@RequestParam(value = "userId") int userId,
+                                            @RequestPart(value = "file") MultipartFile file)
+    {
+        return tejrajQhseService.addEQPTWChecklist(userId, file);
     }
 }

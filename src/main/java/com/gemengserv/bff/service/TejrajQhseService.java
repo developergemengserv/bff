@@ -124,7 +124,7 @@ public interface TejrajQhseService {
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     // NCR API's
 
@@ -901,4 +901,22 @@ public interface TejrajQhseService {
             @RequestParam(value = "companyId",  required = false, defaultValue = "0")    int companyId,
             @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
+
+    @RequestMapping(value = "/addTypeOfWork", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addTypeOfWork(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "type") String type);
+
+    @RequestMapping(value = "/updateTypeOfWork", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateTypeOfWork(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "type") String type,
+            @RequestParam(value = "id") int id);
+
+    @RequestMapping(value = "/addEQPTWChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> addEQPTWChecklist(@RequestParam(value = "userId") int userId,
+                                            @RequestPart(value = "file") MultipartFile file);
 }

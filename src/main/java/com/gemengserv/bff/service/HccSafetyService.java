@@ -561,13 +561,14 @@ public interface HccSafetyService
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam("eventId") Integer eventId,
                                                @RequestParam("eventName") String eventName,
-                                               @RequestParam("file") MultipartFile[] files);
+                                               @RequestPart("file") MultipartFile[] files);
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam("checklistAnswerId") Integer checklistAnswerId,
                                                 @RequestParam("file") MultipartFile[] files);
+
     @RequestMapping(value = "/safety/findUsersByProjectIdAndRoleId", method = RequestMethod.GET)
     ResponseEntity<Object> findUsersByProjectIdAndRoleId(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,
@@ -909,6 +910,38 @@ public interface HccSafetyService
     ResponseEntity<Object> getUnitMasterById(@RequestHeader(value = "userId") Integer userId,
                                              @RequestHeader(value = "token") String token,
                                              @PathVariable(value = "id") long unitMasterId);
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> createQCObservation(@RequestHeader(value = "userId") Integer userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object obsRequest);
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getObs(@RequestHeader(value = "userId") int userId,
+                                               @RequestHeader(value = "token") String token,
+                                               @RequestParam(value = "obsId") long obsId,
+                                               @RequestParam(value = "projectId") long projectId);
+
+    @RequestMapping(value = "/qc/filter/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object filterObsRequest);
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateOBS(@RequestHeader(value = "userId") int userId,
+                                                         @RequestHeader(value = "token") String token,
+                                                         @RequestBody Object obsUpdateRequest);
+
+    @RequestMapping(value = "/qc/obsDetails", method = RequestMethod.GET)
+    public ResponseEntity<Object> getOBSDetails(@RequestHeader(value = "userId") int userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "obsId") long obsId);
+
+    @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDataForObsReport(@RequestParam(value = "user_id") int userId,
+                                                 @RequestParam(value = "token") String token,
+                                                 @RequestParam(value = "obsId",required = true) int obsId,
+                                                 @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
 
 }
