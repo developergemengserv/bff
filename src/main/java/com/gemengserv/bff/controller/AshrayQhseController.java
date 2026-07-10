@@ -1300,4 +1300,14 @@ public class AshrayQhseController
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize){
         return ashrayQhseService.downloadUsersExcel(userId, token, projectId, companyId, pageNum, pageSize);
     }
+
+    @PostMapping("/rest/v1/users/userinfo")
+    public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
+                                                              @RequestHeader("token") String token,
+                                                              @RequestParam("deviceToken") String deviceToken,
+                                                              @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion)
+    {
+        return ashrayQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
+    }
+
 }

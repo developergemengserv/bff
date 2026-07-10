@@ -724,4 +724,6 @@ public class AshrayAdminController {
     {
         return ashrayAdminService.updateUserLocationMappingForGivenUser(paramObj);
     }
+
+
 }

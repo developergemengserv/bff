@@ -1302,4 +1302,13 @@ public class GemQhseController
         return gemQhseService.downloadUsersExcel(userId, token, projectId, companyId, pageNum, pageSize);
     }
 
+    @PostMapping("/rest/v1/users/userinfo")
+    public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
+                                                              @RequestHeader("token") String token,
+                                                              @RequestParam("deviceToken") String deviceToken,
+                                                              @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion)
+    {
+        return gemQhseService.addDeviceTokenAndAppVersion(userId,token,deviceToken,appVersion);
+    }
+
 }

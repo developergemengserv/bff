@@ -919,4 +919,11 @@ public interface TejrajQhseService {
     @ResponseBody // Make sure this is present if you aren't using @RestController
     public Map<String, Object> addEQPTWChecklist(@RequestParam(value = "userId") int userId,
                                             @RequestPart(value = "file") MultipartFile file);
+
+    @PostMapping("/rest/v1/users/userinfo")
+    public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
+                                                              @RequestHeader("token") String token,
+                                                              @RequestParam("deviceToken") String deviceToken,
+                                                              @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion);
+
 }

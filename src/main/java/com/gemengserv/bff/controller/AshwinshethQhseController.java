@@ -1301,5 +1301,14 @@ public class AshwinshethQhseController {
             @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize){
         return ashwinshethQhseService.downloadUsersExcel(userId, token, projectId, companyId, pageNum, pageSize);
     }
+
+    @PostMapping("/rest/v1/users/userinfo")
+    public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
+                                                              @RequestHeader("token") String token,
+                                                              @RequestParam("deviceToken") String deviceToken,
+                                                              @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion){
+        return ashwinshethQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
+    }
+
 }
 

@@ -1326,4 +1326,14 @@ public class TejrajQhseController
     {
         return tejrajQhseService.addEQPTWChecklist(userId, file);
     }
+
+    @PostMapping("/rest/v1/users/userinfo")
+    public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
+                                                              @RequestHeader("token") String token,
+                                                              @RequestParam("deviceToken") String deviceToken,
+                                                              @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion)
+    {
+        return tejrajQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
+    }
+
 }
