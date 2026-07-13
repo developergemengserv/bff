@@ -584,7 +584,7 @@ public class HccSafetyController
         return hccSafetyService.findSafetyObservation(userId, token, lastSync, request);
     }
 
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestParam(value = "lastSync", required = false) String lastSync,
