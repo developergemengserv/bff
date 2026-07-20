@@ -79,17 +79,17 @@ public interface TejrajQhseService {
                                                 @RequestHeader("token") String token);
 
     @GetMapping("/company")
-    List<Object> getCompanies( @RequestHeader("userId") int userId,  @RequestHeader("token") String token);
+    List<Object> getCompanies(@RequestHeader("userId") int userId, @RequestHeader("token") String token);
 
     @RequestMapping(value = "/deleteCompany", method = RequestMethod.DELETE, produces = {"application/json"})
     ResponseEntity<Object> deleteCompany(@RequestParam(value = "companyId") Integer companyId);
 
     @RequestMapping(value = "/downloadCompanies", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadCompaniesExcel(
-            @RequestParam(value = "userId")   Integer userId,
-            @RequestParam(value = "token")    String  token,
-            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
-            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
+            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize);
 
     @PostMapping(value = "/registerUser", produces = "application/json")
     ResponseEntity<Object> registerUser(@RequestBody Object userRegisterRequest);
@@ -527,7 +527,7 @@ public interface TejrajQhseService {
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(
             @RequestParam(value = "project_id", required = true) int pid,
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,@RequestParam("user_id") int user_id,
+            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize, @RequestParam("user_id") int user_id,
             @RequestParam("token") String token);
 
 
@@ -596,10 +596,10 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/downloadProjects", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadProjects(
-            @RequestParam(value = "userId")   Integer userId,
-            @RequestParam(value = "token")    String  token,
-            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
-            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
+            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize);
 
     // QC controller
     @RequestMapping(value = "/qc/crfi", method = RequestMethod.POST)
@@ -630,7 +630,7 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/qc/crfiReport", method = RequestMethod.GET)
     ResponseEntity<byte[]> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                @RequestParam(value = "token") String token,
-                                               @RequestParam(value = "crfiId",required = true) int crfiId,
+                                               @RequestParam(value = "crfiId", required = true) int crfiId,
                                                @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
 
@@ -654,7 +654,6 @@ public interface TejrajQhseService {
                                         @RequestParam(value = "projectId") long projectId);
 
 
-
     @RequestMapping(value = "/qc/obs", method = RequestMethod.PUT)
     ResponseEntity<Object> updateOBS(@RequestHeader(value = "userId") int userId,
                                      @RequestHeader(value = "token") String token,
@@ -669,7 +668,7 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getDataForQCObsReport(@RequestParam(value = "user_id") int userId,
                                                         @RequestParam(value = "token") String token,
-                                                        @RequestParam(value = "obsId",required = true) int obsId,
+                                                        @RequestParam(value = "obsId", required = true) int obsId,
                                                         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
     @RequestMapping(value = "/qcStages", method = RequestMethod.GET)
@@ -690,7 +689,7 @@ public interface TejrajQhseService {
     ResponseEntity<byte[]> ptwReportDownload(
             @RequestParam(value = "user_id") int userId,
             @RequestParam(value = "token") String token,
-            @RequestParam(value = "ptwId",required = true) int ptwId,
+            @RequestParam(value = "ptwId", required = true) int ptwId,
             @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall);
 
     @RequestMapping(value = "/equipmentReportDownload", method = RequestMethod.GET)
@@ -753,8 +752,7 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
                                                      @RequestParam(value = "token") String token,
-                                                     @RequestParam(value = "obsId",required = false) int obsId);
-
+                                                     @RequestParam(value = "obsId", required = false) int obsId);
 
 
     @RequestMapping(value = "/weeklyStatusReport", method = RequestMethod.GET)
@@ -766,7 +764,7 @@ public interface TejrajQhseService {
 
     @GetMapping("/downloadWorkerPdf")
     ResponseEntity<byte[]> downloadWorkerPdf(@RequestParam("user_id") int user_id,
-                                             @RequestParam("token") String token,@RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
+                                             @RequestParam("token") String token, @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall);
 
 // Incident controller
@@ -851,7 +849,7 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/snag/report", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getDataForSnagReport(@RequestParam(value = "user_id") int userId,
                                                        @RequestParam(value = "token") String token,
-                                                       @RequestParam(value = "snagId",required = true) int snagId,
+                                                       @RequestParam(value = "snagId", required = true) int snagId,
                                                        @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
     // User controller
@@ -876,7 +874,7 @@ public interface TejrajQhseService {
     @PostMapping(value = "/user/filter")
     public ResponseEntity<Object> filterUsers(
             @RequestHeader(value = "userId") Integer userId,
-            @RequestHeader(value = "token")  String  token,
+            @RequestHeader(value = "token") String token,
             @RequestBody Object filterRequest);
 
     @GetMapping(value = "/user/getNonProjectUsers")
@@ -895,12 +893,12 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/user/downloadUsers", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadUsersExcel(
-            @RequestParam(value = "userId")   Integer userId,
-            @RequestParam(value = "token")    String  token,
-            @RequestParam(value = "projectId",  required = false, defaultValue = "0")    int projectId,
-            @RequestParam(value = "companyId",  required = false, defaultValue = "0")    int companyId,
-            @RequestParam(value = "pageNum",    defaultValue = "1")    int pageNum,
-            @RequestParam(value = "pageSize",   defaultValue = "1000") int pageSize);
+            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "projectId", required = false, defaultValue = "0") int projectId,
+            @RequestParam(value = "companyId", required = false, defaultValue = "0") int companyId,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize);
 
     @RequestMapping(value = "/addTypeOfWork", method = RequestMethod.POST)
     @ResponseBody
@@ -918,7 +916,7 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/addEQPTWChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     @ResponseBody // Make sure this is present if you aren't using @RestController
     public Map<String, Object> addEQPTWChecklist(@RequestParam(value = "userId") int userId,
-                                            @RequestPart(value = "file") MultipartFile file);
+                                                 @RequestPart(value = "file") MultipartFile file);
 
     @PostMapping("/rest/v1/users/userinfo")
     public ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
@@ -949,3 +947,4 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getEquipments();
+}
