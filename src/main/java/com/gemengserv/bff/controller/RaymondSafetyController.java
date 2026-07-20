@@ -158,7 +158,7 @@ public class RaymondSafetyController
     @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
                                                             @RequestParam("gp_id") int gpId,
-                                                            @RequestParam(value = "file") MultipartFile file)
+                                                            @RequestPart(value = "file") MultipartFile file)
     {
         return raymondSafetyService.uploadImage(type, gpId, file);
     }
@@ -179,7 +179,7 @@ public class RaymondSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return raymondSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -796,7 +796,7 @@ public class RaymondSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return raymondSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 

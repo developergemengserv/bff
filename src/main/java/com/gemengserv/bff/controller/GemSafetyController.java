@@ -166,7 +166,7 @@ public class GemSafetyController
     @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
                                                             @RequestParam("gp_id") int gpId,
-                                                            @RequestParam(value = "file") MultipartFile file)
+                                                            @RequestPart(value = "file") MultipartFile file)
     {
         return gemSafetyService.uploadImage(type, gpId, file);
     }
@@ -211,7 +211,7 @@ public class GemSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return gemSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -851,7 +851,7 @@ public class GemSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return gemSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
@@ -859,7 +859,7 @@ public class GemSafetyController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestParam("file") MultipartFile[] files) {
+                                                       @RequestPart("file") MultipartFile[] files) {
         return gemSafetyService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
@@ -1200,7 +1200,7 @@ public class GemSafetyController
 
     @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addWorkers(@RequestParam(value = "userId") int userId,
-                             @RequestParam(value = "file") MultipartFile file,
+                             @RequestPart(value = "file") MultipartFile file,
                              @RequestParam(value = "projectId") int projectId)
     {
         return gemSafetyService.addWorkers(userId, file, projectId);

@@ -40,7 +40,7 @@ public interface TejrajQhseService {
     ResponseEntity<List<Object>> getActivities();
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
-    String addActivities(@RequestParam(value = "file") MultipartFile file,
+    String addActivities(@RequestPart(value = "file") MultipartFile file,
                          @RequestParam(value = "userId") int userId);
 
     @RequestMapping(value = "/addActivity", method = RequestMethod.POST)
@@ -59,7 +59,7 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addLocations(@RequestParam(value = "userId") int userId,
-                        @RequestParam(value = "file") MultipartFile file);
+                        @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "activityUnitMapping")
     List<Object> getAllActivityUnitMapping();
@@ -510,7 +510,7 @@ public interface TejrajQhseService {
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -536,12 +536,12 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addLocations(@RequestParam(value = "userId") int userId,
-                        @RequestParam(value = "file") MultipartFile file,
+                        @RequestPart(value = "file") MultipartFile file,
                         @RequestParam(value = "projectId") int projectId);
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
     Map<String, Integer> checklistDataUpload(
-            @RequestParam(value = "file") MultipartFile file,
+            @RequestPart(value = "file") MultipartFile file,
             @RequestParam(value = "userId") int userId);
 
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)

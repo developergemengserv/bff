@@ -119,7 +119,7 @@ public interface HccAdminService
      ResponseEntity<Map<String, Object>> uploadSignature(@RequestParam("user_id") int user_id,
                                                                @RequestParam("token") String token,
                                                                @RequestParam("company_id") int companyId,
-                                                               @RequestParam(value = "file") MultipartFile file);
+                                                               @RequestPart(value = "file") MultipartFile file);
 
     //Dashboard Chart Controller
 
@@ -183,7 +183,7 @@ public interface HccAdminService
      ResponseEntity<Object> uploadHazards(@RequestParam(value = "user_id") Integer userId,
                                                 @RequestParam(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file);
+                                                @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
      ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -279,7 +279,7 @@ public interface HccAdminService
      ResponseEntity<Map<String, Object>> uploadProjectLogo(@RequestParam("user_id") int user_id,
                                                                  @RequestParam("token") String token,
                                                                  @RequestParam("project_id") int project_id,
-                                                                 @RequestParam(value = "file") MultipartFile file);
+                                                                 @RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/rest/api/v1/project/find", method = RequestMethod.GET)
      ResponseEntity<Map<String, Object>> findProjects(@RequestParam("user_id") int userId,
@@ -532,7 +532,7 @@ public interface HccAdminService
      ResponseEntity<Map<String, Object>> uploadUserSignature(@RequestParam("user_id") int user_id,
                                                                    @RequestParam("token") String token,
                                                                    @RequestParam("mapped_user_id") int mappedUserId,
-                                                                   @RequestParam(value = "file") MultipartFile file);
+                                                                   @RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/rest/api/v1/user/deleteUser", method = RequestMethod.DELETE, produces = {"application/json"})
      ResponseEntity<Object> deleteUser(@RequestParam(value = "user_id") Integer userId);

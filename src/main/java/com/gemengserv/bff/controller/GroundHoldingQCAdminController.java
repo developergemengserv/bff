@@ -85,7 +85,7 @@ public class GroundHoldingQCAdminController {
     public ResponseEntity<?> uploadChecklists(@RequestHeader(value = "user_id") Integer userId,
                                               @RequestHeader(value = "token") String token,
                                               @RequestParam(value = "activity_code") String activityCode,
-                                              @RequestParam(value = "file") MultipartFile file)
+                                              @RequestPart(value = "file") MultipartFile file)
     {
         return groundHoldingQCAdminService.uploadChecklists(userId, token, activityCode, file);
     }
@@ -185,7 +185,7 @@ public class GroundHoldingQCAdminController {
     public ResponseEntity<Map<String, Object>> uploadSignature(@RequestParam("user_id") int user_id,
                                                                @RequestParam("token") String token,
                                                                @RequestParam("company_id") int companyId,
-                                                               @RequestParam(value = "file") MultipartFile file) {
+                                                               @RequestPart(value = "file") MultipartFile file) {
         return groundHoldingQCAdminService.uploadSignature(user_id, token, companyId, file);
     }
 
@@ -271,7 +271,7 @@ public class GroundHoldingQCAdminController {
     public ResponseEntity<Object> uploadHazards(@RequestParam(value = "user_id") Integer userId,
                                                 @RequestParam(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file) {
+                                                @RequestPart(value = "file") MultipartFile file) {
         return groundHoldingQCAdminService.uploadHazards(userId, token, projectId, file);
     }
 
@@ -372,7 +372,7 @@ public class GroundHoldingQCAdminController {
     public ResponseEntity<Map<String, Object>> uploadProjectLogo(@RequestParam("user_id") int user_id,
                                                                  @RequestParam("token") String token,
                                                                  @RequestParam("project_id") int project_id,
-                                                                 @RequestParam(value = "file") MultipartFile file) {
+                                                                 @RequestPart(value = "file") MultipartFile file) {
         return groundHoldingQCAdminService.uploadProjectLogo(user_id, token, project_id, file);
     }
 
@@ -724,7 +724,7 @@ public class GroundHoldingQCAdminController {
     public ResponseEntity<Map<String, Object>> uploadUserSignature(@RequestParam("user_id") int user_id,
                                                                    @RequestParam("token") String token,
                                                                    @RequestParam("mapped_user_id") int mappedUserId,
-                                                                   @RequestParam(value = "file") MultipartFile file) {
+                                                                   @RequestPart(value = "file") MultipartFile file) {
         return groundHoldingQCAdminService.uploadUserSignature(user_id, token, mappedUserId, file);
     }
 

@@ -165,7 +165,7 @@ public class IndospaceSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return indospaceSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -766,7 +766,7 @@ public class IndospaceSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return indospaceSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
