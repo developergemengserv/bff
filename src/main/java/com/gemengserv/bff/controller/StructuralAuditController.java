@@ -18,7 +18,7 @@ public class StructuralAuditController
     // File Upload Controller
 
     @PostMapping(value = "/upload")
-    public Object uploadFile(@RequestParam("file") MultipartFile file,
+    public Object uploadFile(@RequestPart("file") MultipartFile file,
                       @RequestParam("obsId") int obsId,
                       @RequestParam("mediaType") String  mediaType)
     {

@@ -166,7 +166,7 @@ public class HccSafetyController
     @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
                                                             @RequestParam("gp_id") int gpId,
-                                                            @RequestParam(value = "file") MultipartFile file)
+                                                            @RequestPart(value = "file") MultipartFile file)
     {
         return hccSafetyService.uploadImage(type, gpId, file);
     }
@@ -211,7 +211,7 @@ public class HccSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return hccSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -842,7 +842,7 @@ public class HccSafetyController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestParam("file") MultipartFile[] files) {
+                                                       @RequestPart("file") MultipartFile[] files) {
         return hccSafetyService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
@@ -1142,7 +1142,7 @@ public class HccSafetyController
 
     @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addWorkers(@RequestParam(value = "userId") int userId,
-                             @RequestParam(value = "file") MultipartFile file,
+                             @RequestPart(value = "file") MultipartFile file,
                              @RequestParam(value = "projectId") int projectId)
     {
         return hccSafetyService.addWorkers(userId, file, projectId);

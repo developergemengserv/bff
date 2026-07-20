@@ -111,7 +111,7 @@ public interface GemSafetyService
     @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
     ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
                                                      @RequestParam("gp_id") int gpId,
-                                                     @RequestParam(value = "file") MultipartFile file);
+                                                     @RequestPart(value = "file") MultipartFile file);
 
     // Emergency HelpLine Controller
 
@@ -144,7 +144,7 @@ public interface GemSafetyService
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -571,7 +571,7 @@ public interface GemSafetyService
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam("eventId") Integer eventId,
                                                @RequestParam("eventName") String eventName,
-                                               @RequestParam("file") MultipartFile[] files);
+                                               @RequestPart("file") MultipartFile[] files);
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
@@ -931,7 +931,7 @@ public interface GemSafetyService
 
     @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addWorkers(@RequestParam(value = "userId") int userId,
-                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestPart(value = "file") MultipartFile file,
                       @RequestParam(value = "projectId") int projectId);
 
     // Unit master controller

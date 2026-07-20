@@ -112,7 +112,7 @@ public interface HccSafetyService
     @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
     ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
                                                      @RequestParam("gp_id") int gpId,
-                                                     @RequestParam(value = "file") MultipartFile file);
+                                                     @RequestPart(value = "file") MultipartFile file);
 
     // Emergency HelpLine Controller
 
@@ -145,7 +145,7 @@ public interface HccSafetyService
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -567,7 +567,7 @@ public interface HccSafetyService
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                @RequestParam("file") MultipartFile[] files);
+                                                @RequestPart("file") MultipartFile[] files);
 
     @RequestMapping(value = "/safety/findUsersByProjectIdAndRoleId", method = RequestMethod.GET)
     ResponseEntity<Object> findUsersByProjectIdAndRoleId(@RequestHeader(value = "userId") Integer userId,
@@ -897,7 +897,7 @@ public interface HccSafetyService
 
     @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addWorkers(@RequestParam(value = "userId") int userId,
-                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestPart(value = "file") MultipartFile file,
                       @RequestParam(value = "projectId") int projectId);
 
     // Unit master controller

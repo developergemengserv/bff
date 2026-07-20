@@ -283,7 +283,7 @@ public class LvmController
     @RequestMapping(value = "/addTemplates", consumes = "multipart/form-data", method = RequestMethod.POST)
     public ResponseEntity<Object> addTemplates(@RequestParam(value = "name") String name,
                                                @RequestParam(value = "userId") int userId,
-                                               @RequestParam(value = "file") MultipartFile file)
+                                               @RequestPart(value = "file") MultipartFile file)
     {
         return lvmService.addTemplates(name, userId, file);
     }
@@ -394,7 +394,7 @@ public class LvmController
     }
 
     @PostMapping(value = "/uploadProjectLogo")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile file,
                                                       @RequestParam("project_id") int projectId)
     {
         return lvmService.uploadFile(file, projectId);
@@ -692,7 +692,7 @@ public class LvmController
     }
 
     @PostMapping(value = "/uploadUsersBulk", consumes = "multipart/form-data")
-    public ResponseEntity<Object> uploadUsers(@RequestParam(value = "file") MultipartFile file)
+    public ResponseEntity<Object> uploadUsers(@RequestPart(value = "file") MultipartFile file)
     {
         return lvmService.uploadUsers(file);
     }
@@ -704,7 +704,7 @@ public class LvmController
     }
 
     @PostMapping(value = "/uploadUserProfile")
-    public ResponseEntity<Object> uploadUserProfile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<Object> uploadUserProfile(@RequestPart("file") MultipartFile file,
                                                     @RequestParam("user_id") int userId)
     {
         return lvmService.uploadUserProfile(file, userId);

@@ -53,7 +53,7 @@ public class AshwinshethQhseController {
     }
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
-    public String addActivities(@RequestParam(value = "file") MultipartFile file,
+    public String addActivities(@RequestPart(value = "file") MultipartFile file,
                                 @RequestParam(value = "userId") int userId)
     {
         return ashwinshethQhseService.addActivities(file,userId);
@@ -61,7 +61,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file)
+                               @RequestPart(value = "file") MultipartFile file)
     {
         return ashwinshethQhseService.addLocations(userId,file);
     }
@@ -709,7 +709,7 @@ public class AshwinshethQhseController {
     public ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file)
+                                                @RequestPart(value = "file") MultipartFile file)
     {
         return ashwinshethQhseService.uploadHazards(userId,token,projectId,file);
     }
@@ -750,7 +750,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file,
+                               @RequestPart(value = "file") MultipartFile file,
                                @RequestParam(value = "projectId") int projectId)
     {
         return ashwinshethQhseService.addLocations(userId,file,projectId);
@@ -758,7 +758,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
     public Map<String, Integer> checklistDataUpload(
-            @RequestParam(value = "file") MultipartFile file,
+            @RequestPart(value = "file") MultipartFile file,
             @RequestParam(value = "userId") int userId)
     {
         return ashwinshethQhseService.checklistDataUpload(file,userId);

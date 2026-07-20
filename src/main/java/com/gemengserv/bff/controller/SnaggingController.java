@@ -165,7 +165,7 @@ public class SnaggingController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return snaggingService.uploadHazards(userId, token, projectId, file);
     }
@@ -182,7 +182,7 @@ public class SnaggingController
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     String addLocations(@RequestParam(value = "userId") int userId,
-                        @RequestParam(value = "file") MultipartFile file,
+                        @RequestPart(value = "file") MultipartFile file,
                         @RequestParam(value = "projectId") int projectId)
     {
         return snaggingService.addLocations(userId, file, projectId);
@@ -797,7 +797,7 @@ public class SnaggingController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return snaggingService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
@@ -805,7 +805,7 @@ public class SnaggingController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestParam("file") MultipartFile[] files) {
+                                                       @RequestPart("file") MultipartFile[] files) {
         return snaggingService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
