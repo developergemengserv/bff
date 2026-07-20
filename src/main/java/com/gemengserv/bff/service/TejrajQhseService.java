@@ -926,4 +926,26 @@ public interface TejrajQhseService {
                                                               @RequestParam("deviceToken") String deviceToken,
                                                               @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion);
 
-}
+    @RequestMapping(value = "/addHazard", method = RequestMethod.POST)
+    public Map<String, Object> addHazard(@RequestParam(value = "label") String label);
+
+    @RequestMapping(value = "/addEquipment", method = RequestMethod.POST)
+    public Map<String, Object> addEQ(@RequestParam(value = "label") String label);
+
+    @RequestMapping(value = "/updateHazard", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateHazard(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id);
+
+    @RequestMapping(value = "/updateEquipment", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateEQ(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id);
+
+    @RequestMapping(value = "/getHazards", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getHazards();
+
+    @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getEquipments();
