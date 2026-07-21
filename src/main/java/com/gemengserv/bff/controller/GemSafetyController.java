@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -129,13 +128,6 @@ public class GemSafetyController
         return gemSafetyService.loginAPI(username, password);
     }
 
-    @PostMapping("/rest/v1/loginAD")
-    public ResponseEntity<Object> loginADAPI(@RequestParam("username") String username,
-                                             @RequestParam("password") String password)
-    {
-        return gemSafetyService.loginADAPI(username, password);
-    }
-
     @PostMapping("/rest/v1/users/userinfo")
     ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
                                                        @RequestHeader("token") String token,
@@ -157,20 +149,6 @@ public class GemSafetyController
         return gemSafetyService.registerUser(userId);
     }
 
-    @RequestMapping(value = "/gatePassEntry", method = RequestMethod.POST, produces = {"application/json"})
-    public ResponseEntity<Map<String, Object>> gatePassEntry(@RequestBody Object gatePassRequest) throws Exception
-    {
-        return gemSafetyService.gatePassEntry(gatePassRequest);
-    }
-
-    @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
-                                                            @RequestParam("gp_id") int gpId,
-                                                            @RequestPart(value = "file") MultipartFile file)
-    {
-        return gemSafetyService.uploadImage(type, gpId, file);
-    }
-
     // Emergency HelpLine Controller
 
     @GetMapping(value = "/getEmergencyHelpline")
@@ -179,30 +157,6 @@ public class GemSafetyController
                                                          int projectId)
     {
         return gemSafetyService.getAllEmergencyHelpLine(userId, token, projectId);
-    }
-
-    @PutMapping(value = "/updateEmergencyHelpline")
-    public ResponseEntity<Object> updateEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                          @RequestHeader(value = "token") String token,
-                                                          @RequestBody Object emergencyHelplineRequest)
-    {
-        return gemSafetyService.updateEmergencyHelpLine(userId, token, emergencyHelplineRequest);
-    }
-
-    @PutMapping(value = "/deleteEmergencyHelpline")
-    public ResponseEntity<Object> deleteEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                          @RequestHeader(value = "token") String token,
-                                                          @RequestParam(value = "id") int id)
-    {
-        return gemSafetyService.deleteEmergencyHelpLine(userId, token, id);
-    }
-
-    @PostMapping(value = "/addEmergencyHelpline")
-    public ResponseEntity<Object> addEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                       @RequestHeader(value = "token") String token,
-                                                       @RequestBody Object emergencyHelplineRequest)
-    {
-        return gemSafetyService.addEmergencyHelpLine(userId, token, emergencyHelplineRequest);
     }
 
     // Hazards Controller
@@ -233,7 +187,7 @@ public class GemSafetyController
         return gemSafetyService.findLocation(data, lastSync);
     }
 
-    @RequestMapping(value = "/rest/v1/location/db/findall_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
@@ -241,15 +195,6 @@ public class GemSafetyController
                                                               @RequestParam("token") String token)
     {
         return gemSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
-    }
-
-    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
-    ResponseEntity<Object> getAllLocationsFromSP(@RequestParam(value = "project_id", required = true) int pid,
-                                                 @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-                                                 @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                 @RequestParam("user_id") int user_id, @RequestParam("token") String token)
-    {
-        return gemSafetyService.getAllLocationsFromSP(pid, page, pageSize, user_id, token);
     }
 
 // Observation Master Controller
@@ -294,9 +239,11 @@ public class GemSafetyController
     @RequestMapping(value = "/rest/v1/projects", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
                                                      @RequestParam("token") String token,
-                                                     @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException
+                                                     @RequestParam(value = "lastSync", required = false) String lastSync,
+                                                     @RequestParam(value = "zoneId", required = false, defaultValue = "0") int zoneId,
+                                                     @RequestParam(value = "fundId", required = false, defaultValue = "0") int fundId) throws JsonParseException, JsonMappingException, IOException
     {
-        return gemSafetyService.restProjects(user_id, token, lastSync);
+        return gemSafetyService.restProjects(user_id, token, lastSync, zoneId, fundId);
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
@@ -313,16 +260,10 @@ public class GemSafetyController
         gemSafetyService.rorReport();
     }
 
-    @RequestMapping(value = "/ptwOldReport", method = RequestMethod.POST)
-    public void ptwReportOld(@RequestBody Object ptwReportRequest)
-    {
-        gemSafetyService.ptwReportOld(ptwReportRequest);
-    }
-
     @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
-    void ptwReport(@RequestBody Object ptwReportRequest)
+    ResponseEntity<Object> ptwReport(@RequestBody Object ptwReportRequest)
     {
-        gemSafetyService.ptwReport(ptwReportRequest);
+        return gemSafetyService.ptwReport(ptwReportRequest);
     }
 
     @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
@@ -444,23 +385,6 @@ public class GemSafetyController
     ResponseEntity<Object> equipmentReport(@RequestBody Object  equipmentReportRequest)
     {
         return gemSafetyService.equipmentReport(equipmentReportRequest);
-    }
-
-    @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
-                                                            @RequestParam(value = "token") String token,
-                                                            @RequestParam(value = "obsId",required = false) int obsId)
-    {
-        return gemSafetyService.getObsReport(userId, token, obsId);
-    }
-
-    @RequestMapping(value = "/weeklyStatusReport", method = RequestMethod.GET)
-    public void weeklyStatusReport(@RequestParam(value = "projectId") int projectId,
-                                   @RequestParam(value = "fromDate") String fromDate,
-                                   @RequestParam(value = "toDate") String toDate,
-                                   @RequestParam(value = "locationBased") int locationBased)
-    {
-        gemSafetyService.weeklyStatusReport(projectId, fromDate, toDate, locationBased);
     }
 
     @RequestMapping(value = "/downloadInspectionPdf", method = RequestMethod.GET)
@@ -592,22 +516,13 @@ public class GemSafetyController
         return gemSafetyService.updateSafetyObservation(userId, token, updateRequest);
     }
 
-    @RequestMapping(value = "/safety/obs/find_old", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservation(@RequestHeader(value = "userId") Integer userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
                                                  @RequestBody Object request)
     {
         return gemSafetyService.findSafetyObservation(userId, token, lastSync, request);
-    }
-
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
-    ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
-                                                  @RequestHeader(value = "token") String token,
-                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
-                                                  @RequestBody Object request)
-    {
-        return gemSafetyService.findSafetyObservations(userId, token, lastSync, request);
     }
 
     @RequestMapping(value = "/safety/obs/find/{obsId}", method = RequestMethod.GET)
@@ -623,7 +538,7 @@ public class GemSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return gemSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
@@ -859,7 +774,7 @@ public class GemSafetyController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestPart("file") MultipartFile[] files) {
+                                                       @RequestParam("file") MultipartFile[] files) {
         return gemSafetyService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
@@ -988,57 +903,20 @@ public class GemSafetyController
     }
 
     @GetMapping(value = "/safety/safetyGoodPractices")
-    public ResponseEntity<List<Object>> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
-                                                         @RequestHeader(value = "token") String token)
+    ResponseEntity<Object> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
+                                            @RequestHeader(value = "token") String token)
     {
         return gemSafetyService.getGoodPractices(userId, token);
     }
 
-    @GetMapping(value = "/safetyGoodPracticesByProjectId")
-    public ResponseEntity<List<Object>> getGoodPracticesByProjectId(@RequestHeader(value = "userId") Integer userId,
-                                                                    @RequestHeader(value = "token") String token,
-                                                                    @RequestParam(value = "project_id") Integer projectId)
-    {
-        return gemSafetyService.getGoodPracticesByProjectId(userId, token, projectId);
-    }
-
-    @GetMapping(value = "/safetyGoodPracticesById")
-    public ResponseEntity<Object> getGoodPracticesById(@RequestHeader(value = "userId") Integer userId,
-                                                       @RequestHeader(value = "token") String token,
-                                                       @RequestParam(value = "goodPracticesId") Integer goodPracticesId)
-    {
-        return gemSafetyService.getGoodPracticesById(userId, token, goodPracticesId);
-    }
-
     @GetMapping(value = "/safety/zones")
-    public ResponseEntity<Object> getZones(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
+    public ResponseEntity<Object> getZoindnes(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
         return gemSafetyService.getZones(userId, token);
     }
 
     @RequestMapping(value = "/safety/workers/history/find", method = RequestMethod.POST)
     public ResponseEntity<Object> findWorkerRequestHistory(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token, @RequestBody Object request) {
         return gemSafetyService.findWorkerRequestHistory(userId, token, request);
-    }
-
-    // Safety Diary Controller
-
-    @PostMapping(value = "/saveSafetyDiary")
-    public ResponseEntity<Object> saveSafetyDiary(@RequestBody Object safetyDiaryRequest)
-    {
-        return gemSafetyService.saveSafetyDiary(safetyDiaryRequest);
-    }
-
-    @GetMapping(value = "/getSafetyDiary")
-    public ResponseEntity<List<Object>> getSafetyDiary(@RequestParam(value = "userId", required = false, defaultValue = "0") int userId,
-                                                       @RequestParam(value = "projectId", required = false, defaultValue = "0") int projectId)
-    {
-        return gemSafetyService.getSafetyDiary(userId, projectId);
-    }
-
-    @GetMapping(value = "/getSafetyCategoryMaster")
-    public ResponseEntity<List<Object>> getSafetyCategoryMaster()
-    {
-        return gemSafetyService.getSafetyCategoryMaster();
     }
 
     // Safety Incident Controller
@@ -1050,23 +928,12 @@ public class GemSafetyController
         return gemSafetyService.saveIncident(userId, token, request);
     }
 
-    @RequestMapping(value = "/safety/incident_old", method = RequestMethod.GET)
-    public ResponseEntity<Object> findSafetyIncidentOld(@RequestHeader(value = "userId") Integer userId,
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
+    public ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
                                                      @RequestParam(value = "page_size", defaultValue = "500", required = false) Integer pageSize,
-                                                     @RequestParam(value = "project_id") Integer projectId)
-    {
-        return gemSafetyService.findSafetyIncidentOld(userId, token, page, pageSize, projectId);
-    }
-
-    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
-    public ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
-                                                                   @RequestHeader(value = "token") String token,
-                                                                   @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
-                                                                   @RequestParam(value = "page_size", defaultValue = "500", required = false) Integer pageSize,
-                                                                   @RequestParam(value = "project_id") Integer projectId)
-    {
+                                                     @RequestParam(value = "project_id") Integer projectId) {
         return gemSafetyService.findSafetyIncident(userId, token, page, pageSize, projectId);
     }
 
@@ -1076,6 +943,7 @@ public class GemSafetyController
                                                    @PathVariable(value = "incidentId") Integer incidentId) {
         return gemSafetyService.findIncidentById(userId, token, incidentId);
     }
+
 
     // Near Miss APIs
 
@@ -1099,6 +967,23 @@ public class GemSafetyController
         return gemSafetyService.updateNearMissById(userId, token, request);
     }
 
+    @RequestMapping(value = "/getNearMissHistory", method = RequestMethod.GET)
+    public ResponseEntity<Object> getNearMissHistory(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return gemSafetyService.getNearMissHistory(userId, token, nearMissId);
+    }
+
+    @RequestMapping(value = "/getNearMissAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getNearMissAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return gemSafetyService.getNearMissAPHistory(userId, token, nearMissId);
+    }
+
+
     // First Aid APIs
 
     @RequestMapping(value = "/addFirstAid", method = RequestMethod.POST)
@@ -1116,6 +1001,30 @@ public class GemSafetyController
         return gemSafetyService.updateFirstAidById(userId, token, updateFirstAidRequest);
     }
 
+    @RequestMapping(value = "/getFirstAidById", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidById(@RequestHeader(value = "userId") Integer userId,
+                                           @RequestHeader(value = "token") String token,
+                                           @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return gemSafetyService.getFirstAidById(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidHistory(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return gemSafetyService.getFirstAidHistory(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return gemSafetyService.getFirstAidAPHistory(userId, token, firstAidId);
+    }
+
     // Safety TBT Controller
 
     @PostMapping(value = "/SafetyTBT")
@@ -1126,6 +1035,23 @@ public class GemSafetyController
     @GetMapping(value = "/SafetyTBT")
     public ResponseEntity<Object> getSafetyTBT(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token, @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId) {
         return gemSafetyService.getSafetyTBT(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTSP")
+    public ResponseEntity<Object> getSafetyTBTSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId)
+    {
+        return gemSafetyService.getSafetyTBTSP(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTTopics")
+    public ResponseEntity<Object> getSafetyTBTTopics(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token)
+    {
+        return gemSafetyService.getSafetyTBTTopics(userId,token);
     }
 
     @GetMapping(value = "/SafetyTBTSPWithPageWise")
@@ -1143,9 +1069,27 @@ public class GemSafetyController
         return gemSafetyService.updateSafetyTBT(userId, token, request);
     }
 
+    @GetMapping(value = "/getSafetyTbtByIdWithSP")
+    public ResponseEntity<Object> getSafetyTbtByIdWithSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "tbtId") Integer tbtId)
+    {
+        return gemSafetyService.getSafetyTbtByIdWithSP(userId, token, tbtId);
+    }
+
+    @GetMapping(value = "/getSafetyTbtHistoryById/{id}")
+    public ResponseEntity<Object> getSafetyTbtHistoryById(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "id") Integer tbtId)
+    {
+        return gemSafetyService.getSafetyTbtHistoryById(userId, token, tbtId);
+    }
+
     @GetMapping(value = "/SafetyTBTMaster")
-    public ResponseEntity<List<Object>> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
-                                                           @RequestHeader(value = "token") String token)
+    public ResponseEntity<Object> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token)
     {
         return gemSafetyService.getSafetyTBTMaster(userId, token);
     }
@@ -1160,13 +1104,6 @@ public class GemSafetyController
     @GetMapping(value = "/SafetyWorkers")
     public ResponseEntity<Object> getSafetyWorkers(@RequestHeader(value = "user_id") int userId, @RequestHeader(value = "token") String token, @RequestParam(value = "project_id") long projectId, @RequestParam(value = "company_id", required = false, defaultValue = "0") long companyId) {
         return gemSafetyService.getSafetyWorkers(userId, token, projectId, companyId);
-    }
-
-    @GetMapping(value = "/trades")
-    public ResponseEntity<List<Object>> getWorkersTrades(@RequestHeader(value = "user_id") int userId,
-                                                         @RequestHeader(value = "token") String token)
-    {
-        return gemSafetyService.getWorkersTrades(userId, token);
     }
 
     @GetMapping(value = "/SafetyWorkersByPagination")
@@ -1189,25 +1126,14 @@ public class GemSafetyController
         return gemSafetyService.updateSafetyWorkerById(userId, token, request);
     }
 
-    @PutMapping(value = "/updateSafetyWorker/{id}")
-    public ResponseEntity<Object> updateSafetyWorkerById(@RequestHeader(value = "user_id") int userId,
-                                                         @RequestHeader(value = "token") String token,
-                                                         @RequestParam(value = "id") long workerId,
-                                                         @RequestBody Object request)
+    @GetMapping(value = "/safety/getSafetyWorkerType")
+    ResponseEntity<Object> getSafetyWorkerType(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token)
     {
-        return gemSafetyService.updateSafetyWorkerById(userId, token, workerId, request);
-    }
-
-    @RequestMapping(value = "/addWorkers", consumes = "multipart/form-data", method = RequestMethod.POST)
-    public String addWorkers(@RequestParam(value = "userId") int userId,
-                             @RequestPart(value = "file") MultipartFile file,
-                             @RequestParam(value = "projectId") int projectId)
-    {
-        return gemSafetyService.addWorkers(userId, file, projectId);
+        return gemSafetyService.getSafetyWorkerType(userId, token);
     }
 
     // Unit master controller
-
     @GetMapping(value = "/unitMaster")
     ResponseEntity<List<Object>> getAllUnitMaster(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token)
