@@ -538,7 +538,7 @@ public class IndospaceSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return indospaceSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
@@ -902,8 +902,15 @@ public class IndospaceSafetyController
         return indospaceSafetyService.saveGoodPractices(userId, token, goodPracticesRequest);
     }
 
+    @GetMapping(value = "/safety/safetyGoodPractices")
+    ResponseEntity<Object> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
+                                            @RequestHeader(value = "token") String token)
+    {
+        return indospaceSafetyService.getGoodPractices(userId, token);
+    }
+
     @GetMapping(value = "/safety/zones")
-    public ResponseEntity<Object> getZones(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
+    public ResponseEntity<Object> getZoindnes(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
         return indospaceSafetyService.getZones(userId, token);
     }
 
@@ -959,6 +966,23 @@ public class IndospaceSafetyController
         return indospaceSafetyService.updateNearMissById(userId, token, request);
     }
 
+    @RequestMapping(value = "/getNearMissHistory", method = RequestMethod.GET)
+    public ResponseEntity<Object> getNearMissHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                 @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return indospaceSafetyService.getNearMissHistory(userId, token, nearMissId);
+    }
+
+    @RequestMapping(value = "/getNearMissAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getNearMissAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return indospaceSafetyService.getNearMissAPHistory(userId, token, nearMissId);
+    }
+
+
     // First Aid APIs
 
     @RequestMapping(value = "/addFirstAid", method = RequestMethod.POST)
@@ -976,6 +1000,30 @@ public class IndospaceSafetyController
         return indospaceSafetyService.updateFirstAidById(userId, token, updateFirstAidRequest);
     }
 
+    @RequestMapping(value = "/getFirstAidById", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidById(@RequestHeader(value = "userId") Integer userId,
+                                           @RequestHeader(value = "token") String token,
+                                           @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return indospaceSafetyService.getFirstAidById(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidHistory(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return indospaceSafetyService.getFirstAidHistory(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return indospaceSafetyService.getFirstAidAPHistory(userId, token, firstAidId);
+    }
+
     // Safety TBT Controller
 
     @PostMapping(value = "/SafetyTBT")
@@ -986,6 +1034,23 @@ public class IndospaceSafetyController
     @GetMapping(value = "/SafetyTBT")
     public ResponseEntity<Object> getSafetyTBT(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token, @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId) {
         return indospaceSafetyService.getSafetyTBT(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTSP")
+    public ResponseEntity<Object> getSafetyTBTSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId)
+    {
+        return indospaceSafetyService.getSafetyTBTSP(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTTopics")
+    public ResponseEntity<Object> getSafetyTBTTopics(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token)
+    {
+        return indospaceSafetyService.getSafetyTBTTopics(userId,token);
     }
 
     @GetMapping(value = "/SafetyTBTSPWithPageWise")
@@ -1001,6 +1066,31 @@ public class IndospaceSafetyController
     @PutMapping(value = "/updateSafetyTBT")
     public ResponseEntity<Object> updateSafetyTBT(@RequestHeader(value = "user_id") int userId, @RequestHeader(value = "token") String token, @RequestBody Object request) {
         return indospaceSafetyService.updateSafetyTBT(userId, token, request);
+    }
+
+    @GetMapping(value = "/getSafetyTbtByIdWithSP")
+    public ResponseEntity<Object> getSafetyTbtByIdWithSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "tbtId") Integer tbtId)
+    {
+        return indospaceSafetyService.getSafetyTbtByIdWithSP(userId, token, tbtId);
+    }
+
+    @GetMapping(value = "/getSafetyTbtHistoryById/{id}")
+    public ResponseEntity<Object> getSafetyTbtHistoryById(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "id") Integer tbtId)
+    {
+        return indospaceSafetyService.getSafetyTbtHistoryById(userId, token, tbtId);
+    }
+
+    @GetMapping(value = "/SafetyTBTMaster")
+    public ResponseEntity<Object> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
+                                                                    @RequestHeader(value = "token") String token)
+    {
+        return indospaceSafetyService.getSafetyTBTMaster(userId, token);
     }
 
     // Safety Workers Controller
@@ -1035,8 +1125,14 @@ public class IndospaceSafetyController
         return indospaceSafetyService.updateSafetyWorkerById(userId, token, request);
     }
 
-    // Unit master controller
+    @GetMapping(value = "/safety/getSafetyWorkerType")
+    ResponseEntity<Object> getSafetyWorkerType(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token)
+    {
+        return indospaceSafetyService.getSafetyWorkerType(userId, token);
+    }
 
+    // Unit master controller
     @GetMapping(value = "/unitMaster")
     ResponseEntity<List<Object>> getAllUnitMaster(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token)
