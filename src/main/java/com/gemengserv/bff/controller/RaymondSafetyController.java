@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -123,16 +122,16 @@ public class RaymondSafetyController
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Object> loginAPI(@RequestParam("username") String username,
-                               @RequestParam("password") String password)
+                                    @RequestParam("password") String password)
     {
         return raymondSafetyService.loginAPI(username, password);
     }
 
     @PostMapping("/rest/v1/users/userinfo")
     ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
-                                                  @RequestHeader("token") String token,
-                                                  @RequestParam("deviceToken") String deviceToken,
-                                                  @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion)
+                                                       @RequestHeader("token") String token,
+                                                       @RequestParam("deviceToken") String deviceToken,
+                                                       @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion)
     {
         return raymondSafetyService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
     }
@@ -149,26 +148,12 @@ public class RaymondSafetyController
         return raymondSafetyService.registerUser(userId);
     }
 
-    @RequestMapping(value = "/gatePassEntry", method = RequestMethod.POST, produces = {"application/json"})
-    public ResponseEntity<Map<String, Object>> gatePassEntry(@RequestBody Object gatePassRequest) throws Exception
-    {
-        return raymondSafetyService.gatePassEntry(gatePassRequest);
-    }
-
-    @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
-                                                            @RequestParam("gp_id") int gpId,
-                                                            @RequestPart(value = "file") MultipartFile file)
-    {
-        return raymondSafetyService.uploadImage(type, gpId, file);
-    }
-
     // Emergency HelpLine Controller
 
     @GetMapping(value = "/getEmergencyHelpline")
     ResponseEntity<List<Object>> getAllEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,
-                                                         @RequestParam(value = "projectId") int projectId)
+                                                         int projectId)
     {
         return raymondSafetyService.getAllEmergencyHelpLine(userId, token, projectId);
     }
@@ -201,7 +186,7 @@ public class RaymondSafetyController
         return raymondSafetyService.findLocation(data, lastSync);
     }
 
-    @RequestMapping(value = "/rest/v1/location/db/findall_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
@@ -209,15 +194,6 @@ public class RaymondSafetyController
                                                               @RequestParam("token") String token)
     {
         return raymondSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
-    }
-
-    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
-    ResponseEntity<Object> getAllLocationsFromSP(@RequestParam(value = "project_id", required = true) int pid,
-                                                 @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-                                                 @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                 @RequestParam("user_id") int user_id, @RequestParam("token") String token)
-    {
-        return raymondSafetyService.getAllLocationsFromSP(pid, page, pageSize, user_id, token);
     }
 
 // Observation Master Controller
@@ -262,9 +238,11 @@ public class RaymondSafetyController
     @RequestMapping(value = "/rest/v1/projects", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
                                                      @RequestParam("token") String token,
-                                                     @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException
+                                                     @RequestParam(value = "lastSync", required = false) String lastSync,
+                                                     @RequestParam(value = "zoneId", required = false, defaultValue = "0") int zoneId,
+                                                     @RequestParam(value = "fundId", required = false, defaultValue = "0") int fundId) throws JsonParseException, JsonMappingException, IOException
     {
-        return raymondSafetyService.restProjects(user_id, token, lastSync);
+        return raymondSafetyService.restProjects(user_id, token, lastSync, zoneId, fundId);
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
@@ -282,9 +260,9 @@ public class RaymondSafetyController
     }
 
     @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
-    void ptwReport(@RequestBody Object ptwReportRequest)
+    ResponseEntity<Object> ptwReport(@RequestBody Object ptwReportRequest)
     {
-         raymondSafetyService.ptwReport(ptwReportRequest);
+        return raymondSafetyService.ptwReport(ptwReportRequest);
     }
 
     @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
@@ -537,22 +515,13 @@ public class RaymondSafetyController
         return raymondSafetyService.updateSafetyObservation(userId, token, updateRequest);
     }
 
-    @RequestMapping(value = "/safety/obs/find_old", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservation(@RequestHeader(value = "userId") Integer userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
                                                  @RequestBody Object request)
     {
         return raymondSafetyService.findSafetyObservation(userId, token, lastSync, request);
-    }
-
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
-    ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
-                                                  @RequestHeader(value = "token") String token,
-                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
-                                                  @RequestBody Object request)
-    {
-        return raymondSafetyService.findSafetyObservations(userId, token, lastSync, request);
     }
 
     @RequestMapping(value = "/safety/obs/find/{obsId}", method = RequestMethod.GET)
@@ -568,7 +537,7 @@ public class RaymondSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return raymondSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
@@ -932,8 +901,15 @@ public class RaymondSafetyController
         return raymondSafetyService.saveGoodPractices(userId, token, goodPracticesRequest);
     }
 
+    @GetMapping(value = "/safety/safetyGoodPractices")
+    ResponseEntity<Object> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
+                                            @RequestHeader(value = "token") String token)
+    {
+        return raymondSafetyService.getGoodPractices(userId, token);
+    }
+
     @GetMapping(value = "/safety/zones")
-    public ResponseEntity<Object> getZones(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
+    public ResponseEntity<Object> getZoindnes(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token) {
         return raymondSafetyService.getZones(userId, token);
     }
 
@@ -951,7 +927,7 @@ public class RaymondSafetyController
         return raymondSafetyService.saveIncident(userId, token, request);
     }
 
-    @RequestMapping(value = "/safety/incident_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     public ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
@@ -966,6 +942,7 @@ public class RaymondSafetyController
                                                    @PathVariable(value = "incidentId") Integer incidentId) {
         return raymondSafetyService.findIncidentById(userId, token, incidentId);
     }
+
 
     // Near Miss APIs
 
@@ -989,6 +966,23 @@ public class RaymondSafetyController
         return raymondSafetyService.updateNearMissById(userId, token, request);
     }
 
+    @RequestMapping(value = "/getNearMissHistory", method = RequestMethod.GET)
+    public ResponseEntity<Object> getNearMissHistory(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return raymondSafetyService.getNearMissHistory(userId, token, nearMissId);
+    }
+
+    @RequestMapping(value = "/getNearMissAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getNearMissAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "nearMissId") Integer nearMissId)
+    {
+        return raymondSafetyService.getNearMissAPHistory(userId, token, nearMissId);
+    }
+
+
     // First Aid APIs
 
     @RequestMapping(value = "/addFirstAid", method = RequestMethod.POST)
@@ -1006,6 +1000,30 @@ public class RaymondSafetyController
         return raymondSafetyService.updateFirstAidById(userId, token, updateFirstAidRequest);
     }
 
+    @RequestMapping(value = "/getFirstAidById", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidById(@RequestHeader(value = "userId") Integer userId,
+                                           @RequestHeader(value = "token") String token,
+                                           @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return raymondSafetyService.getFirstAidById(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidHistory(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return raymondSafetyService.getFirstAidHistory(userId, token, firstAidId);
+    }
+
+    @RequestMapping(value = "/getFirstAidAPHistory", method = RequestMethod.GET)
+    ResponseEntity<Object> getFirstAidAPHistory(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestParam(value = "firstAidId") Integer firstAidId)
+    {
+        return raymondSafetyService.getFirstAidAPHistory(userId, token, firstAidId);
+    }
+
     // Safety TBT Controller
 
     @PostMapping(value = "/SafetyTBT")
@@ -1016,6 +1034,23 @@ public class RaymondSafetyController
     @GetMapping(value = "/SafetyTBT")
     public ResponseEntity<Object> getSafetyTBT(@RequestHeader(value = "userId") Integer userId, @RequestHeader(value = "token") String token, @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId) {
         return raymondSafetyService.getSafetyTBT(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTSP")
+    public ResponseEntity<Object> getSafetyTBTSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId)
+    {
+        return raymondSafetyService.getSafetyTBTSP(userId, token, projectId);
+    }
+
+    @GetMapping(value = "/SafetyTBTTopics")
+    public ResponseEntity<Object> getSafetyTBTTopics(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token)
+    {
+        return raymondSafetyService.getSafetyTBTTopics(userId,token);
     }
 
     @GetMapping(value = "/SafetyTBTSPWithPageWise")
@@ -1031,6 +1066,31 @@ public class RaymondSafetyController
     @PutMapping(value = "/updateSafetyTBT")
     public ResponseEntity<Object> updateSafetyTBT(@RequestHeader(value = "user_id") int userId, @RequestHeader(value = "token") String token, @RequestBody Object request) {
         return raymondSafetyService.updateSafetyTBT(userId, token, request);
+    }
+
+    @GetMapping(value = "/getSafetyTbtByIdWithSP")
+    public ResponseEntity<Object> getSafetyTbtByIdWithSP(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "tbtId") Integer tbtId)
+    {
+        return raymondSafetyService.getSafetyTbtByIdWithSP(userId, token, tbtId);
+    }
+
+    @GetMapping(value = "/getSafetyTbtHistoryById/{id}")
+    public ResponseEntity<Object> getSafetyTbtHistoryById(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @PathVariable(value = "id") Integer tbtId)
+    {
+        return raymondSafetyService.getSafetyTbtHistoryById(userId, token, tbtId);
+    }
+
+    @GetMapping(value = "/SafetyTBTMaster")
+    public ResponseEntity<Object> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token)
+    {
+        return raymondSafetyService.getSafetyTBTMaster(userId, token);
     }
 
     // Safety Workers Controller
@@ -1065,8 +1125,14 @@ public class RaymondSafetyController
         return raymondSafetyService.updateSafetyWorkerById(userId, token, request);
     }
 
-    // Unit master controller
+    @GetMapping(value = "/safety/getSafetyWorkerType")
+    ResponseEntity<Object> getSafetyWorkerType(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token)
+    {
+        return raymondSafetyService.getSafetyWorkerType(userId, token);
+    }
 
+    // Unit master controller
     @GetMapping(value = "/unitMaster")
     ResponseEntity<List<Object>> getAllUnitMaster(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token)
