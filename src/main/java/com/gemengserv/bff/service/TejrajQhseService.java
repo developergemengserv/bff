@@ -108,9 +108,7 @@ public interface TejrajQhseService {
                                                  @RequestParam("device_code") String device_code);
 
     @RequestMapping(value = "/rest/v1/logout", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("version") String version,
-                                               @RequestParam("device_code") String device_code);
-
+    ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("webCall") boolean webCall);
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
     ResponseEntity<Object> userDetails(@RequestParam("user_id") int user_id,
@@ -947,4 +945,15 @@ public interface TejrajQhseService {
 
     @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getEquipments();
+
+    @RequestMapping(value = "/uploadEquipmentChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> uploadEquipmentChecklist(@RequestParam(value = "userId") int userId,
+                                                        @RequestParam(value = "file") MultipartFile file);
+
+    @RequestMapping(value = "/uploadHazardChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> uploadHazardChecklist(@RequestParam(value = "userId") int userId,
+                                                     @RequestParam(value = "file") MultipartFile file);
+
 }
