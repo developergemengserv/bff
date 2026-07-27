@@ -98,9 +98,8 @@ public class TejrajQhseController {
     }
 
     @RequestMapping(value = "/rest/v1/logout", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("version") String version,
-                                                      @RequestParam("device_code") String device_code) {
-        return tejrajQhseService.logout(user_id, version, device_code);
+    public ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id, @RequestParam("webCall") boolean webCall) {
+        return tejrajQhseService.logout(user_id, webCall);
     }
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)
@@ -1260,5 +1259,21 @@ public class TejrajQhseController {
     @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getEquipments() {
         return tejrajQhseService.getEquipments();
+    }
+
+    @RequestMapping(value = "/uploadEquipmentChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> uploadEquipmentChecklist(@RequestParam(value = "userId") int userId,
+                                                        @RequestParam(value = "file") MultipartFile file)
+    {
+        return tejrajQhseService.uploadEquipmentChecklist(userId, file);
+    }
+
+    @RequestMapping(value = "/uploadHazardChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> uploadHazardChecklist(@RequestParam(value = "userId") int userId,
+                                                     @RequestParam(value = "file") MultipartFile file)
+    {
+        return tejrajQhseService.uploadHazardChecklist(userId, file);
     }
 }
