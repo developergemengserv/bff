@@ -131,7 +131,7 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -548,13 +548,13 @@ public interface GroundHoldingSafetyService
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam("eventId") Integer eventId,
                                                @RequestParam("eventName") String eventName,
-                                               @RequestParam("file") MultipartFile[] files);
+                                               @RequestPart("file") MultipartFile[] files);
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                @RequestParam("file") MultipartFile[] files);
+                                                @RequestPart("file") MultipartFile[] files);
     @RequestMapping(value = "/safety/findUsersByProjectIdAndRoleId", method = RequestMethod.GET)
     ResponseEntity<Object> findUsersByProjectIdAndRoleId(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,

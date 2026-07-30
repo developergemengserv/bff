@@ -190,7 +190,7 @@ public class GroundHoldingSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return groundHoldingSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -818,7 +818,7 @@ public class GroundHoldingSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return groundHoldingSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
@@ -826,7 +826,7 @@ public class GroundHoldingSafetyController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestParam("file") MultipartFile[] files) {
+                                                       @RequestPart("file") MultipartFile[] files) {
         return groundHoldingSafetyService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 
