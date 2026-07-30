@@ -1264,7 +1264,7 @@ public class TejrajQhseController {
     @RequestMapping(value = "/uploadEquipmentChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     @ResponseBody // Make sure this is present if you aren't using @RestController
     public Map<String, Object> uploadEquipmentChecklist(@RequestParam(value = "userId") int userId,
-                                                        @RequestParam(value = "file") MultipartFile file)
+                                                        @RequestPart(value = "file") MultipartFile file)
     {
         return tejrajQhseService.uploadEquipmentChecklist(userId, file);
     }
@@ -1272,7 +1272,7 @@ public class TejrajQhseController {
     @RequestMapping(value = "/uploadHazardChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     @ResponseBody // Make sure this is present if you aren't using @RestController
     public Map<String, Object> uploadHazardChecklist(@RequestParam(value = "userId") int userId,
-                                                     @RequestParam(value = "file") MultipartFile file)
+                                                     @RequestPart(value = "file") MultipartFile file)
     {
         return tejrajQhseService.uploadHazardChecklist(userId, file);
     }
