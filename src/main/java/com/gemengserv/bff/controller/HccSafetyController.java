@@ -584,7 +584,7 @@ public class HccSafetyController
         return hccSafetyService.findSafetyObservation(userId, token, lastSync, request);
     }
 
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestParam(value = "lastSync", required = false) String lastSync,
@@ -1212,5 +1212,30 @@ public class HccSafetyController
                                                       @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
     {
         return hccSafetyService.getDataForObsReport(userId, token, obsId, webCall);
+    }
+
+    @RequestMapping(value = "/addMember", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> addMember(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestBody Object memberRequest)
+    {
+        return hccSafetyService.addMember(userId, token, memberRequest);
+    }
+
+    @RequestMapping(value = "/updateMember", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> updateMember(@RequestHeader(value = "userId") Integer userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestBody Object memberUpdateRequest)
+    {
+        return hccSafetyService.updateMember(userId, token, memberUpdateRequest);
+    }
+
+    @GetMapping(value = "/getMembers")
+    public ResponseEntity<List<Object>> getMembers(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId)
+    {
+        return hccSafetyService.getMembers(userId, token, projectId);
     }
 }
