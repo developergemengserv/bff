@@ -1238,4 +1238,30 @@ public class HccSafetyController
     {
         return hccSafetyService.getMembers(userId, token, projectId);
     }
+
+    @RequestMapping(value = "/addLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> addLocation(@RequestHeader(value = "userId") Integer userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object location)
+    {
+        return hccSafetyService.addLocation(userId, token, location);
+    }
+
+    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> updateLocation(@RequestHeader(value = "userId") Integer userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object location)
+    {
+        return hccSafetyService.updateLocation(userId, token, location);
+    }
+
+    @GetMapping(value = "/getLocations")
+    public ResponseEntity<List<Object>> getLocations(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId)
+    {
+        return hccSafetyService.getLocations(userId, token, projectId);
+    }
+
 }

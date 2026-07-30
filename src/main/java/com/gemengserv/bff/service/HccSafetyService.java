@@ -959,4 +959,21 @@ public interface HccSafetyService
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
+
+    @RequestMapping(value = "/addLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> addLocation(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestBody Object location);
+
+    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> updateLocation(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestBody Object location);
+
+    @GetMapping(value = "/getLocations")
+    public ResponseEntity<List<Object>> getLocations(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
+
 }
