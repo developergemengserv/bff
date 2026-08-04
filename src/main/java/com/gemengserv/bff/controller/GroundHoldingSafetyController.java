@@ -590,7 +590,7 @@ public class GroundHoldingSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return groundHoldingSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API

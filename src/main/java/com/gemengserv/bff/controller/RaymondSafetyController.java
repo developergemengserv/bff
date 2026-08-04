@@ -951,7 +951,7 @@ public class RaymondSafetyController
         return raymondSafetyService.saveIncident(userId, token, request);
     }
 
-    @RequestMapping(value = "/safety/incident_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     public ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
