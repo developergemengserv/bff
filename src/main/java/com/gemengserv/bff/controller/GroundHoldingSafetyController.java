@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -116,7 +115,7 @@ public class GroundHoldingSafetyController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file)
+                                           @RequestPart(value = "file") MultipartFile file)
     {
         return groundHoldingSafetyService.uploadSignature(userId, token, file);
     }
@@ -190,7 +189,7 @@ public class GroundHoldingSafetyController
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file)
+                                         @RequestPart(value = "file") MultipartFile file)
     {
         return groundHoldingSafetyService.uploadHazards(userId, token, projectId, file);
     }
@@ -216,11 +215,10 @@ public class GroundHoldingSafetyController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return groundHoldingSafetyService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return groundHoldingSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
 // Observation Master Controller
@@ -228,12 +226,11 @@ public class GroundHoldingSafetyController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return groundHoldingSafetyService.getAllObservationsFromDB(page, pageSize, request, userId, token, lastSync);
+        return groundHoldingSafetyService.getAllObservationsFromDB(page, pageSize, userId, token, lastSync);
     }
 
     // Progress Report Controller
@@ -592,7 +589,7 @@ public class GroundHoldingSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return groundHoldingSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
@@ -820,7 +817,7 @@ public class GroundHoldingSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return groundHoldingSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
@@ -828,7 +825,7 @@ public class GroundHoldingSafetyController
     public ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                        @RequestHeader(value = "token") String token,
                                                        @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                       @RequestParam("file") MultipartFile[] files) {
+                                                       @RequestPart("file") MultipartFile[] files) {
         return groundHoldingSafetyService.uploadCheckListMedia(userId, token, checklistAnswerId, files);
     }
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -116,7 +115,7 @@ public class IndospaceSafetyController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file)
+                                           @RequestPart(value = "file") MultipartFile file)
     {
         return indospaceSafetyService.uploadSignature(userId, token, file);
     }
@@ -191,11 +190,10 @@ public class IndospaceSafetyController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return indospaceSafetyService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return indospaceSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
 // Observation Master Controller
@@ -203,12 +201,11 @@ public class IndospaceSafetyController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return indospaceSafetyService.getAllObservationsFromDB(page, pageSize, request, userId, token, lastSync);
+        return indospaceSafetyService.getAllObservationsFromDB(page, pageSize, userId, token, lastSync);
     }
 
     // Progress Report Controller

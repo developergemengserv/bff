@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.gemengserv.bff.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -200,7 +198,7 @@ public interface GroundHoldingQcService
     @RequestMapping(value = "/rest/v1/upload/signature", method = RequestMethod.POST)
     ResponseEntity<Object> uploadSignature(@RequestParam("user_id") int user_id,
                                            @RequestParam("token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/rest/v1/common/getUnitMaster", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getUnitMaster(@RequestParam("user_id") int userId,
@@ -217,7 +215,7 @@ public interface GroundHoldingQcService
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Map<String, Object>> loginAPI(@RequestParam("username") String username,
@@ -435,7 +433,7 @@ public interface GroundHoldingQcService
     ResponseEntity<LinkedHashMap<String, Object>> getMaterials(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page, @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize, @RequestParam(value = "project_id", defaultValue = "0", required = false) int project_id, @RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
     @RequestMapping(value = "/material/master/{pid}", method = RequestMethod.GET)
-    ModelAndView materialMaster(@PathVariable("pid") int project_id, HttpServletRequest request);
+    ModelAndView materialMaster(@PathVariable("pid") int project_id);
 
     @RequestMapping(value = "/material_test/find", method = RequestMethod.GET)
     Object getAllMaterialTests();
@@ -481,7 +479,6 @@ public interface GroundHoldingQcService
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                                         @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                                        HttpServletRequest request,
                                                                         @RequestParam("user_id") int user_id,
                                                                         @RequestParam("token") String token);
 
@@ -518,7 +515,6 @@ public interface GroundHoldingQcService
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
 
@@ -535,7 +531,7 @@ public interface GroundHoldingQcService
     ModelAndView projectById(@RequestParam("pid") int project_id);
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    ModelAndView projects(HttpServletRequest request);
+    ModelAndView projects();
 
 //    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
 //    ModelAndView addProject(@RequestParam("project") Object project,
@@ -571,12 +567,12 @@ public interface GroundHoldingQcService
 
     // Report Controller
 
-    @RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/rest/v1/crfi/report", method = RequestMethod.GET)
 //  String buildCRFIReport(ActivityInspection activityInspection, List<Integer> userIds, ProjectService projectService, UserService userService, CommonService commonService, ActivityMasterService activityMasterService, LocationMasterService locationMasterService, ActivityRequestService activityRequestService, ConfigProperties configProperties) {
     String buildCRFIReport(Object projectService, Object userService,
                            Object commonService, Object activityMasterService,
                            Object locationMasterService, Object activityRequestService,
-                           Object configProperties);
+                   `        Object configProperties);*/
 
     @RequestMapping(value = "/rest/v1/ncr/report", method = RequestMethod.GET)
     String buildNCRReport();
@@ -592,14 +588,14 @@ public interface GroundHoldingQcService
     @RequestMapping(value = "/rest/v1/obs/escalation/report", method = RequestMethod.GET)
     void escalationOBSReport() throws Exception;
 
-    @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/rest/v1/orl/report", method = RequestMethod.GET)
 //  String ORLMonthlyReport() {
     String ORLMonthlyReport(Object projectService, Object userService,
                             Object activityRequestService, Object materialInspectionRequestService,
                             Object commonService, Object ncrMainService, Object observationRequestService,
                             Object activityMasterService, Object locationMasterService, Object observationMasterService,
                             Object materialMasterService, Object configProperties, Object commonController);
-
+*/
     @RequestMapping(value = "/rest/v1/crfi/RFIReport", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getDataForRFIReport(@RequestParam(value = "user_id") int userId,
                                                             @RequestParam(value = "token") String token,
@@ -622,45 +618,41 @@ public interface GroundHoldingQcService
     ResponseEntity<Object> getUser(@PathVariable("uid") int user_id);
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
-    ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response);
+    ModelAndView logoutPage ();
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     ModelAndView users();
 
-    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/user/{pid}/{uid}", method = { RequestMethod.GET})
     ModelAndView userById(@PathVariable("uid") String user_ids,
-                          @PathVariable("pid") int project_id,
-                          HttpServletRequest request);
+                          @PathVariable("pid") int project_id
+                          );
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     ModelAndView addUser(@ModelAttribute("user") Object user,
-                         BindingResult result,
                          @RequestParam("pid") int project_id,
-                         @RequestParam("role_id") int role_id,
-                         HttpServletRequest request);
+                         @RequestParam("role_id") int role_id);
 
-    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/deleteUser", method = { RequestMethod.GET})
     ModelAndView deleteUser(@RequestParam("uid") int user_id,
                             @RequestParam("pid") int project_id,
                             RedirectAttributes redirectAttributes);
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     ModelAndView updateUser(@ModelAttribute("user") Object user,
-                            BindingResult bindingResult,
                             @RequestParam("pid") int project_id);
 
-    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/projectMembers/{id}", method = { RequestMethod.GET})
     ModelAndView usersByProject(@PathVariable("id") int project_id);
 
     @RequestMapping(value = "/updateProjectMembers", method = RequestMethod.POST)
     ModelAndView updateProjectMembers(@ModelAttribute("project_Members") Object project_Members,
-                                      BindingResult result, @RequestParam("userIds") String userIds);
+                                      @RequestParam("userIds") String userIds);
 
     @RequestMapping(value = "/addProjectMembers", method = RequestMethod.POST)
     ModelAndView addProjectMembers(@RequestParam("user_id") List<Integer> user_id,
                                    @RequestParam("pid") int project_id,
-                                   @RequestParam("role_id") int role_id,
-                                   HttpServletRequest request);
+                                   @RequestParam("role_id") int role_id);
 
     @RequestMapping(value="/checkEmailPhoneNo", method=RequestMethod.GET)
     String checkEmailPhoneNo(@RequestParam("name") String name,
@@ -668,9 +660,9 @@ public interface GroundHoldingQcService
 
     // Weekly Report Controller
 
-    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
-    void WeeklyReport(Object projectService, Object activityRequestService,
-                      Object configProperties) throws Exception;
+//    @RequestMapping(value = "/rest/v1/weekly/report", method = RequestMethod.GET)
+//    void WeeklyReport(Object projectService, Object activityRequestService,
+//                      Object configProperties) throws Exception;
 
 
 }

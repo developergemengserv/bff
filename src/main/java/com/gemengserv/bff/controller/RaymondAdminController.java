@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -242,8 +241,8 @@ public class RaymondAdminController {
             @RequestParam(value = "project_id", required = true) int pid,
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
             @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-            HttpServletRequest request, @RequestParam("user_id") int user_id, @RequestParam("token") String token) {
-        return raymondAdminService.getAllLocationsFromDB(pid, page, pageSize, request, user_id, token);
+            @RequestParam("user_id") int user_id, @RequestParam("token") String token) {
+        return raymondAdminService.getAllLocationsFromDB(pid, page, pageSize, user_id, token);
     }
 
     @RequestMapping(value = "/rest/api/v1/location/db/findall", method = RequestMethod.GET)

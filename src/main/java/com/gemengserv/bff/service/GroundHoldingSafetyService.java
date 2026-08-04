@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -83,7 +82,7 @@ public interface GroundHoldingSafetyService
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Object> loginAPI(@RequestParam("username") String username,
@@ -131,7 +130,7 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -149,7 +148,6 @@ public interface GroundHoldingSafetyService
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
 
@@ -158,7 +156,6 @@ public interface GroundHoldingSafetyService
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync);
@@ -550,13 +547,13 @@ public interface GroundHoldingSafetyService
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam("eventId") Integer eventId,
                                                @RequestParam("eventName") String eventName,
-                                               @RequestParam("file") MultipartFile[] files);
+                                               @RequestPart("file") MultipartFile[] files);
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestParam("checklistAnswerId") Integer checklistAnswerId,
-                                                @RequestParam("file") MultipartFile[] files);
+                                                @RequestPart("file") MultipartFile[] files);
     @RequestMapping(value = "/safety/findUsersByProjectIdAndRoleId", method = RequestMethod.GET)
     ResponseEntity<Object> findUsersByProjectIdAndRoleId(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,

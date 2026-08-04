@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -117,7 +116,7 @@ public class HccSafetyController
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file)
+                                           @RequestPart(value = "file") MultipartFile file)
     {
         return hccSafetyService.uploadSignature(userId, token, file);
     }
@@ -237,11 +236,10 @@ public class HccSafetyController
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token)
     {
-        return hccSafetyService.getAllLocationsFromDB(pid,page,pageSize,request,user_id,token);
+        return hccSafetyService.getAllLocationsFromDB(pid,page,pageSize,user_id,token);
     }
 
     @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
@@ -258,12 +256,11 @@ public class HccSafetyController
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync)
     {
-        return hccSafetyService.getAllObservationsFromDB(page, pageSize, request, userId, token, lastSync);
+        return hccSafetyService.getAllObservationsFromDB(page, pageSize, userId, token, lastSync);
     }
 
     // Progress Report Controller
@@ -586,7 +583,7 @@ public class HccSafetyController
         return hccSafetyService.findSafetyObservation(userId, token, lastSync, request);
     }
 
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestParam(value = "lastSync", required = false) String lastSync,
@@ -608,7 +605,7 @@ public class HccSafetyController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return hccSafetyService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
@@ -836,7 +833,7 @@ public class HccSafetyController
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestParam("eventId") Integer eventId,
                                                       @RequestParam("eventName") String eventName,
-                                                      @RequestParam("file") MultipartFile[] files) {
+                                                      @RequestPart("file") MultipartFile[] files) {
         return hccSafetyService.uploadMultipleFiles(userId, token, eventId, eventName, files);
     }
 
@@ -1166,4 +1163,104 @@ public class HccSafetyController
     {
         return hccSafetyService.getUnitMasterById(userId, token, unitMasterId);
     }
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> createQCObservation(@RequestHeader(value = "userId") Integer userId,
+                                                                   @RequestHeader(value = "token") String token,
+                                                                   @RequestBody Object obsRequest)
+    {
+        return hccSafetyService.createQCObservation(userId, token, obsRequest);
+    }
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getObs(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestParam(value = "obsId") long obsId,
+                                                      @RequestParam(value = "projectId") long projectId)
+    {
+        return hccSafetyService.getObs(userId, token, obsId, projectId);
+    }
+
+    @RequestMapping(value = "/qc/filter/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+                                               @RequestHeader(value = "token") String token,
+                                               @RequestBody Object filterObsRequest)
+    {
+        return hccSafetyService.getObsFilter(userId, token, filterObsRequest);
+    }
+
+    @RequestMapping(value = "/qc/obs", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateOBS(@RequestHeader(value = "userId") int userId,
+                                            @RequestHeader(value = "token") String token,
+                                            @RequestBody Object obsUpdateRequest){
+        return hccSafetyService.updateOBS(userId, token, obsUpdateRequest);
+    }
+
+    @RequestMapping(value = "/qc/obsDetails", method = RequestMethod.GET)
+    public ResponseEntity<Object> getOBSDetails(@RequestHeader(value = "userId") int userId,
+                                                       @RequestHeader(value = "token") String token,
+                                                       @RequestParam(value = "obsId") long obsId)
+    {
+        return hccSafetyService.getOBSDetails(userId, token, obsId);
+    }
+
+    @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDataForObsReport(@RequestParam(value = "user_id") int userId,
+                                                      @RequestParam(value = "token") String token,
+                                                      @RequestParam(value = "obsId",required = true) int obsId,
+                                                      @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
+    {
+        return hccSafetyService.getDataForObsReport(userId, token, obsId, webCall);
+    }
+
+    @RequestMapping(value = "/addMember", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> addMember(@RequestHeader(value = "userId") Integer userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestBody Object memberRequest)
+    {
+        return hccSafetyService.addMember(userId, token, memberRequest);
+    }
+
+    @RequestMapping(value = "/updateMember", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> updateMember(@RequestHeader(value = "userId") Integer userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestBody Object memberUpdateRequest)
+    {
+        return hccSafetyService.updateMember(userId, token, memberUpdateRequest);
+    }
+
+    @GetMapping(value = "/getMembers")
+    public ResponseEntity<List<Object>> getMembers(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId)
+    {
+        return hccSafetyService.getMembers(userId, token, projectId);
+    }
+
+    @RequestMapping(value = "/addLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> addLocation(@RequestHeader(value = "userId") Integer userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object location)
+    {
+        return hccSafetyService.addLocation(userId, token, location);
+    }
+
+    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST)
+    public ResponseEntity<Object> updateLocation(@RequestHeader(value = "userId") Integer userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object location)
+    {
+        return hccSafetyService.updateLocation(userId, token, location);
+    }
+
+    @GetMapping(value = "/getLocations")
+    public ResponseEntity<List<Object>> getLocations(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId)
+    {
+        return hccSafetyService.getLocations(userId, token, projectId);
+    }
+
 }

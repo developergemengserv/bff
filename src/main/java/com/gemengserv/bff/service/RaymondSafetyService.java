@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -83,7 +82,7 @@ public interface RaymondSafetyService
     @PostMapping(value = "/rest/v1/upload/signature", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadSignature(@RequestHeader(value = "userId") Integer userId,
                                            @RequestHeader(value = "token") String token,
-                                           @RequestParam(value = "file") MultipartFile file);
+                                           @RequestPart(value = "file") MultipartFile file);
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Object> loginAPI(@RequestParam("username") String username,
@@ -114,7 +113,7 @@ public interface RaymondSafetyService
     @GetMapping(value = "/getEmergencyHelpline")
     ResponseEntity<List<Object>> getAllEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,
-                                                         int projectId);
+                                                         @RequestParam(value = "projectId") int projectId);
 
     // Hazards Controller
 
@@ -140,7 +139,6 @@ public interface RaymondSafetyService
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                              HttpServletRequest request,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
 
@@ -156,7 +154,6 @@ public interface RaymondSafetyService
     @RequestMapping(value = "/rest/v1/observation/master/db/findall", method = RequestMethod.GET)
     ResponseEntity<Object> getAllObservationsFromDB(@RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                     @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-                                                    HttpServletRequest request,
                                                     @RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "lastSync", required = false) String lastSync);
@@ -683,7 +680,7 @@ public interface RaymondSafetyService
                                         @RequestHeader(value = "token") String token,
                                         @RequestBody Object request);
 
-    @RequestMapping(value = "/safety/incident_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                               @RequestHeader(value = "token") String token,
                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
