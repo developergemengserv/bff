@@ -1338,4 +1338,47 @@ public class TejrajQhseController
         return tejrajQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
     }
 
+    @RequestMapping(value = "/qc/mrfi", method = RequestMethod.POST)
+    public ResponseEntity<Object> createMrfi(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object mrfiRequest)
+    {
+        return tejrajQhseService.createMrfi(userId, token, mrfiRequest);
+    }
+
+    @RequestMapping(value = "/qc/mrfi", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMrfi(@RequestHeader(value = "userId") Integer userId,
+                                                  @RequestHeader(value = "token") String token,
+                                                  @RequestParam(value = "companyId") long companyId,
+                                                  @RequestParam(value = "projectId") int projectId,
+                                                  @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                  @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
+    {
+        return tejrajQhseService.getMrfi(userId, token, companyId, projectId, pageNum, pageSize);
+    }
+
+    @RequestMapping(value = "/qc/mrfi/checklist", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getMrfiChecklist(@RequestHeader(value = "userId") Integer userId,
+                                                                      @RequestHeader(value = "token") String token)
+    {
+        return tejrajQhseService.getMrfiChecklist(userId, token);
+    }
+
+    @RequestMapping(value = "/qc/mrfiDetails", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMrfiDetails(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "mrfiId") long mrfiId)
+    {
+        return tejrajQhseService.getMrfiDetails(userId, token, mrfiId);
+    }
+
+    @RequestMapping(value = "/qc/mrfi", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateMrfi(@RequestHeader(value = "userId") int userId,
+                                                           @RequestHeader(value = "token") String token,
+                                                           @RequestBody Object mrfiUpdateRequest)
+    {
+        return tejrajQhseService.updateMrfi(userId, token, mrfiUpdateRequest);
+    }
 }
