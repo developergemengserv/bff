@@ -160,7 +160,7 @@ public interface GemQcService
                                                      @RequestParam("token") String token,
                                                      @RequestParam("event_id") int eventId,
                                                      @RequestParam("event_name") String eventName,
-                                                     @RequestParam("file") MultipartFile[] files,
+                                                     @RequestPart("file") MultipartFile[] files,
                                                      @RequestParam(value = "comment", required = false, defaultValue = "--") String comment);
 
     @RequestMapping(value = "/rest/v1/userDetails", method = RequestMethod.GET)

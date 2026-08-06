@@ -52,7 +52,7 @@ public class AshrayQhseController
     }
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
-    public String addActivities(@RequestParam(value = "file") MultipartFile file,
+    public String addActivities(@RequestPart(value = "file") MultipartFile file,
                                 @RequestParam(value = "userId") int userId)
     {
         return ashrayQhseService.addActivities(file,userId);
@@ -60,7 +60,7 @@ public class AshrayQhseController
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file)
+                               @RequestPart(value = "file") MultipartFile file)
     {
         return ashrayQhseService.addLocations(userId,file);
     }
@@ -708,7 +708,7 @@ public class AshrayQhseController
     public ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file)
+                                                @RequestPart(value = "file") MultipartFile file)
     {
         return ashrayQhseService.uploadHazards(userId,token,projectId,file);
     }
@@ -749,7 +749,7 @@ public class AshrayQhseController
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file,
+                               @RequestPart(value = "file") MultipartFile file,
                                @RequestParam(value = "projectId") int projectId)
     {
         return ashrayQhseService.addLocations(userId,file,projectId);
@@ -757,7 +757,7 @@ public class AshrayQhseController
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
     public Map<String, Integer> checklistDataUpload(
-            @RequestParam(value = "file") MultipartFile file,
+            @RequestPart(value = "file") MultipartFile file,
             @RequestParam(value = "userId") int userId)
     {
         return ashrayQhseService.checklistDataUpload(file,userId);
@@ -1310,4 +1310,39 @@ public class AshrayQhseController
         return ashrayQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
     }
 
+    @RequestMapping(value = "/addHazard", method = RequestMethod.POST)
+    public Map<String, Object> addHazard(@RequestParam(value = "label") String label) {
+        return ashrayQhseService.addHazard(label);
+    }
+
+    @RequestMapping(value = "/addEquipment", method = RequestMethod.POST)
+    public Map<String, Object> addEQ(@RequestParam(value = "label") String label) {
+        return ashrayQhseService.addEQ(label);
+    }
+
+    @RequestMapping(value = "/updateHazard", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateHazard(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id) {
+        return ashrayQhseService.updateHazard(label, id);
+    }
+
+    @RequestMapping(value = "/updateEquipment", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateEQ(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id) {
+        return ashrayQhseService.updateEQ(label, id);
+    }
+
+    @RequestMapping(value = "/getHazards", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getHazards() {
+        return ashrayQhseService.getHazards();
+    }
+
+    @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getEquipments() {
+        return ashrayQhseService.getEquipments();
+    }
 }

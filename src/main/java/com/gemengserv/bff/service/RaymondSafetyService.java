@@ -44,7 +44,7 @@ public interface RaymondSafetyService
                                                         @RequestParam(value = "lastSync", required = false) String lastSync);
 
 
-   // Activity Unit Mapping Controller
+    // Activity Unit Mapping Controller
 
     @GetMapping(value = "activityUnitMapping")
     List<Object> getAllActivityUnitMapping();
@@ -86,13 +86,13 @@ public interface RaymondSafetyService
 
     @PostMapping("/rest/v2/login")
     ResponseEntity<Object> loginAPI(@RequestParam("username") String username,
-                               @RequestParam("password") String password);
+                                    @RequestParam("password") String password);
 
     @PostMapping("/rest/v1/users/userinfo")
     ResponseEntity<Object> addDeviceTokenAndAppVersion(@RequestHeader("user_id") int userId,
-                                                  @RequestHeader("token") String token,
-                                                  @RequestParam("deviceToken") String deviceToken,
-                                                  @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion);
+                                                       @RequestHeader("token") String token,
+                                                       @RequestParam("deviceToken") String deviceToken,
+                                                       @RequestParam(value = "appVersion", defaultValue = "1", required = false) String appVersion);
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Object> registerUser(@RequestBody Object userRegisterRequest);
@@ -100,20 +100,12 @@ public interface RaymondSafetyService
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE, produces = {"application/json"})
     ResponseEntity<Object> registerUser(@RequestParam(value = "user_id") Integer userId);
 
-    @RequestMapping(value = "/gatePassEntry", method = RequestMethod.POST, produces = {"application/json"})
-    ResponseEntity<Map<String, Object>> gatePassEntry(@RequestBody Object gatePassRequest) throws Exception;
-
-    @RequestMapping(value = "/media/imageUpload", method = RequestMethod.POST)
-    ResponseEntity<Map<String, Object>> uploadImage( @RequestParam("type") String type,
-                                                            @RequestParam("gp_id") int gpId,
-                                                            @RequestParam(value = "file") MultipartFile file);
-
     // Emergency HelpLine Controller
 
     @GetMapping(value = "/getEmergencyHelpline")
     ResponseEntity<List<Object>> getAllEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,
-                                                         @RequestParam(value = "projectId") int projectId);
+                                                         int projectId);
 
     // Hazards Controller
 
@@ -121,7 +113,7 @@ public interface RaymondSafetyService
     ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                          @RequestHeader(value = "token") String token,
                                          @PathVariable(value = "projectId") Integer projectId,
-                                         @RequestParam(value = "file") MultipartFile file);
+                                         @RequestPart(value = "file") MultipartFile file);
 
     @GetMapping(value = "/getHazardsByProjectId/{project_id}")
     ResponseEntity<List<Object>> getHazardsByProjectId(@RequestHeader(value = "user_id") Integer userId,
@@ -135,19 +127,12 @@ public interface RaymondSafetyService
     ResponseEntity<Map<String, Object>> findLocation(@RequestBody String data,
                                                      @RequestParam(value = "lastSync", required = false) String lastSync);
 
-    @RequestMapping(value = "/rest/v1/location/db/findall_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllLocationsFromDB(@RequestParam(value = "project_id", required = true) int pid,
                                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
                                                               @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
                                                               @RequestParam("user_id") int user_id,
                                                               @RequestParam("token") String token);
-
-    @RequestMapping(value = "/rest/v1/location/db/findall", method = RequestMethod.GET)
-    ResponseEntity<Object> getAllLocationsFromSP(@RequestParam(value = "project_id", required = true) int pid,
-            @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-            @RequestParam("user_id") int user_id, @RequestParam("token") String token);
-
 
     // Observation Master Controller
 
@@ -179,7 +164,9 @@ public interface RaymondSafetyService
     @RequestMapping(value = "/rest/v1/projects", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
                                                      @RequestParam("token") String token,
-                                                     @RequestParam(value = "lastSync", required = false) String lastSync) throws JsonParseException, JsonMappingException, IOException;
+                                                     @RequestParam(value = "lastSync", required = false) String lastSync,
+                                                     @RequestParam(value = "zoneId", required = false, defaultValue = "0") int zoneId,
+                                                     @RequestParam(value = "fundId", required = false, defaultValue = "0") int fundId) throws JsonParseException, JsonMappingException, IOException;
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     ModelAndView projectById(@RequestParam("pid") int project_id);
@@ -190,7 +177,7 @@ public interface RaymondSafetyService
     void rorReport();
 
     @RequestMapping(value = "/ptwReport", method = RequestMethod.POST)
-    void ptwReport(@RequestBody Object ptwReportRequest);
+    ResponseEntity<Object> ptwReport(@RequestBody Object ptwReportRequest);
 
     @RequestMapping(value = "/safetyObsReport", method = RequestMethod.GET)
     void safetyObsReport();
@@ -211,10 +198,10 @@ public interface RaymondSafetyService
                                                 @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId);
 
     @RequestMapping(value = "/safetyTbtExcelReport", method = RequestMethod.GET)
-     ResponseEntity<Object> safetyTbtExcelReport(@RequestParam(value = "fromDate") String fromDate,
-                                                 @RequestParam(value = "toDate") String toDate,
-                                                 @RequestParam(value = "userId") Integer userId,
-                                                 @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId);
+    ResponseEntity<Object> safetyTbtExcelReport(@RequestParam(value = "fromDate") String fromDate,
+                                                @RequestParam(value = "toDate") String toDate,
+                                                @RequestParam(value = "userId") Integer userId,
+                                                @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId);
 
     @RequestMapping(value = "/safetyMeetingExcelReport", method = RequestMethod.GET)
     ResponseEntity<Object> safetyMeetingExcelReport(@RequestParam(value = "fromDate") String fromDate,
@@ -352,17 +339,11 @@ public interface RaymondSafetyService
                                                    @RequestHeader(value = "token") String token,
                                                    @RequestBody Object updateRequest);
 
-    @RequestMapping(value = "/safety/obs/find_old", method = RequestMethod.POST)
+    @RequestMapping(value = "/safety/obs/find", method = RequestMethod.POST)
     ResponseEntity<Object> findSafetyObservation(@RequestHeader(value = "userId") Integer userId,
                                                  @RequestHeader(value = "token") String token,
                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
                                                  @RequestBody Object request);
-
-    @RequestMapping(value = "/obs/find", method = RequestMethod.POST)
-    ResponseEntity<Object> findSafetyObservations(@RequestHeader(value = "userId") Integer userId,
-                                                  @RequestHeader(value = "token") String token,
-                                                  @RequestParam(value = "lastSync", required = false) String lastSync,
-                                                  @RequestBody Object request);
 
 
     @RequestMapping(value = "/safety/obs/find/{obsId}", method = RequestMethod.GET)
@@ -534,7 +515,7 @@ public interface RaymondSafetyService
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam("eventId") Integer eventId,
                                                @RequestParam("eventName") String eventName,
-                                               @RequestParam("file") MultipartFile[] files);
+                                               @RequestPart("file") MultipartFile[] files);
 
     @PostMapping(value = "/safety/uploadCheckListMedia", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadCheckListMedia(@RequestHeader(value = "userId") Integer userId,
@@ -645,7 +626,6 @@ public interface RaymondSafetyService
                                          @RequestParam int projectId);
 
     // Good Practices
-
     @PostMapping(value = "/safety/safetyGoodPractices")
     ResponseEntity<Object> saveGoodPractices(@RequestHeader(value = "userId") Integer userId,
                                              @RequestHeader(value = "token") String token,

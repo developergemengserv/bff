@@ -53,7 +53,7 @@ public class AshwinshethQhseController {
     }
 
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
-    public String addActivities(@RequestParam(value = "file") MultipartFile file,
+    public String addActivities(@RequestPart(value = "file") MultipartFile file,
                                 @RequestParam(value = "userId") int userId)
     {
         return ashwinshethQhseService.addActivities(file,userId);
@@ -61,7 +61,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/addActivitiesChecklist", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file)
+                               @RequestPart(value = "file") MultipartFile file)
     {
         return ashwinshethQhseService.addLocations(userId,file);
     }
@@ -709,7 +709,7 @@ public class AshwinshethQhseController {
     public ResponseEntity<Object> uploadHazards(@RequestHeader(value = "userId") Integer userId,
                                                 @RequestHeader(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file)
+                                                @RequestPart(value = "file") MultipartFile file)
     {
         return ashwinshethQhseService.uploadHazards(userId,token,projectId,file);
     }
@@ -750,7 +750,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/addLocations", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addLocations(@RequestParam(value = "userId") int userId,
-                               @RequestParam(value = "file") MultipartFile file,
+                               @RequestPart(value = "file") MultipartFile file,
                                @RequestParam(value = "projectId") int projectId)
     {
         return ashwinshethQhseService.addLocations(userId,file,projectId);
@@ -758,7 +758,7 @@ public class AshwinshethQhseController {
 
     @RequestMapping(value = "/checklistDataUpload", consumes = "multipart/form-data", method = RequestMethod.POST)
     public Map<String, Integer> checklistDataUpload(
-            @RequestParam(value = "file") MultipartFile file,
+            @RequestPart(value = "file") MultipartFile file,
             @RequestParam(value = "userId") int userId)
     {
         return ashwinshethQhseService.checklistDataUpload(file,userId);
@@ -1310,5 +1310,40 @@ public class AshwinshethQhseController {
         return ashwinshethQhseService.addDeviceTokenAndAppVersion(userId, token, deviceToken, appVersion);
     }
 
+    @RequestMapping(value = "/addHazard", method = RequestMethod.POST)
+    public Map<String, Object> addHazard(@RequestParam(value = "label") String label) {
+        return ashwinshethQhseService.addHazard(label);
+    }
+
+    @RequestMapping(value = "/addEquipment", method = RequestMethod.POST)
+    public Map<String, Object> addEQ(@RequestParam(value = "label") String label) {
+        return ashwinshethQhseService.addEQ(label);
+    }
+
+    @RequestMapping(value = "/updateHazard", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateHazard(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id) {
+        return ashwinshethQhseService.updateHazard(label, id);
+    }
+
+    @RequestMapping(value = "/updateEquipment", method = RequestMethod.POST)
+    @ResponseBody // Make sure this is present if you aren't using @RestController
+    public Map<String, Object> updateEQ(
+            @RequestParam(value = "label") String label,
+            @RequestParam(value = "id") int id) {
+        return ashwinshethQhseService.updateEQ(label, id);
+    }
+
+    @RequestMapping(value = "/getHazards", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getHazards() {
+        return ashwinshethQhseService.getHazards();
+    }
+
+    @RequestMapping(value = "/getEquipments", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getEquipments() {
+        return ashwinshethQhseService.getEquipments();
+    }
 }
 

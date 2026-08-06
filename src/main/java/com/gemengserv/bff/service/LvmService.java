@@ -153,7 +153,7 @@ public interface LvmService
     @RequestMapping(value = "/addTemplates", consumes = "multipart/form-data", method = RequestMethod.POST)
     ResponseEntity<Object> addTemplates(@RequestParam(value = "name") String name,
                                                @RequestParam(value = "userId") int userId,
-                                               @RequestParam(value = "file") MultipartFile file);
+                                               @RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/getTemplates", method = RequestMethod.GET)
     ResponseEntity<List<Object>> getTemplatesMaster();
@@ -213,7 +213,7 @@ public interface LvmService
                                                             @RequestParam(value = "project_id", required = false, defaultValue = "0") int projectId);
 
     @PostMapping(value = "/uploadProjectLogo")
-    ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file,
+    ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile file,
                                       @RequestParam("project_id") int projectId);
 
     @RequestMapping(value = "/updateProjectDetail", method = RequestMethod.PUT)
@@ -365,13 +365,13 @@ public interface LvmService
                                                      @RequestParam("year") int year);
 
     @PostMapping(value = "/uploadUsersBulk", consumes = "multipart/form-data")
-    ResponseEntity<Object> uploadUsers(@RequestParam(value = "file") MultipartFile file);
+    ResponseEntity<Object> uploadUsers(@RequestPart(value = "file") MultipartFile file);
 
     @RequestMapping(value = "/updateUserDetail", method = RequestMethod.PUT)
     ResponseEntity<Object> updateUserDetail(@RequestBody Object user);
 
     @PostMapping(value = "/uploadUserProfile")
-    ResponseEntity<Object> uploadUserProfile(@RequestParam("file") MultipartFile file,
+    ResponseEntity<Object> uploadUserProfile(@RequestPart("file") MultipartFile file,
                                                     @RequestParam("user_id") int userId);
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE)

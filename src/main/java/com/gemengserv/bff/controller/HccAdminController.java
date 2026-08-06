@@ -173,7 +173,7 @@ public class HccAdminController {
     public ResponseEntity<Map<String, Object>> uploadSignature(@RequestParam("user_id") int user_id,
                                                                @RequestParam("token") String token,
                                                                @RequestParam("company_id") int companyId,
-                                                               @RequestParam(value = "file") MultipartFile file) {
+                                                               @RequestPart(value = "file") MultipartFile file) {
         return hccAdminService.uploadSignature(user_id, token, companyId, file);
     }
 
@@ -261,7 +261,7 @@ public class HccAdminController {
     public ResponseEntity<Object> uploadHazards(@RequestParam(value = "user_id") Integer userId,
                                                 @RequestParam(value = "token") String token,
                                                 @PathVariable(value = "projectId") Integer projectId,
-                                                @RequestParam(value = "file") MultipartFile file) {
+                                                @RequestPart(value = "file") MultipartFile file) {
         return hccAdminService.uploadHazards(userId, token, projectId, file);
     }
 
@@ -402,7 +402,7 @@ public class HccAdminController {
     public ResponseEntity<Map<String, Object>> uploadProjectLogo(@RequestParam("user_id") int user_id,
                                                                  @RequestParam("token") String token,
                                                                  @RequestParam("project_id") int project_id,
-                                                                 @RequestParam(value = "file") MultipartFile file) {
+                                                                 @RequestPart(value = "file") MultipartFile file) {
         return hccAdminService.uploadProjectLogo(user_id, token, project_id, file);
     }
 
@@ -768,7 +768,7 @@ public class HccAdminController {
     public ResponseEntity<Map<String, Object>> uploadUserSignature(@RequestParam("user_id") int user_id,
                                                                    @RequestParam("token") String token,
                                                                    @RequestParam("mapped_user_id") int mappedUserId,
-                                                                   @RequestParam(value = "file") MultipartFile file)
+                                                                   @RequestPart(value = "file") MultipartFile file)
     {
         return hccAdminService.uploadUserSignature(user_id, token, mappedUserId, file);
     }

@@ -236,7 +236,7 @@ public class GroundHoldingQcController
                                                             @RequestParam("token") String token,
                                                             @RequestParam("event_id") int eventId,
                                                             @RequestParam("event_name") String eventName,
-                                                            @RequestParam("file") MultipartFile[] files,
+                                                            @RequestPart("file") MultipartFile[] files,
                                                             @RequestParam(value = "comment", required = false, defaultValue = "--") String comment)
     {
         return groundHoldingQcService.uploadMultipleFileHandler(userId, token, eventId, eventName, files, comment);

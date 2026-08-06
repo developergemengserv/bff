@@ -107,23 +107,6 @@ public interface GroundHoldingSafetyService
                                                          @RequestHeader(value = "token") String token,
                                                          int projectId);
 
-    @PutMapping(value = "/updateEmergencyHelpline")
-    ResponseEntity<Object> updateEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                   @RequestHeader(value = "token") String token,
-                                                   @RequestBody Object emergencyHelplineRequest);
-
-
-    @PutMapping(value = "/deleteEmergencyHelpline")
-    ResponseEntity<Object> deleteEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                   @RequestHeader(value = "token") String token,
-                                                   @RequestParam(value = "id") int id);
-
-
-    @PostMapping(value = "/addEmergencyHelpline")
-    ResponseEntity<Object> addEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
-                                                @RequestHeader(value = "token") String token,
-                                                @RequestBody Object emergencyHelplineRequest);
-
     // Hazards Controller
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
@@ -312,21 +295,6 @@ public interface GroundHoldingSafetyService
                                              @RequestHeader("token") String token,
                                              @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(name = "requestType", required = true, defaultValue = "Mobile") String requestType);
-
-    @GetMapping("/downloadDebitPdf")
-    ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
-                                            @RequestHeader("token") String token,
-                                            @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId);
-
-    @RequestMapping(value = "/obsreport", method = RequestMethod.GET)
-    ResponseEntity<Map<String, Object>> getObsReport(@RequestParam(value = "user_id") int userId,
-                                                     @RequestParam(value = "token") String token,
-                                                     @RequestParam(value = "obsId",required = false) int obsId);
-    @GetMapping(value = "/findCompanyUsers")
-    ResponseEntity<List<Object>> findCompanyUsers(@RequestHeader(value = "userId") Integer userId,
-                                                  @RequestHeader(value = "token") String token);
-
-
 
     // Safe Man Hours Controller
 
@@ -664,7 +632,7 @@ public interface GroundHoldingSafetyService
                                              @RequestBody Object goodPracticesRequest);
 
     @GetMapping(value = "/safety/safetyGoodPractices")
-    ResponseEntity<List<Object>> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
+    ResponseEntity<Object> getGoodPractices(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token);
 
     // Master Data (Zones, Funds, Workers)
@@ -692,7 +660,7 @@ public interface GroundHoldingSafetyService
                                         @RequestHeader(value = "token") String token,
                                         @RequestBody Object request);
 
-    @RequestMapping(value = "/safety/incident_old", method = RequestMethod.GET)
+    @RequestMapping(value = "/safety/incident", method = RequestMethod.GET)
     ResponseEntity<Object> findSafetyIncident(@RequestHeader(value = "userId") Integer userId,
                                               @RequestHeader(value = "token") String token,
                                               @RequestParam(value = "page_num", defaultValue = "1", required = false) Integer page,
@@ -820,7 +788,7 @@ public interface GroundHoldingSafetyService
                                                    @PathVariable(value = "id") Integer tbtId);
 
     @GetMapping(value = "/SafetyTBTMaster")
-    ResponseEntity<List<Object>> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
+    ResponseEntity<Object> getSafetyTBTMaster(@RequestHeader(value = "userId") Integer userId,
                                               @RequestHeader(value = "token") String token);
 
     @PutMapping(value = "/updateSafetyTBT")
