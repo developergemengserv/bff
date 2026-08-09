@@ -1287,4 +1287,9 @@ public class HccSafetyController
         return hccSafetyService.getRoasters(userId,token,projectId);
     }
 
+    @RequestMapping(value = "/dashboard/counts", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDashboardCounts()
+    {
+        return hccSafetyService.getDashboardCounts();
+    }
 }

@@ -990,6 +990,7 @@ public interface HccSafetyService
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
 
-
+    @RequestMapping(value = "/dashboard/counts", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDashboardCounts();
 
 }

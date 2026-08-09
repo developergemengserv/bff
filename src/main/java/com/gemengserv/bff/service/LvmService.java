@@ -339,10 +339,10 @@ public interface LvmService
 
     // USer Controller
 
-    @RequestMapping(value = "user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     ResponseEntity<Object> createAuthenticationToken(@RequestBody Object authenticationRequest) throws Exception;
 
-    @RequestMapping(value = "user/validateOtp", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/validateOtp", method = RequestMethod.POST)
     ResponseEntity<Object> validateOtp(@RequestBody Object otpRequest) throws Exception;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)

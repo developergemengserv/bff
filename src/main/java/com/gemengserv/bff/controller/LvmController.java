@@ -640,13 +640,13 @@ public class LvmController
 
     // USer Controller
 
-    @RequestMapping(value = "user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody Object authenticationRequest) throws Exception
     {
         return lvmService.createAuthenticationToken(authenticationRequest);
     }
 
-    @RequestMapping(value = "user/validateOtp", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/validateOtp", method = RequestMethod.POST)
     public ResponseEntity<Object> validateOtp(@RequestBody Object otpRequest) throws Exception
     {
         return lvmService.validateOtp(otpRequest);
