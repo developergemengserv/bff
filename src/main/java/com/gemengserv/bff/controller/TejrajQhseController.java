@@ -11,9 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/tejraj")
@@ -211,7 +209,7 @@ public class TejrajQhseController {
         return tejrajQhseService.updateNcr(userId, token, qcNcrUpdateRequest);
     }
 
-    @RequestMapping(value = "/qc//filter/ncr", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/ncr", method = RequestMethod.POST)
     public ResponseEntity<Object> getNcrFilter(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object ncrFilterRequest) {
@@ -834,10 +832,10 @@ public class TejrajQhseController {
     }
 
     @RequestMapping(value = "/qc/filter/crfi", method = RequestMethod.POST)
-    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+    public ResponseEntity<Object> getCRFIFilter(@RequestHeader(value = "userId") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterCrfiRequest) {
-        return tejrajQhseService.getObsFilter(userId, token, filterCrfiRequest);
+        return tejrajQhseService.getCRFIFilter(userId, token, filterCrfiRequest);
     }
 
     // QC OBS API
@@ -878,6 +876,14 @@ public class TejrajQhseController {
                                                         @RequestParam(value = "obsId", required = true) int obsId,
                                                         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall) {
         return tejrajQhseService.getDataForQCObsReport(userId, token, obsId, webCall);
+    }
+
+    @RequestMapping(value = "/filter/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object filterObsRequest)
+    {
+        return tejrajQhseService.getObsFilter(userId, token, filterObsRequest);
     }
 
     @RequestMapping(value = "/qcStages", method = RequestMethod.GET)
@@ -1321,5 +1327,12 @@ public class TejrajQhseController {
                                              @RequestBody Object mrfiUpdateRequest)
     {
         return tejrajQhseService.updateMrfi(userId, token, mrfiUpdateRequest);
+    }
+
+    @RequestMapping(value = "/user/details", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
+                                         @RequestParam("token") String token)
+    {
+        return tejrajQhseService.getUserDetails(user_id,token);
     }
 }

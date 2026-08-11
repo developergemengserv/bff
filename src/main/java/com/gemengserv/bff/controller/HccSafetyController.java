@@ -1288,8 +1288,11 @@ public class HccSafetyController
     }
 
     @RequestMapping(value = "/dashboard/counts", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDashboardCounts()
+    public ResponseEntity<Object> getDashboardCounts(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "fromDate", required = false, defaultValue = "") String fromDate,
+                                                     @RequestParam(value = "toDate", required = false, defaultValue = "") String toDate)
     {
-        return hccSafetyService.getDashboardCounts();
+        return hccSafetyService.getDashboardCounts(userId, token, fromDate, toDate);
     }
 }

@@ -991,6 +991,9 @@ public interface HccSafetyService
             @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
 
     @RequestMapping(value = "/dashboard/counts", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDashboardCounts();
+    public ResponseEntity<Object> getDashboardCounts(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "fromDate", required = false, defaultValue = "") String fromDate,
+                                                     @RequestParam(value = "toDate", required = false, defaultValue = "") String toDate);
 
 }

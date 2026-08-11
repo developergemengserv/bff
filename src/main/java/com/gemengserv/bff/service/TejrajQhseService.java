@@ -632,7 +632,7 @@ public interface TejrajQhseService {
 
 
     @RequestMapping(value = "/qc/filter/crfi", method = RequestMethod.POST)
-    ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+    ResponseEntity<Object> getCRFIFilter(@RequestHeader(value = "userId") int userId,
                                         @RequestHeader(value = "token") String token,
                                         @RequestBody Object filterCrfiRequest);
 
@@ -667,6 +667,11 @@ public interface TejrajQhseService {
                                                         @RequestParam(value = "token") String token,
                                                         @RequestParam(value = "obsId", required = true) int obsId,
                                                         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
+
+    @RequestMapping(value = "/filter/obs", method = RequestMethod.POST)
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestBody Object filterObsRequest);
 
     @RequestMapping(value = "/qcStages", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getAll();
@@ -983,4 +988,8 @@ public interface TejrajQhseService {
     public ResponseEntity<Object> updateMrfi(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object mrfiUpdateRequest);
+
+    @RequestMapping(value = "/user/details", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
+                                              @RequestParam("token") String token);
 }
