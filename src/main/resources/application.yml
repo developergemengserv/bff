@@ -54,6 +54,10 @@ springdoc:
         url: /ashrayadmin/v3/api-docs
       - name: "Gem QHSE Admin"
         url: /gemqhseadmin/v3/api-docs
+      - name: "Notandas QHSE"
+        url: /notandas/v3/api-docs
+      - name: "Holystico QHSE"
+        url: /holystico/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -81,6 +85,8 @@ app-routes:
     ashray: "8103"
     ashrayadmin: "8104"
     gemqhseadmin: "8105"
+    notandas: "8106"
+    holystico: "8107"
 
 app:
   cors:
