@@ -996,4 +996,20 @@ public interface HccSafetyService
                                                      @RequestParam(value = "fromDate", required = false, defaultValue = "") String fromDate,
                                                      @RequestParam(value = "toDate", required = false, defaultValue = "") String toDate);
 
+    @RequestMapping(value = "/addProjectProgress", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> addProjectProgress(@RequestHeader(value = "userId") int userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestBody Object projectProgressRequest);
+
+    @RequestMapping(value = "/updateProjectProgress", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> updateProjectProgress(@RequestHeader(value = "userId") int userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestBody Object updateProjectProgress);
+
+    @GetMapping(value = "/getProjectProgress")
+    public ResponseEntity<List<Object>> getProjectProgress(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
+
 }

@@ -878,7 +878,7 @@ public class TejrajQhseController {
         return tejrajQhseService.getDataForQCObsReport(userId, token, obsId, webCall);
     }
 
-    @RequestMapping(value = "/filter/obs", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/obs", method = RequestMethod.POST)
     public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestBody Object filterObsRequest)

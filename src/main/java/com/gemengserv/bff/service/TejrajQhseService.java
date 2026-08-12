@@ -668,7 +668,7 @@ public interface TejrajQhseService {
                                                         @RequestParam(value = "obsId", required = true) int obsId,
                                                         @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
-    @RequestMapping(value = "/filter/obs", method = RequestMethod.POST)
+    @RequestMapping(value = "/qc/filter/obs", method = RequestMethod.POST)
     public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                                       @RequestHeader(value = "token") String token,
                                                       @RequestBody Object filterObsRequest);

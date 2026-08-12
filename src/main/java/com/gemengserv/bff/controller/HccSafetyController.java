@@ -1295,4 +1295,27 @@ public class HccSafetyController
     {
         return hccSafetyService.getDashboardCounts(userId, token, fromDate, toDate);
     }
+
+    @RequestMapping(value = "/addProjectProgress", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> addProjectProgress(@RequestHeader(value = "userId") int userId,
+                                                              @RequestHeader(value = "token") String token,
+                                                              @RequestBody Object projectProgressRequest) {
+        return hccSafetyService.addProjectProgress(userId, token, projectProgressRequest);
+    }
+
+    @RequestMapping(value = "/updateProjectProgress", method = RequestMethod.POST, produces = {"application/json"})
+    public ResponseEntity<Object> updateProjectProgress(@RequestHeader(value = "userId") int userId,
+                                                              @RequestHeader(value = "token") String token,
+                                                              @RequestBody Object updateProjectProgress) {
+        return hccSafetyService.updateProjectProgress(userId, token, updateProjectProgress);
+    }
+
+    @GetMapping(value = "/getProjectProgress")
+    public ResponseEntity<List<Object>> getProjectProgress(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId) {
+        return hccSafetyService.getProjectProgress(userId, token, projectId);
+    }
+
 }
