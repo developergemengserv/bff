@@ -1012,4 +1012,9 @@ public interface HccSafetyService
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "project_id" , required = false, defaultValue = "0") int projectId);
 
+    @GetMapping(value = "/getRoasterHistory")
+    public ResponseEntity<Object> getRoasterHistory(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id") int projectId);
 }

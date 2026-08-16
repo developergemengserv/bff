@@ -1318,4 +1318,13 @@ public class HccSafetyController
         return hccSafetyService.getProjectProgress(userId, token, projectId);
     }
 
+    @GetMapping(value = "/getRoasterHistory")
+    public ResponseEntity<Object> getRoasterHistory(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "project_id") int projectId)
+    {
+        return hccSafetyService.getRoasterHistory(userId, token, projectId);
+    }
+
 }
