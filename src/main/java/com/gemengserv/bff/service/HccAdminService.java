@@ -146,10 +146,10 @@ public interface HccAdminService
      ResponseEntity<Map<String, Object>> getActivities(@RequestParam("user_id") int user_id,
                                                              @RequestParam("token") String token,@RequestParam("project_id") String project_id) throws IOException;
 
-    @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.POST)
      ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                            @RequestHeader("token") String token,
-                                                           @RequestParam("project_id") int projectId);
+                                                           @RequestBody Object safetyRequest);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
      ResponseEntity<Map<String, Object>> getDateRangeReportDashboard(@RequestHeader(value = "user_id") int user_id,

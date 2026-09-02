@@ -920,6 +920,11 @@ public interface HccSafetyService
                                                @RequestParam(value = "obsId") long obsId,
                                                @RequestParam(value = "projectId") long projectId);
 
+    @RequestMapping(value = "/qc/roaster/obs", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getRoasterObs(@RequestHeader(value = "userId") int userId,
+                                                      @RequestHeader(value = "token") String token,
+                                                      @RequestParam(value = "roasterId") long roasterId);
+
     @RequestMapping(value = "/qc/filter/obs", method = RequestMethod.POST)
     public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") int userId,
                                                       @RequestHeader(value = "token") String token,
@@ -1017,4 +1022,9 @@ public interface HccSafetyService
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestParam(value = "project_id") int projectId);
+
+    @RequestMapping(value = "/rest/v1/observation/subtype", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getSubtypes(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token);
+
 }

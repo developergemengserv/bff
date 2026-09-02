@@ -215,11 +215,11 @@ public class HccAdminController {
         return hccAdminService.getActivities(user_id, token, project_id);
     }
 
-    @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.POST)
     public ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                            @RequestHeader("token") String token,
-                                                           @RequestParam("project_id") int projectId) {
-        return hccAdminService.getSafetyDashboardCounts(user_id, token, projectId);
+                                                           @RequestBody Object safetyRequest) {
+        return hccAdminService.getSafetyDashboardCounts(user_id, token, safetyRequest);
     }
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)

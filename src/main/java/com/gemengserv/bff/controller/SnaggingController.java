@@ -568,7 +568,7 @@ public class SnaggingController
                                                          @RequestHeader(value = "token") String token,
                                                          @RequestBody Object request)
     {
-        return findObservationRequestHistory(userId, token, request);
+        return snaggingService.findObservationRequestHistory(userId, token, request);
     }
 
     // MASTER API
