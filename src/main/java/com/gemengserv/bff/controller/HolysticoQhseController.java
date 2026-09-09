@@ -1337,4 +1337,11 @@ public class HolysticoQhseController {
     {
         return holysticoQhseService.getUserDetails(user_id,token);
     }
+
+    @RequestMapping(value = "/qc/mrfi/master", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMaterialMaster(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token)
+    {
+        return holysticoQhseService.getMaterialMaster(userId,token);
+    }
 }

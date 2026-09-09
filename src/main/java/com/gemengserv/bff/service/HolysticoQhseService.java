@@ -992,4 +992,9 @@ public interface HolysticoQhseService {
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                               @RequestParam("token") String token);
+
+    @RequestMapping(value = "/qc/mrfi/master", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMaterialMaster(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token);
+
 }
