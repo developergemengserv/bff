@@ -90,4 +90,4 @@ app-routes:
 
 app:
   cors:
-    allowed-origins: "http://13.232.224.37:8080,http://localhost:4200,http://192.168.1.4:4200"
+    allowed-origins: "https://projects-digitalgem.com, http://13.232.224.37:8080,http://localhost:4200,http://192.168.1.4:4200"
