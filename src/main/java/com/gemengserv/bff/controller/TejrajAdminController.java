@@ -90,7 +90,7 @@ public class TejrajAdminController {
         return tejrajAdminService.getTopics(user_id, token);
     }
 
-    @RequestMapping(value = "/getYears", method = RequestMethod.GET)
+    @RequestMapping(value = "rest/api/v1/common/getYears", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getYears()
     {
         return tejrajAdminService.getYears();
@@ -657,7 +657,7 @@ public class TejrajAdminController {
     }
 
     //UserController
-    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(value = "user_id") int userId,
                                                            @RequestParam(value = "token") String token,
                                                            @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,

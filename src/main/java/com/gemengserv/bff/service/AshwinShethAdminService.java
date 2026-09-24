@@ -66,7 +66,7 @@ public interface AshwinShethAdminService {
     @RequestMapping(value = "rest/api/v1/common/getTopics", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getTopics(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
-    @RequestMapping(value = "/getYears", method = RequestMethod.GET)
+    @RequestMapping(value = "rest/api/v1/common/getYears", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getYears();
 
     @RequestMapping(value = "/rest/api/v1/mapping/company/activity/create", method = RequestMethod.POST, produces = {"application/json"})
@@ -129,7 +129,10 @@ public interface AshwinShethAdminService {
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token,
-                                                    @RequestParam("project_id") int projectId);
+                                                    @RequestParam("project_id") int projectId,
+                                                    @RequestParam(value = "term") String term,
+                                                    @RequestParam(value = "period") int period,
+                                                    @RequestParam(value = "year") int year);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getDateRangeReportDashboard(@RequestHeader(value = "user_id") int user_id,
@@ -459,7 +462,7 @@ public interface AshwinShethAdminService {
     @RequestMapping(value = "/rest/api/v1/mapping/user/activity/update", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> updateUserActivityMapping(@RequestBody Map<String, Object> paramObj);
 
-    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(value = "user_id") int userId,
                                                     @RequestParam(value = "token") String token,
                                                     @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,

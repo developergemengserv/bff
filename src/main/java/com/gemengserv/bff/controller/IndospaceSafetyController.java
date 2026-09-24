@@ -153,7 +153,7 @@ public class IndospaceSafetyController
     @GetMapping(value = "/getEmergencyHelpline")
     ResponseEntity<List<Object>> getAllEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token,
-                                                         int projectId)
+                                                         @RequestParam(value = "projectId") int projectId)
     {
         return indospaceSafetyService.getAllEmergencyHelpLine(userId, token, projectId);
     }

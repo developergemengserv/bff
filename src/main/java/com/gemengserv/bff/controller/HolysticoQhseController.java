@@ -646,7 +646,7 @@ public class HolysticoQhseController {
     @GetMapping(value = "/getEmergencyHelpline")
     public ResponseEntity<List<Object>> getAllEmergencyHelpLine(@RequestHeader(value = "userId") Integer userId,
                                                                 @RequestHeader(value = "token") String token,
-                                                                int projectId) {
+                                                                @RequestParam(value = "projectId") int projectId){
         return holysticoQhseService.getAllEmergencyHelpLine(userId, token, projectId);
     }
 
