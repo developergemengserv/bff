@@ -186,8 +186,11 @@ public class NotandasAdminController {
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     public ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                            @RequestHeader("token") String token,
-                                                           @RequestParam("project_id") int projectId) {
-        return notandasAdminService.getSafetyDashboardCounts(user_id, token, projectId);
+                                                           @RequestParam("project_id") int projectId,
+                                                           @RequestParam(value = "term") String term,
+                                                           @RequestParam(value = "period") int period,
+                                                           @RequestParam(value = "year") int year) {
+        return notandasAdminService.getSafetyDashboardCounts(user_id, token, projectId,term,period,year);
     }
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)

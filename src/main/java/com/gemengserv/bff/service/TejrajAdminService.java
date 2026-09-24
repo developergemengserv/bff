@@ -129,7 +129,10 @@ public interface TejrajAdminService
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token,
-                                                    @RequestParam("project_id") int projectId);
+                                                    @RequestParam("project_id") int projectId,
+                                                    @RequestParam(value = "term") String term,
+                                                    @RequestParam(value = "period") int period,
+                                                    @RequestParam(value = "year") int year);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getDateRangeReportDashboard(@RequestHeader(value = "user_id") int user_id,
