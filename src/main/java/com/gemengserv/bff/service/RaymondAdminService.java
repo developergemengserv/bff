@@ -447,7 +447,7 @@ public interface RaymondAdminService
     @RequestMapping(value = "/rest/api/v1/mapping/user/activity/update", method = RequestMethod.POST, produces = {"application/json"})
      ResponseEntity<Map<String, Object>> updateUserActivityMapping(@RequestBody Map<String, Object> paramObj);
 
-    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.POST)
      ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(value = "user_id") int userId,
                                                            @RequestParam(value = "token") String token,
                                                            @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
