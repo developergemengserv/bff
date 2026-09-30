@@ -947,6 +947,17 @@ public interface HccSafetyService
                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 
 
+    @RequestMapping(value = "/qc/obs/dashboard/counts", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getDashboardCounts(@RequestHeader(value = "userId") Integer userId,
+                                                           @RequestHeader(value = "token") String token,
+                                                           @RequestParam(value = "projectId", required = false, defaultValue = "") Integer projectId);
+
+    @RequestMapping(value = "/qc/rosterReportDownload", method = RequestMethod.GET)
+    public ResponseEntity<Object> getRosterReport(@RequestParam(value = "user_id") int userId,
+                                                  @RequestParam(value = "token") String token,
+                                                  @RequestParam(value = "rosterId",required = true) int rosterId,
+                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
+
     @RequestMapping(value = "/addMember", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<Object> addMember(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token,
@@ -983,6 +994,11 @@ public interface HccSafetyService
     public ResponseEntity<List<Object>> fetchUsers(@RequestHeader("user_id") int userId,
                                                    @RequestHeader("token") String token,
                                                    @RequestParam("projectId") int projectId);
+
+    @RequestMapping(value = "/getProjectUsers", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getProjectUsers(@RequestHeader("user_id") int userId,
+                                                        @RequestHeader("token") String token,
+                                                        @RequestParam("projectId") int projectId) ;
 
     @RequestMapping(value = "/addRoaster", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<Object> addRoaster(@RequestHeader(value = "userId") Integer userId,

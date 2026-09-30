@@ -1116,6 +1116,23 @@ public class HccSafetyController {
         return hccSafetyService.getDataForObsReport(userId, token, obsId, webCall);
     }
 
+    @RequestMapping(value = "/qc/obs/dashboard/counts", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getDashboardCounts(@RequestHeader(value = "userId") Integer userId,
+                                                                       @RequestHeader(value = "token") String token,
+                                                                       @RequestParam(value = "projectId", required = false, defaultValue = "") Integer projectId)
+    {
+        return hccSafetyService.getDashboardCounts(userId, token, projectId);
+    }
+
+    @RequestMapping(value = "/qc/rosterReportDownload", method = RequestMethod.GET)
+    public ResponseEntity<Object> getRosterReport(@RequestParam(value = "user_id") int userId,
+                                                  @RequestParam(value = "token") String token,
+                                                  @RequestParam(value = "rosterId",required = true) int rosterId,
+                                                  @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall)
+    {
+        return hccSafetyService.getRosterReport(userId, token, rosterId, webCall);
+    }
+
     @RequestMapping(value = "/addMember", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<Object> addMember(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token,
@@ -1165,6 +1182,13 @@ public class HccSafetyController {
                                                    @RequestHeader("token") String token,
                                                    @RequestParam("projectId") int projectId) {
         return hccSafetyService.fetchUsers(userId, token, projectId);
+    }
+
+    @RequestMapping(value = "/getProjectUsers", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getProjectUsers(@RequestHeader("user_id") int userId,
+                                                   @RequestHeader("token") String token,
+                                                   @RequestParam("projectId") int projectId) {
+        return hccSafetyService.getProjectUsers(userId, token, projectId);
     }
 
     @RequestMapping(value = "/addRoaster", method = RequestMethod.POST, produces = {"application/json"})

@@ -360,8 +360,13 @@ public class HccAdminController {
 
     @RequestMapping(value = "/rest/api/v1/project/findAll", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> restProjects(@RequestParam("user_id") int user_id,
-                                                            @RequestParam("token") String token) throws JsonParseException, JsonMappingException, IOException {
-        return hccAdminService.restProjects(user_id, token);
+                                                            @RequestParam("token") String token,
+                                                            @RequestParam(value = "active", required = false, defaultValue = "2") int active,
+                                                            @RequestParam(value = "zoneId", required = false, defaultValue = "0") int zoneId,
+                                                            @RequestParam(value = "stateId", required = false, defaultValue = "0") int stateId,
+                                                            @RequestParam(value = "sector", required = false, defaultValue = "0") int sector,
+                                                            @RequestParam(value = "subSector", required = false, defaultValue = "0") int subSector) throws JsonParseException, JsonMappingException, IOException {
+        return hccAdminService.restProjects(user_id, token,active,zoneId,stateId,sector,subSector);
     }
 
     @RequestMapping(value = "/rest/api/v1/project/createOld", method = RequestMethod.POST, produces = {"application/json"})
