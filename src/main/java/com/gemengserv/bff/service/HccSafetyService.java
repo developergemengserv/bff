@@ -953,7 +953,7 @@ public interface HccSafetyService
                                                            @RequestParam(value = "projectId", required = false, defaultValue = "") Integer projectId);
 
     @RequestMapping(value = "/qc/rosterReportDownload", method = RequestMethod.GET)
-    public ResponseEntity<Object> getRosterReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getRosterReport(@RequestParam(value = "user_id") int userId,
                                                   @RequestParam(value = "token") String token,
                                                   @RequestParam(value = "rosterId",required = true) int rosterId,
                                                   @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
