@@ -843,6 +843,4 @@ public interface IndospaceSafetyService
     ResponseEntity<Object> getUnitMasterById(@RequestHeader(value = "userId") Integer userId,
                                              @RequestHeader(value = "token") String token,
                                              @PathVariable(value = "id") long unitMasterId);
-
-
 }
