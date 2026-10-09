@@ -896,6 +896,12 @@ public class TejrajQhseController {
         return tejrajQhseService.create(stageName);
     }
 
+    @RequestMapping(value = "/qcStages", method = RequestMethod.PUT)
+    public ResponseEntity<Object> update(@RequestParam String stageName,
+                                         @RequestParam int stageId) {
+        return tejrajQhseService.update(stageName,stageId);
+    }
+
     // Report controller
 
     @RequestMapping(value = "/rorReport", method = RequestMethod.GET)
@@ -1334,5 +1340,29 @@ public class TejrajQhseController {
                                          @RequestParam("token") String token)
     {
         return tejrajQhseService.getUserDetails(user_id,token);
+    }
+
+    @RequestMapping(value = "qc/excel/crfi", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getCrfiExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestBody Object filterRequest)
+    {
+        return tejrajQhseService.getCrfiExcelFilter(userId, token, filterRequest);
+    }
+
+    @RequestMapping(value = "qc/excel/ncr", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getNCRExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestBody Object filterRequest)
+    {
+        return tejrajQhseService.getNCRExcelFilter(userId, token, filterRequest);
+    }
+
+    @RequestMapping(value = "qc/excel/obs", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getOBSExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                @RequestHeader(value = "token") String token,
+                                                @RequestBody Object filterRequest)
+    {
+        return tejrajQhseService.getOBSExcelFilter(userId, token, filterRequest);
     }
 }

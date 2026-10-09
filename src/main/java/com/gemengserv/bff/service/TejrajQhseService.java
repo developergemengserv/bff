@@ -679,6 +679,9 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/qcStages", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> create(@RequestParam String stageName);
 
+    @RequestMapping(value = "/qcStages", method = RequestMethod.PUT)
+    public ResponseEntity<Object> update(@RequestParam String stageName,
+                                         @RequestParam int stageId);
     // Report controller
 
     @RequestMapping(value = "/rorReport", method = RequestMethod.GET)
@@ -992,4 +995,20 @@ public interface TejrajQhseService {
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                               @RequestParam("token") String token);
+
+    @RequestMapping(value = "qc/excel/crfi", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getCrfiExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestBody Object filterRequest);
+
+    @RequestMapping(value = "qc/excel/ncr", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getNCRExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestBody Object filterRequest);
+
+    @RequestMapping(value = "qc/excel/obs", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> getOBSExcelFilter(@RequestHeader(value = "userId") int userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestBody Object filterRequest);
+
 }
