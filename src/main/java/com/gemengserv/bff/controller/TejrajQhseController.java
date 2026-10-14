@@ -1358,6 +1358,29 @@ public class TejrajQhseController {
         return tejrajQhseService.getMaterialTypes();
     }
 
+    @RequestMapping(value = "/qc/addMaterial", method = RequestMethod.POST)
+    public ResponseEntity<Object> addMaterial(@RequestHeader(value = "userId") Integer userId,
+                                                             @RequestHeader(value = "token") String token,
+                                                             @RequestBody Object materialAddRequest)
+    {
+        return tejrajQhseService.addMaterial(userId, token, materialAddRequest);
+    }
+
+    @RequestMapping(value = "/qc/getMaterials", method = RequestMethod.GET)
+    public List<Object> getMaterials(@RequestHeader(value = "userId") Integer userId,
+                                             @RequestHeader(value = "token") String token)
+    {
+        return tejrajQhseService.getMaterials(userId, token);
+    }
+
+    @RequestMapping(value = "/qc/updateMaterial", method = RequestMethod.POST)
+    public ResponseEntity<Object> updateMaterial(@RequestHeader(value = "userId") Integer userId,
+                                                 @RequestHeader(value = "token") String token,
+                                                 @RequestBody Object materialUpdateRequest)
+    {
+        return tejrajQhseService.updateMaterial(userId, token, materialUpdateRequest);
+    }
+
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                          @RequestParam("token") String token)
