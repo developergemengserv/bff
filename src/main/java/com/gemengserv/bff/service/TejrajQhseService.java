@@ -185,6 +185,11 @@ public interface TejrajQhseService {
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "id") Integer tbtId);
 
+    @PostMapping(value = "/filter/tbt")
+    public ResponseEntity<Object> getTBTFilter(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object filterTbtRequest);
     // safety controller API's
 
     // safety observation API's
@@ -772,6 +777,11 @@ public interface TejrajQhseService {
                                              @RequestParam("token") String token, @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(value = "webCall", defaultValue = "true", required = false) boolean webCall);
 
+    @PostMapping(value = "/filter/workers")
+    public ResponseEntity<Object> getWorkersFilter(@RequestHeader(value = "user_id") int userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestBody Object filterRequest);
+
 // Incident controller
 
     @RequestMapping(value = "/safety/incident", method = RequestMethod.POST)
@@ -991,6 +1001,9 @@ public interface TejrajQhseService {
     public ResponseEntity<Object> updateMrfi(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object mrfiUpdateRequest);
+
+    @RequestMapping(value = "/qc/mrfi/materialTypes", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getMaterialTypes();
 
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,

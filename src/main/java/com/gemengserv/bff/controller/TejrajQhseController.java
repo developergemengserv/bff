@@ -250,6 +250,15 @@ public class TejrajQhseController {
         return tejrajQhseService.getSafetyTbtById(userId, token, tbtId);
     }
 
+    @PostMapping(value = "/filter/tbt")
+    public ResponseEntity<Object> getTBTFilter(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object filterTbtRequest)
+    {
+        return tejrajQhseService.getTBTFilter(userId, token, filterTbtRequest);
+    }
+
     // safety controller API's
 
     // safety observation API's
@@ -1024,6 +1033,14 @@ public class TejrajQhseController {
         return tejrajQhseService.downloadWorkerPdf(user_id, token, workerId, webCall);
     }
 
+    @PostMapping(value = "/filter/workers")
+    public ResponseEntity<Object> getWorkersFilter(@RequestHeader(value = "user_id") int userId,
+                                                                 @RequestHeader(value = "token") String token,
+                                                                 @RequestBody Object filterRequest)
+    {
+        return tejrajQhseService.getWorkersFilter(userId, token, filterRequest);
+    }
+
 
     // Incident controller
 
@@ -1333,6 +1350,12 @@ public class TejrajQhseController {
                                              @RequestBody Object mrfiUpdateRequest)
     {
         return tejrajQhseService.updateMrfi(userId, token, mrfiUpdateRequest);
+    }
+
+    @RequestMapping(value = "/qc/mrfi/materialTypes", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getMaterialTypes()
+    {
+        return tejrajQhseService.getMaterialTypes();
     }
 
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
