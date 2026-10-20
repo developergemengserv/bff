@@ -126,10 +126,7 @@ public interface RaymondAdminService
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
      ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                            @RequestHeader("token") String token,
-                                                           @RequestParam("project_id") int projectId,
-                                                     @RequestParam(value = "term") String term,
-                                                     @RequestParam(value = "period") int period,
-                                                     @RequestParam(value = "year") int year);
+                                                           @RequestParam("project_id") int projectId);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
      ResponseEntity<Map<String, Object>> getDateRangeReportDashboard(@RequestHeader(value = "user_id") int user_id,
@@ -359,33 +356,33 @@ public interface RaymondAdminService
                                                              @RequestBody Object findRequest);
 
     @GetMapping("/rest/api/v1/ui/report/downloadTBTPdf")
-     ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                                  @RequestHeader("token") String token,
                                                  @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId);
 
     @GetMapping("/rest/api/v1/ui/report/downloadIncidentPdf")
-     ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadEquipmentPdf", method = RequestMethod.GET)
-     ResponseEntity<Object> equipmentReport(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> equipmentReport(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "equipmentId", required = true, defaultValue = "0") int equipmentId);
 
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadPtwPdf", method = RequestMethod.GET)
-     ResponseEntity<Object> ptwReport(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> ptwReport(@RequestHeader("user_id") int user_id,
                                             @RequestHeader("token") String token,
                                             @RequestParam(name = "ptwId", required = true, defaultValue = "0") int ptwId);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadObsReport", method = RequestMethod.GET)
-     ResponseEntity<Object> getObsReport(@RequestHeader(value = "user_id") int userId,
+     ResponseEntity<byte[]> getObsReport(@RequestHeader(value = "user_id") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam(value = "obsId",required = true, defaultValue = "0") int obsId);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/meetingReportPdf", method = RequestMethod.GET)
-     ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> meetingReport(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token,
                                                 @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId);
 
@@ -394,11 +391,11 @@ public interface RaymondAdminService
                                                 @RequestParam(value = "token") String token);
 
     @GetMapping("/rest/api/v1/ui/report/downloadGPPdf")
-     ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> downloadGPPdf(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token,@RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId);
 
     @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
-     ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
+     ResponseEntity<byte[]> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token,@RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds);
 
 

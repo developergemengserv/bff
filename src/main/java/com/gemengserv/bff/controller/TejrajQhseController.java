@@ -250,6 +250,14 @@ public class TejrajQhseController {
         return tejrajQhseService.getSafetyTbtById(userId, token, tbtId);
     }
 
+    @PostMapping(value = "/excel/tbt")
+    public ResponseEntity<Object> getTBTExcel(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object filterTbtRequest)
+    {
+        return tejrajQhseService.getTBTExcel(userId, token, filterTbtRequest);
+    }
     // safety controller API's
 
     // safety observation API's
@@ -1019,6 +1027,13 @@ public class TejrajQhseController {
         return tejrajQhseService.downloadWorkerPdf(user_id, token, workerId, webCall);
     }
 
+    @PostMapping(value = "/excel/workers")
+    public ResponseEntity<Object> getWorkersExcel(@RequestHeader(value = "user_id") int userId,
+                                             @RequestHeader(value = "token") String token,
+                                             @RequestBody Object filterRequest)
+    {
+        return tejrajQhseService.getWorkersExcel(userId, token, filterRequest);
+    }
 
     // Incident controller
 
