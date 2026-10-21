@@ -190,6 +190,13 @@ public interface TejrajQhseService {
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object filterTbtRequest);
+
+    @PostMapping(value = "/excel/tbt")
+    public ResponseEntity<Object> getTBTExcel(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object filterTbtRequest);
+
     // safety controller API's
 
     // safety observation API's
@@ -781,6 +788,11 @@ public interface TejrajQhseService {
     public ResponseEntity<Object> getWorkersFilter(@RequestHeader(value = "user_id") int userId,
                                                    @RequestHeader(value = "token") String token,
                                                    @RequestBody Object filterRequest);
+
+    @PostMapping(value = "/excel/workers")
+    public ResponseEntity<Object> getWorkersExcel(@RequestHeader(value = "user_id") int userId,
+                                                  @RequestHeader(value = "token") String token,
+                                                  @RequestBody Object filterRequest);
 
 // Incident controller
 
