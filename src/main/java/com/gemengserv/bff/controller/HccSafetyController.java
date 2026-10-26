@@ -346,7 +346,7 @@ public class HccSafetyController {
     }
 
     @GetMapping("/downloadMemoPdf")
-    ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                            @RequestHeader("token") String token,
                                            @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId) {
         return hccSafetyService.downloadMemoPdf(user_id, token, obsId);
@@ -360,7 +360,7 @@ public class HccSafetyController {
     }
 
     @GetMapping("/downloadIncidentPdf")
-    ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                @RequestHeader("token") String token,
                                                @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId) {
         return hccSafetyService.downloadIncidentPdf(user_id, token, incidentId);
@@ -374,7 +374,7 @@ public class HccSafetyController {
     }
 
     @GetMapping("/downloadTBTPdf")
-    ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                           @RequestHeader("token") String token,
                                           @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId,
                                           @RequestParam(name = "requestType", required = false, defaultValue = "Mobile") String requestType) {
@@ -382,7 +382,7 @@ public class HccSafetyController {
     }
 
     @GetMapping("/downloadGPPdf")
-    ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadGPPdf(@RequestHeader("user_id") int user_id,
                                          @RequestHeader("token") String token,
                                          @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId) {
         return hccSafetyService.downloadGPPdf(user_id, token, goodPracticeId);
@@ -409,7 +409,7 @@ public class HccSafetyController {
     }
 
     @RequestMapping(value = "/meetingReportPdf", method = RequestMethod.GET)
-    ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> meetingReport(@RequestHeader("user_id") int user_id,
                                          @RequestHeader("token") String token,
                                          @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId,
                                          @RequestParam(name = "requestType", required = false, defaultValue = "Mobile") String requestType) {
@@ -441,7 +441,7 @@ public class HccSafetyController {
     }
 
     @GetMapping("/downloadWorkerPdf")
-    ResponseEntity<Object> downloadWorkerPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadWorkerPdf(@RequestHeader("user_id") int user_id,
                                              @RequestHeader("token") String token,
                                              @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(name = "requestType", required = true, defaultValue = "Mobile") String requestType) {
@@ -1109,7 +1109,7 @@ public class HccSafetyController {
     }
 
     @RequestMapping(value = "/qc/obsReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDataForObsReport(@RequestParam(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getDataForObsReport(@RequestParam(value = "user_id") int userId,
                                                       @RequestParam(value = "token") String token,
                                                       @RequestParam(value = "obsId", required = true) int obsId,
                                                       @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall) {

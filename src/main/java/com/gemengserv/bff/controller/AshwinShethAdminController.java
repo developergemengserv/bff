@@ -576,7 +576,7 @@ public class AshwinShethAdminController {
     }
 
     @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token, @RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds) {
         return ashwinShethAdminService.downloadAllTBTPdf(user_id, token, tbtIds);
     }

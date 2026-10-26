@@ -608,7 +608,7 @@ public interface GroundHoldingQcService
                                                      @RequestParam(value = "obsId",required = false) int obsId);
 
     @RequestMapping(value = "/rest/v1/downloadNcrPdf", method = RequestMethod.GET)
-    ResponseEntity<Object> downloadNcrPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadNcrPdf(@RequestHeader("user_id") int user_id,
                                           @RequestHeader("token") String token,
                                           @RequestParam(name = "ncrId", required = true, defaultValue = "0") int ncrId);
 

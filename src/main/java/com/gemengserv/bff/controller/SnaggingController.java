@@ -363,7 +363,7 @@ public class SnaggingController
     }
 
     @GetMapping("/downloadMemoPdf")
-    ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                            @RequestHeader("token") String token,
                                            @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId)
     {
@@ -379,7 +379,7 @@ public class SnaggingController
     }
 
     @GetMapping("/downloadIncidentPdf")
-    ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                @RequestHeader("token") String token,
                                                @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
     {
@@ -395,7 +395,7 @@ public class SnaggingController
     }
 
     @GetMapping("/downloadTBTPdf")
-    ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                           @RequestHeader("token") String token,
                                           @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId,
                                           @RequestParam(name = "requestType", required = false, defaultValue = "Mobile") String requestType)
@@ -404,7 +404,7 @@ public class SnaggingController
     }
 
     @GetMapping("/downloadGPPdf")
-    ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadGPPdf(@RequestHeader("user_id") int user_id,
                                          @RequestHeader("token") String token,
                                          @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId)
     {
@@ -435,7 +435,7 @@ public class SnaggingController
     }
 
     @RequestMapping(value = "/meetingReportPdf", method = RequestMethod.GET)
-    ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> meetingReport(@RequestHeader("user_id") int user_id,
                                          @RequestHeader("token") String token,
                                          @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId,
                                          @RequestParam(name = "requestType", required = false, defaultValue = "Mobile") String requestType)
@@ -471,7 +471,7 @@ public class SnaggingController
     }
 
     @GetMapping("/downloadWorkerPdf")
-    ResponseEntity<Object> downloadWorkerPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadWorkerPdf(@RequestHeader("user_id") int user_id,
                                              @RequestHeader("token") String token,
                                              @RequestParam(name = "workerId", required = true, defaultValue = "0") int workerId,
                                              @RequestParam(name = "requestType", required = true, defaultValue = "Mobile") String requestType)

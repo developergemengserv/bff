@@ -948,7 +948,7 @@ public class NotandasQhseController {
     }
 
     @GetMapping("/downloadMemoPdf")
-    public ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId) {
         return notandasQhseService.downloadMemoPdf(user_id, token, obsId);
@@ -956,7 +956,7 @@ public class NotandasQhseController {
 
 
     @GetMapping("/downloadDebitPdf")
-    public ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadDebitPdf(@RequestHeader("user_id") int user_id,
                                                    @RequestHeader("token") String token,
                                                    @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId) {
         return notandasQhseService.downloadDebitPdf(user_id, token, debitId);
@@ -964,7 +964,7 @@ public class NotandasQhseController {
 
 
     @GetMapping("/downloadIncidentPdf")
-    public ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId) {
         return notandasQhseService.downloadIncidentPdf(user_id, token, incidentId);

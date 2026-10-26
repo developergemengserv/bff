@@ -954,7 +954,7 @@ public class TejrajQhseController {
     }
 
     @GetMapping("/downloadMemoPdf")
-    public ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId) {
         return tejrajQhseService.downloadMemoPdf(user_id, token, obsId);
@@ -962,7 +962,7 @@ public class TejrajQhseController {
 
 
     @GetMapping("/downloadDebitPdf")
-    public ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadDebitPdf(@RequestHeader("user_id") int user_id,
                                                    @RequestHeader("token") String token,
                                                    @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId) {
         return tejrajQhseService.downloadDebitPdf(user_id, token, debitId);
@@ -970,7 +970,7 @@ public class TejrajQhseController {
 
 
     @GetMapping("/downloadIncidentPdf")
-    public ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId) {
         return tejrajQhseService.downloadIncidentPdf(user_id, token, incidentId);

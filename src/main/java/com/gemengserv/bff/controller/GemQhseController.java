@@ -1017,7 +1017,7 @@ public class GemQhseController
     }
 
     @GetMapping("/downloadMemoPdf")
-    public ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId)
     {
@@ -1026,7 +1026,7 @@ public class GemQhseController
 
 
     @GetMapping("/downloadDebitPdf")
-    public ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadDebitPdf(@RequestHeader("user_id") int user_id,
                                                    @RequestHeader("token") String token,
                                                    @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId)
     {
@@ -1035,7 +1035,7 @@ public class GemQhseController
 
 
     @GetMapping("/downloadIncidentPdf")
-    public ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId)
     {

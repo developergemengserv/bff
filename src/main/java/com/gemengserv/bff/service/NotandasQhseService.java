@@ -714,19 +714,19 @@ public interface NotandasQhseService {
                                                    @RequestParam(value = "projectId", required = false, defaultValue = "0") Integer projectId);
 
     @GetMapping("/downloadMemoPdf")
-    ResponseEntity<Object> downloadMemoPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadMemoPdf(@RequestHeader("user_id") int user_id,
                                            @RequestHeader("token") String token,
                                            @RequestParam(name = "obsId", required = false, defaultValue = "0") int obsId);
 
 
     @GetMapping("/downloadDebitPdf")
-    ResponseEntity<Object> downloadDebitPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadDebitPdf(@RequestHeader("user_id") int user_id,
                                             @RequestHeader("token") String token,
                                             @RequestParam(name = "debitId", required = false, defaultValue = "0") int debitId);
 
 
     @GetMapping("/downloadIncidentPdf")
-    ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                @RequestHeader("token") String token,
                                                @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId);
 

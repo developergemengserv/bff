@@ -903,7 +903,7 @@ public class GroundHoldingQcController
     }
 
     @RequestMapping(value = "/rest/v1/downloadNcrPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> downloadNcrPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadNcrPdf(@RequestHeader("user_id") int user_id,
                                             @RequestHeader("token") String token,
                                             @RequestParam(name = "ncrId", required = true, defaultValue = "0") int ncrId)
     {

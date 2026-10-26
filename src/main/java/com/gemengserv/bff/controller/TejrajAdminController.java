@@ -523,14 +523,14 @@ public class TejrajAdminController {
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadTBTPdf")
-    public ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                                  @RequestHeader("token") String token,
                                                  @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId) {
         return tejrajAdminService.downloadTBTPdf(user_id, token, tbtId);
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadIncidentPdf")
-    public ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId) {
         return tejrajAdminService.downloadIncidentPdf(user_id, token, incidentId);
@@ -538,28 +538,28 @@ public class TejrajAdminController {
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadEquipmentPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> equipmentReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> equipmentReport(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "equipmentId", required = true, defaultValue = "0") int equipmentId) {
         return tejrajAdminService.equipmentReport(user_id, token, equipmentId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadPtwPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> ptwReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> ptwReport(@RequestHeader("user_id") int user_id,
                                             @RequestHeader("token") String token,
                                             @RequestParam(name = "ptwId", required = true, defaultValue = "0") int ptwId) {
         return tejrajAdminService.ptwReport(user_id, token, ptwId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadObsReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getObsReport(@RequestHeader(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getObsReport(@RequestHeader(value = "user_id") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam(value = "obsId", required = true, defaultValue = "0") int obsId) {
         return tejrajAdminService.getObsReport(userId, token, obsId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/meetingReportPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> meetingReport(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token,
                                                 @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId) {
         return tejrajAdminService.meetingReport(user_id, token, tbtId);
@@ -572,13 +572,13 @@ public class TejrajAdminController {
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadGPPdf")
-    public ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadGPPdf(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token, @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId) {
         return tejrajAdminService.downloadGPPdf(user_id, token, goodPracticeId);
     }
 
     @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token, @RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds) {
         return tejrajAdminService.downloadAllTBTPdf(user_id, token, tbtIds);
     }

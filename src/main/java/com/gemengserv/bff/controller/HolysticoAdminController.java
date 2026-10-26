@@ -521,14 +521,14 @@ public class HolysticoAdminController {
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadTBTPdf")
-    public ResponseEntity<Object> downloadTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadTBTPdf(@RequestHeader("user_id") int user_id,
                                                  @RequestHeader("token") String token,
                                                  @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId) {
         return holysticoAdminService.downloadTBTPdf(user_id, token, tbtId);
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadIncidentPdf")
-    public ResponseEntity<Object> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadIncidentPdf(@RequestHeader("user_id") int user_id,
                                                       @RequestHeader("token") String token,
                                                       @RequestParam(name = "incidentId", required = false, defaultValue = "0") int incidentId) {
         return holysticoAdminService.downloadIncidentPdf(user_id, token, incidentId);
@@ -536,28 +536,28 @@ public class HolysticoAdminController {
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadEquipmentPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> equipmentReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> equipmentReport(@RequestHeader("user_id") int user_id,
                                                   @RequestHeader("token") String token,
                                                   @RequestParam(name = "equipmentId", required = true, defaultValue = "0") int equipmentId) {
         return holysticoAdminService.equipmentReport(user_id, token, equipmentId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadPtwPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> ptwReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> ptwReport(@RequestHeader("user_id") int user_id,
                                             @RequestHeader("token") String token,
                                             @RequestParam(name = "ptwId", required = true, defaultValue = "0") int ptwId) {
         return holysticoAdminService.ptwReport(user_id, token, ptwId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/downloadObsReport", method = RequestMethod.GET)
-    public ResponseEntity<Object> getObsReport(@RequestHeader(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getObsReport(@RequestHeader(value = "user_id") int userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestParam(value = "obsId", required = true, defaultValue = "0") int obsId) {
         return holysticoAdminService.getObsReport(userId, token, obsId);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/meetingReportPdf", method = RequestMethod.GET)
-    public ResponseEntity<Object> meetingReport(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> meetingReport(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token,
                                                 @RequestParam(name = "tbtId", required = true, defaultValue = "0") int tbtId) {
         return holysticoAdminService.meetingReport(user_id, token, tbtId);
@@ -570,13 +570,13 @@ public class HolysticoAdminController {
     }
 
     @GetMapping("/rest/api/v1/ui/report/downloadGPPdf")
-    public ResponseEntity<Object> downloadGPPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadGPPdf(@RequestHeader("user_id") int user_id,
                                                 @RequestHeader("token") String token, @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId) {
         return holysticoAdminService.downloadGPPdf(user_id, token, goodPracticeId);
     }
 
     @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
+    public ResponseEntity<byte[]> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token, @RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds) {
         return holysticoAdminService.downloadAllTBTPdf(user_id, token, tbtIds);
     }

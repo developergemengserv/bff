@@ -413,7 +413,7 @@ public interface AshwinShethAdminService {
                                          @RequestHeader("token") String token, @RequestParam(name = "goodPracticeId", required = true, defaultValue = "0") int goodPracticeId);
 
     @GetMapping(value = "/rest/api/v1/ui/report/downloadAllTBTPdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    ResponseEntity<Object> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
+   ResponseEntity<byte[]> downloadAllTBTPdf(@RequestHeader("user_id") int user_id,
                                              @RequestHeader("token") String token, @RequestParam(name = "tbtId", required = true, defaultValue = "0") int[] tbtIds);
 
 
