@@ -268,7 +268,7 @@ public class TejrajQhseController {
     }
 
     @PostMapping(value = "/excel/tbt")
-    public ResponseEntity<Object> getTBTExcel(
+    public ResponseEntity<byte[]> getTBTExcel(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
             @RequestBody Object filterTbtRequest)
@@ -1058,7 +1058,7 @@ public class TejrajQhseController {
     }
 
     @PostMapping(value = "/excel/workers")
-    public ResponseEntity<Object> getWorkersExcel(@RequestHeader(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getWorkersExcel(@RequestHeader(value = "user_id") int userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestBody Object filterRequest)
     {
