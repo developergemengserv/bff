@@ -46,6 +46,14 @@ public class TejrajQhseController {
         return tejrajQhseService.getActivities();
     }
 
+    @GetMapping(value = "/getActivityChecklist")
+    public ResponseEntity<List<Object>> getActivityChecklist(@RequestHeader(value = "userId") Integer userId,
+                                                                                @RequestHeader(value = "token") String token,
+                                                                                @RequestParam(value = "activityCode") String code)
+    {
+        return tejrajQhseService.getActivityChecklist(userId, token, code);
+    }
+
     @RequestMapping(value = "/addActivities", consumes = "multipart/form-data", method = RequestMethod.POST)
     public String addActivities(@RequestPart(value = "file") MultipartFile file,
                                 @RequestParam(value = "userId") int userId) {
