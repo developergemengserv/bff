@@ -1058,7 +1058,7 @@ public class TejrajQhseController {
     }
 
     @PostMapping(value = "/excel/workers")
-    public ResponseEntity<byte[]> getWorkersExcel(@RequestHeader(value = "user_id") int userId,
+    public ResponseEntity<byte[]> getWorkersExcel(@RequestHeader(value = "userId") int userId,
                                                   @RequestHeader(value = "token") String token,
                                                   @RequestBody Object filterRequest)
     {
