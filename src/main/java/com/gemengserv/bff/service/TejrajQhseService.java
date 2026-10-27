@@ -990,6 +990,11 @@ public interface TejrajQhseService {
     public Map<String, Object> uploadHazardChecklist(@RequestParam(value = "userId") int userId,
                                                      @RequestPart(value = "file") MultipartFile file);
 
+    @GetMapping(value = "/getHazardChecklist")
+    public ResponseEntity<List<Object>> getHazardChecklist(@RequestHeader(value = "userId") Integer userId,
+                                                                            @RequestHeader(value = "token") String token,
+                                                                            @RequestParam(value = "typeOfWorkId") int id);
+
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createMrfi(
             @RequestHeader(value = "userId") Integer userId,

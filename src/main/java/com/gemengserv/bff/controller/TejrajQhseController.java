@@ -1331,6 +1331,14 @@ public class TejrajQhseController {
         return tejrajQhseService.uploadHazardChecklist(userId, file);
     }
 
+    @GetMapping(value = "/getHazardChecklist")
+    public ResponseEntity<List<Object>> getHazardChecklist(@RequestHeader(value = "userId") Integer userId,
+                                                           @RequestHeader(value = "token") String token,
+                                                           @RequestParam(value = "typeOfWorkId") int id)
+    {
+        return tejrajQhseService.getHazardChecklist(userId, token, id);
+    }
+
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createMrfi(
             @RequestHeader(value = "userId") Integer userId,
