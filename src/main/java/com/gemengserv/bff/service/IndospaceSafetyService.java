@@ -844,5 +844,8 @@ public interface IndospaceSafetyService
                                              @RequestHeader(value = "token") String token,
                                              @PathVariable(value = "id") long unitMasterId);
 
+    @RequestMapping(value = "/rest/v1/checkSession", method = RequestMethod.GET)
+    public ResponseEntity<Object> checkSession(@RequestParam("userId") int user_id,
+                                               @RequestParam("token") String token);
 
 }

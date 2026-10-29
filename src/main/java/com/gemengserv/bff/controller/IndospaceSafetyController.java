@@ -1146,4 +1146,19 @@ public class IndospaceSafetyController
     {
         return indospaceSafetyService.getUnitMasterById(userId, token, unitMasterId);
     }
+
+    @GetMapping(value = "/safety/funds")
+    public ResponseEntity<Object> getFunds(
+            @RequestHeader(value = "userId") Integer userId,
+            @RequestHeader(value = "token") String token)
+    {
+        return indospaceSafetyService.getFunds(userId, token);
+    }
+
+    @RequestMapping(value = "/rest/v1/checkSession", method = RequestMethod.GET)
+    public ResponseEntity<Object> checkSession(@RequestParam("userId") int user_id,
+                                                       @RequestParam("token") String token)
+    {
+        return indospaceSafetyService.checkSession(user_id, token);
+    }
 }
