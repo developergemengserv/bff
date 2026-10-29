@@ -319,6 +319,13 @@ public class TejrajQhseController {
         return tejrajQhseService.findObservationRequestHistory(userId, token, historyRequest);
     }
 
+    @PostMapping(value = "/safety/filter/obs")
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") Integer userId,
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestBody Object filterObsRequest) {
+        return tejrajQhseService.getObsFilter(userId, token, filterObsRequest);
+    }
+
     // MASTER API
 
     @GetMapping(value = "/safety/master/unsafeAct/findAll")
@@ -470,6 +477,13 @@ public class TejrajQhseController {
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest) {
         return tejrajQhseService.findPtwCount(userId, token, dashboardCountRequest);
+    }
+
+    @PostMapping(value = "/safety/filter/ptw")
+    public ResponseEntity<Object> getPtwFilter(@RequestHeader(value = "userId") Integer userId,
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestBody Object filterPtwRequest) {
+        return tejrajQhseService.getPtwFilter(userId, token, filterPtwRequest);
     }
 
     @PostMapping(value = "/safety/findObsCount")
