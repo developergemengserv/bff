@@ -226,6 +226,10 @@ public interface TejrajQhseService {
             @RequestHeader(value = "token") String token,
             @RequestBody Object historyRequest);
 
+    @PostMapping(value = "/safety/filter/obs")
+    public ResponseEntity<Object> getObsFilter(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token,
+                                               @RequestBody Object filterObsRequest) ;
 
     // MASTER API
 
@@ -352,7 +356,12 @@ public interface TejrajQhseService {
             @RequestHeader(value = "token") String token,
             @RequestBody Object dashboardCountRequest);
 
-    @PostMapping(value = "/safety/findObsCount")
+    @PostMapping(value = "/safety/filter/ptw")
+    public ResponseEntity<Object> getPtwFilter(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token,
+                                               @RequestBody Object filterPtwRequest);
+
+        @PostMapping(value = "/safety/findObsCount")
     ResponseEntity<Object> findObsCount(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
