@@ -57,6 +57,12 @@ public interface TejrajQhseService {
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object activityRequest);
 
+    @PostMapping("/editActivityCheckpoint")
+    public ResponseEntity<Object> editActivityCheckpoint(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object activityCheckpointRequest);
+
     @GetMapping(value = "/rest/v1/activityTypeOfWork", produces = "application/json")
     ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
                                                         @RequestHeader("token") String token, @RequestParam(value = "lastSync", required = false) String lastSync);

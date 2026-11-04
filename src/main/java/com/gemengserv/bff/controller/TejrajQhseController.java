@@ -80,6 +80,15 @@ public class TejrajQhseController {
         return tejrajQhseService.editActivity(userId, token, activityRequest);
     }
 
+    @PostMapping("/editActivityCheckpoint")
+    public ResponseEntity<Object> editActivityCheckpoint(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value = "token") String token,
+            @RequestBody Object activityCheckpointRequest)
+    {
+        return tejrajQhseService.editActivityCheckpoint(userId, token, activityCheckpointRequest);
+    }
+
     //    ActivityTypeOfWorkMappingController
     @GetMapping(value = "/rest/v1/activityTypeOfWork", produces = "application/json")
     public ResponseEntity<Object> getActivityTypeOfWorkMapping(@RequestHeader("user_id") int userId,
