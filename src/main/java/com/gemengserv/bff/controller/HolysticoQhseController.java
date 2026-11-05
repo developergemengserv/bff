@@ -271,6 +271,12 @@ public class HolysticoQhseController {
         return holysticoQhseService.updateSafetyObservation(userId, token, updateRequest);
     }
 
+    @GetMapping(value = "/vendor")
+    public ResponseEntity<List<Object>> getVendors(@RequestHeader(value = "userId") Integer userId,
+                                                         @RequestHeader(value = "token") String token) {
+        return holysticoQhseService.getVendors(userId, token);
+    }
+
     @PostMapping(value = "/safety/obs/find")
     public ResponseEntity<Object> findSafetyObservation(
             @RequestHeader(value = "userId") Integer userId,
