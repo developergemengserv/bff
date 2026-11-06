@@ -64,7 +64,7 @@ public class SnaggingAdminController {
         return snaggingAdminService.checkotp(otp, user_id, version);
     }
 
-    @RequestMapping(value = "rest/api/v1/common/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/api/v1/common/logout", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> logout(@RequestParam("user_id") int user_id,
                                                       @RequestParam("version") String version) {
         return snaggingAdminService.logout(user_id, version);
@@ -88,6 +88,11 @@ public class SnaggingAdminController {
     @RequestMapping(value = "rest/api/v1/common/getTopics", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getTopics(@RequestParam("user_id") int user_id, @RequestParam("token") String token) {
         return snaggingAdminService.getTopics(user_id, token);
+    }
+
+    @RequestMapping(value = "rest/api/v1/common/getYears", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getYears() {
+        return snaggingAdminService.getYears();
     }
 
     //CompanyActivityMappingController
@@ -181,8 +186,11 @@ public class SnaggingAdminController {
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     public ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                            @RequestHeader("token") String token,
-                                                           @RequestParam("project_id") int projectId) {
-        return snaggingAdminService.getSafetyDashboardCounts(user_id, token, projectId);
+                                                           @RequestParam("project_id") int projectId,
+                                                           @RequestParam(value = "term") String term,
+                                                           @RequestParam(value = "period") int period,
+                                                           @RequestParam(value = "year") int year) {
+        return snaggingAdminService.getSafetyDashboardCounts(user_id, token, projectId,term,period,year);
     }
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
@@ -190,9 +198,8 @@ public class SnaggingAdminController {
                                                                            @RequestHeader(value = "token") String token,
                                                                            @RequestParam(value = "project_id") int project_id,
                                                                            @RequestParam(value = "fromDate") String fromDate,
-                                                                           @RequestParam(value = "toDate") String toDate,
-                                                                           @RequestParam(value = "filterType") String filterType) {
-        return snaggingAdminService.getDateRangeReportDashboard(user_id, token, project_id, fromDate, toDate, filterType);
+                                                                           @RequestParam(value = "toDate") String toDate) {
+        return snaggingAdminService.getDateRangeReportDashboard(user_id, token, project_id, fromDate, toDate);
     }
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportExcel", method = RequestMethod.GET)
@@ -200,9 +207,8 @@ public class SnaggingAdminController {
                                                             @RequestHeader(value = "token") String token,
                                                             @RequestParam(value = "project_id") int project_id,
                                                             @RequestParam(value = "fromDate") String fromDate,
-                                                            @RequestParam(value = "toDate") String toDate,
-                                                            @RequestParam(value = "filterType") String filterType) {
-        return snaggingAdminService.getDateRangeReportExcel(user_id, token, project_id, fromDate, toDate, filterType);
+                                                            @RequestParam(value = "toDate") String toDate) {
+        return snaggingAdminService.getDateRangeReportExcel(user_id, token, project_id, fromDate, toDate);
     }
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getContractorwiseCounts", method = RequestMethod.GET)
@@ -212,6 +218,25 @@ public class SnaggingAdminController {
                                                           @RequestParam(value = "fromDate") String fromDate,
                                                           @RequestParam(value = "toDate") String toDate) {
         return snaggingAdminService.getContractorwiseCounts(user_id, token, projectId, fromDate, toDate);
+    }
+
+    @RequestMapping(value = "/getDateRangeAddReportDashboard", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getDateRangeAddReportDashboard(@RequestHeader(value = "user_id") int user_id,
+                                                                              @RequestHeader(value = "token") String token,
+                                                                              @RequestParam(value = "project_id") int project_id,
+                                                                              @RequestParam(value = "term") String term,
+                                                                              @RequestParam(value = "period") int period) {
+        return snaggingAdminService.getDateRangeAddReportDashboard(user_id, token, project_id, term, period);
+    }
+
+    @RequestMapping(value = "/getDashboardReportData", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDashboardReportData(@RequestHeader(value = "user_id") int user_id,
+                                                         @RequestHeader(value = "token") String token,
+                                                         @RequestParam(value = "type") String type,
+                                                         @RequestParam(value = "project_id") int project_id,
+                                                         @RequestParam(value = "term") String term,
+                                                         @RequestParam(value = "period") int period) {
+        return snaggingAdminService.getDashboardReportData(user_id, token, type, project_id, term, period);
     }
 
     //HazardsController
@@ -235,8 +260,8 @@ public class SnaggingAdminController {
     public ResponseEntity<Map<String, Object>> getAllLocationsFromDB(
             @RequestParam(value = "project_id", required = true) int pid,
             @RequestParam(value = "page_num", defaultValue = "1", required = false) int page,
-            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
-            @RequestParam("user_id") int user_id, @RequestParam("token") String token) {
+            @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize
+            , @RequestParam("user_id") int user_id, @RequestParam("token") String token) {
         return snaggingAdminService.getAllLocationsFromDB(pid, page, pageSize, user_id, token);
     }
 
@@ -376,8 +401,9 @@ public class SnaggingAdminController {
                                                            @RequestHeader(value = "token") String token,
                                                            @RequestParam(value = "project_id") int projectId,
                                                            @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
-                                                           @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize) {
-        return snaggingAdminService.getAllObsDataForUIReport(userId, token, projectId, pageNum, pageSize);
+                                                           @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
+                                                           @RequestParam(value = "checkDebitNote", defaultValue = "0", required = false) int checkDebitNote) {
+        return snaggingAdminService.getAllObsDataForUIReport(userId, token, projectId, pageNum, pageSize, checkDebitNote);
     }
 
     @RequestMapping(value = "/rest/api/v1/ui/report/find/mrfi", method = RequestMethod.GET)
@@ -624,7 +650,7 @@ public class SnaggingAdminController {
     }
 
     //UserController
-    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(value = "user_id") int userId,
                                                            @RequestParam(value = "token") String token,
                                                            @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,

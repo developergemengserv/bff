@@ -65,6 +65,9 @@ public interface SnaggingAdminService {
     @RequestMapping(value = "rest/api/v1/common/getTopics", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getTopics(@RequestParam("user_id") int user_id, @RequestParam("token") String token);
 
+    @RequestMapping(value = "rest/api/v1/common/getYears", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getYears();
+
     @RequestMapping(value = "/rest/api/v1/mapping/company/activity/create", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> addCompanyActivityMapping(@RequestBody Map<String, Object> paramObj);
 
@@ -125,24 +128,24 @@ public interface SnaggingAdminService {
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getSafetyDashboardCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getSafetyDashboardCounts(@RequestHeader("user_id") int user_id,
                                                     @RequestHeader("token") String token,
-                                                    @RequestParam("project_id") int projectId);
+                                                    @RequestParam("project_id") int projectId,
+                                                    @RequestParam(value = "term") String term,
+                                                    @RequestParam(value = "period") int period,
+                                                    @RequestParam(value = "year") int year);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportDashboard", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getDateRangeReportDashboard(@RequestHeader(value = "user_id") int user_id,
                                                                     @RequestHeader(value = "token") String token,
                                                                     @RequestParam(value = "project_id") int project_id,
                                                                     @RequestParam(value = "fromDate") String fromDate,
-                                                                    @RequestParam(value = "toDate") String toDate,
-                                                                    @RequestParam(value = "filterType") String filterType
-    );
+                                                                    @RequestParam(value = "toDate") String toDate);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getDateRangeReportExcel", method = RequestMethod.GET)
     ResponseEntity<Resource> getDateRangeReportExcel(@RequestHeader(value = "user_id") int user_id,
                                                      @RequestHeader(value = "token") String token,
                                                      @RequestParam(value = "project_id") int project_id,
                                                      @RequestParam(value = "fromDate") String fromDate,
-                                                     @RequestParam(value = "toDate") String toDate,
-                                                     @RequestParam(value = "filterType") String filterType);
+                                                     @RequestParam(value = "toDate") String toDate);
 
     @RequestMapping(value = "/rest/api/v1/dashboardchart/getContractorwiseCounts", method = RequestMethod.GET)
     ResponseEntity<Object> getContractorwiseCounts(@RequestHeader("user_id") int user_id,
@@ -150,6 +153,21 @@ public interface SnaggingAdminService {
                                                    @RequestParam("project_id") int projectId,
                                                    @RequestParam(value = "fromDate") String fromDate,
                                                    @RequestParam(value = "toDate") String toDate);
+
+    @RequestMapping(value = "/getDateRangeAddReportDashboard", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getDateRangeAddReportDashboard(@RequestHeader(value = "user_id") int user_id,
+                                                                              @RequestHeader(value = "token") String token,
+                                                                              @RequestParam(value = "project_id") int project_id,
+                                                                              @RequestParam(value = "term") String term,
+                                                                              @RequestParam(value = "period") int period);
+
+    @RequestMapping(value = "/getDashboardReportData", method = RequestMethod.GET)
+    public ResponseEntity<Object> getDashboardReportData(@RequestHeader(value = "user_id") int user_id,
+                                                         @RequestHeader(value = "token") String token,
+                                                         @RequestParam(value = "type") String type,
+                                                         @RequestParam(value = "project_id") int project_id,
+                                                         @RequestParam(value = "term") String term,
+                                                         @RequestParam(value = "period") int period);
 
     @PostMapping(value = "/hazards/upload/{projectId}", consumes = "multipart/form-data")
     ResponseEntity<Object> uploadHazards(@RequestParam(value = "user_id") Integer userId,
@@ -267,7 +285,8 @@ public interface SnaggingAdminService {
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestParam(value = "project_id") int projectId,
                                                     @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
-                                                    @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize);
+                                                    @RequestParam(value = "page_size", defaultValue = "1000", required = false) int pageSize,
+                                                    @RequestParam(value = "checkDebitNote", defaultValue = "0", required = false) int checkDebitNote);
 
     @RequestMapping(value = "/rest/api/v1/ui/report/find/mrfi", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllMRFIDataForUIReport(@RequestParam(value = "user_id") int userId,
@@ -442,7 +461,7 @@ public interface SnaggingAdminService {
     @RequestMapping(value = "/rest/api/v1/mapping/user/activity/update", method = RequestMethod.POST, produces = {"application/json"})
     ResponseEntity<Map<String, Object>> updateUserActivityMapping(@RequestBody Map<String, Object> paramObj);
 
-    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/api/v1/user/findAll", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(value = "user_id") int userId,
                                                     @RequestParam(value = "token") String token,
                                                     @RequestParam(value = "page_num", defaultValue = "1", required = false) int pageNum,
