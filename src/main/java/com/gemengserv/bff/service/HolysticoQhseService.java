@@ -201,6 +201,10 @@ public interface HolysticoQhseService {
             @RequestHeader(value = "token") String token,
             @RequestBody Object updateRequest);
 
+    @GetMapping(value = "/vendor")
+    public ResponseEntity<Object> getVendors(@RequestHeader(value = "userId") Integer userId,
+                                                   @RequestHeader(value = "token") String token);
+
     @PostMapping(value = "/safety/obs/find")
     ResponseEntity<Object> findSafetyObservation(
             @RequestHeader(value = "userId") Integer userId,

@@ -58,6 +58,12 @@ springdoc:
         url: /notandas/v3/api-docs
       - name: "Holystico QHSE"
         url: /holystico/v3/api-docs
+      - name: "Holystico QHSE ADMIN"
+        url: /holysticoadmin/v3/api-docs
+      - name: "Notandas QHSE ADMIN"
+        url: /notandasadmin/v3/api-docs
+      - name: "Snagging ADMIN"
+        url: /snaggingadmin/v3/api-docs
 app-routes:
   routes:
     tejraj: "8081"
@@ -87,6 +93,9 @@ app-routes:
     gemqhseadmin: "8105"
     notandas: "8106"
     holystico: "8107"
+    holysticoadmin: "8108"
+    notandasadmin: "8109"
+    snaggingadmin: "8110"
 
 app:
   cors:
