@@ -202,7 +202,7 @@ public interface HolysticoQhseService {
             @RequestBody Object updateRequest);
 
     @GetMapping(value = "/vendor")
-    public ResponseEntity<List<Object>> getVendors(@RequestHeader(value = "userId") Integer userId,
+    public ResponseEntity<Object> getVendors(@RequestHeader(value = "userId") Integer userId,
                                                    @RequestHeader(value = "token") String token);
 
     @PostMapping(value = "/safety/obs/find")

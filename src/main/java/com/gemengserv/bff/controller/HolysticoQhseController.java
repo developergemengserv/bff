@@ -272,7 +272,7 @@ public class HolysticoQhseController {
     }
 
     @GetMapping(value = "/vendor")
-    public ResponseEntity<List<Object>> getVendors(@RequestHeader(value = "userId") Integer userId,
+    public ResponseEntity<Object> getVendors(@RequestHeader(value = "userId") Integer userId,
                                                          @RequestHeader(value = "token") String token) {
         return holysticoQhseService.getVendors(userId, token);
     }
