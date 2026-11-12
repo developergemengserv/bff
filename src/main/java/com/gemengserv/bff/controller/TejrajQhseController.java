@@ -335,8 +335,14 @@ public class TejrajQhseController {
         return tejrajQhseService.getObsFilter(userId, token, filterObsRequest);
     }
 
-    // MASTER API
+    @PostMapping(value = "/safety/excel/obs")
+    public ResponseEntity<byte[]> getObsExcel(@RequestHeader(value = "userId") Integer userId,
+                                         @RequestHeader(value = "token") String token,
+                                         @RequestBody Object filterObsRequest){
+        return tejrajQhseService.getObsExcel(userId, token, filterObsRequest);
+    }
 
+    // MASTER API
     @GetMapping(value = "/safety/master/unsafeAct/findAll")
     public ResponseEntity<Object> findAllUnsafeAct(
             @RequestHeader(value = "userId") Integer userId,
@@ -493,6 +499,13 @@ public class TejrajQhseController {
                                                           @RequestHeader(value = "token") String token,
                                                           @RequestBody Object filterPtwRequest) {
         return tejrajQhseService.getPtwFilter(userId, token, filterPtwRequest);
+    }
+
+    @PostMapping(value = "/safety/excel/ptw")
+    public ResponseEntity<byte[]> getPtwExcel(@RequestHeader(value = "userId") Integer userId,
+                                         @RequestHeader(value = "token") String token,
+                                         @RequestBody Object filterPtwRequest) {
+        return tejrajQhseService.getPtwExcel(userId, token, filterPtwRequest);
     }
 
     @PostMapping(value = "/safety/findObsCount")
@@ -1114,8 +1127,20 @@ public class TejrajQhseController {
         return tejrajQhseService.findIncidentById(userId, token, incidentId);
     }
 
-    // Safety worker controller
+    @PostMapping(value = "/safety/filter/incident")
+    public ResponseEntity<Object> getIncidentFilter(@RequestHeader(value = "userId") Integer userId,
+                                                                    @RequestHeader(value = "token") String token,
+                                                                    @RequestBody Object filterIncidentRequest) {
+        return tejrajQhseService.getIncidentFilter(userId, token, filterIncidentRequest);
+    }
 
+    @PostMapping(value = "/safety/excel/incident")
+    public ResponseEntity<byte[]> getIncidentExcel(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestBody Object filterIncidentRequest) {
+        return tejrajQhseService.getIncidentExcel(userId, token, filterIncidentRequest);
+    }
+        // Safety worker controller
     @PostMapping(value = "/SafetyWorkers")
     public ResponseEntity<Object> saveSafetyWorkers(@RequestHeader(value = "user_id") int userId,
                                                     @RequestHeader(value = "token") String token,

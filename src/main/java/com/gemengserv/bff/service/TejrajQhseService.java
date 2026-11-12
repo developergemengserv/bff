@@ -248,6 +248,10 @@ public interface TejrajQhseService {
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterObsRequest) ;
 
+    @PostMapping(value = "/safety/excel/obs")
+    public ResponseEntity<byte[]> getObsExcel(@RequestHeader(value = "userId") Integer userId,
+                                              @RequestHeader(value = "token") String token,
+                                              @RequestBody Object filterObsRequest);
     // MASTER API
 
     @GetMapping(value = "/safety/master/unsafeAct/findAll")
@@ -378,7 +382,12 @@ public interface TejrajQhseService {
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterPtwRequest);
 
-        @PostMapping(value = "/safety/findObsCount")
+    @PostMapping(value = "/safety/excel/ptw")
+    public ResponseEntity<byte[]> getPtwExcel(@RequestHeader(value = "userId") Integer userId,
+                                         @RequestHeader(value = "token") String token,
+                                         @RequestBody Object filterPtwRequest);
+
+    @PostMapping(value = "/safety/findObsCount")
     ResponseEntity<Object> findObsCount(
             @RequestHeader(value = "userId") Integer userId,
             @RequestHeader(value = "token") String token,
@@ -832,6 +841,16 @@ public interface TejrajQhseService {
     ResponseEntity<Object> findIncidentById(@RequestHeader(value = "userId") Integer userId,
                                             @RequestHeader(value = "token") String token,
                                             @PathVariable(value = "incidentId") Integer incidentId);
+
+    @PostMapping(value = "/safety/filter/incident")
+    public ResponseEntity<Object> getIncidentFilter(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestBody Object filterIncidentRequest);
+
+    @PostMapping(value = "/safety/excel/incident")
+    public ResponseEntity<byte[]> getIncidentExcel(@RequestHeader(value = "userId") Integer userId,
+                                                   @RequestHeader(value = "token") String token,
+                                                   @RequestBody Object filterIncidentRequest);
 
     // Safety worker controller
 
