@@ -973,7 +973,7 @@ public interface HolysticoQhseService {
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.GET)
     public ResponseEntity<Object> getMrfi(@RequestHeader(value = "userId") Integer userId,
                                           @RequestHeader(value = "token") String token,
-                                          @RequestParam(value = "companyId") long companyId,
+                                          @RequestParam(value = "companyId", required = false, defaultValue = "0") long companyId,
                                           @RequestParam(value = "projectId") int projectId,
                                           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                           @RequestParam(value = "pageSize", defaultValue = "100") int pageSize);
@@ -997,8 +997,13 @@ public interface HolysticoQhseService {
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                               @RequestParam("token") String token);
 
-    @RequestMapping(value = "/qc/mrfi/master", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/mrfi/materialMaster", method = RequestMethod.GET)
     public ResponseEntity<Object> getMaterialMaster(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestHeader(value = "materialTypeId", required = false, defaultValue = "0") int materialTypeId);
+
+    @RequestMapping(value = "/qc/mrfi/materialTypeMaster", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMaterialTypeMaster(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token);
 
 }

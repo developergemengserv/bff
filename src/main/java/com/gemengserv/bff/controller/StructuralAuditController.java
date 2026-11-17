@@ -17,12 +17,13 @@ public class StructuralAuditController
 
     // File Upload Controller
 
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/upload", consumes = "multipart/form-data")
     public Object uploadFile(@RequestPart("file") MultipartFile file,
-                      @RequestParam("obsId") int obsId,
+                             @RequestHeader("Authorization") String token,
+                             @RequestParam("obsId") int obsId,
                       @RequestParam("mediaType") String  mediaType)
     {
-        return structuralAuditService.uploadFile(file, obsId, mediaType);
+        return structuralAuditService.uploadFile(file, token, obsId, mediaType);
     }
 
     // Location Master Controller

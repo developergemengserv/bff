@@ -1305,7 +1305,7 @@ public class HolysticoQhseController {
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.GET)
     public ResponseEntity<Object> getMrfi(@RequestHeader(value = "userId") Integer userId,
                                           @RequestHeader(value = "token") String token,
-                                          @RequestParam(value = "companyId") long companyId,
+                                          @RequestParam(value = "companyId", required = false, defaultValue = "0") long companyId,
                                           @RequestParam(value = "projectId") int projectId,
                                           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                           @RequestParam(value = "pageSize", defaultValue = "100") int pageSize)
@@ -1344,10 +1344,18 @@ public class HolysticoQhseController {
         return holysticoQhseService.getUserDetails(user_id,token);
     }
 
-    @RequestMapping(value = "/qc/mrfi/master", method = RequestMethod.GET)
+    @RequestMapping(value = "/qc/mrfi/materialMaster", method = RequestMethod.GET)
     public ResponseEntity<Object> getMaterialMaster(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestHeader(value = "materialTypeId", required = false, defaultValue = "0") int materialTypeId)
+    {
+        return holysticoQhseService.getMaterialMaster(userId,token,materialTypeId);
+    }
+
+    @RequestMapping(value = "/qc/mrfi/materialTypeMaster", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMaterialTypeMaster(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token)
     {
-        return holysticoQhseService.getMaterialMaster(userId,token);
+        return holysticoQhseService.getMaterialTypeMaster(userId,token);
     }
 }

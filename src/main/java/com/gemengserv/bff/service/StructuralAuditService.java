@@ -15,8 +15,9 @@ public interface StructuralAuditService
 {
     // File Upload Controller
 
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/upload", consumes = "multipart/form-data")
     Object uploadFile(@RequestPart("file") MultipartFile file,
+                      @RequestHeader("Authorization") String token,
                       @RequestParam("obsId") int obsId,
                       @RequestParam("mediaType") String  mediaType);
 
