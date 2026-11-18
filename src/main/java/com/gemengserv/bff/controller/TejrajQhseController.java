@@ -627,6 +627,20 @@ public class TejrajQhseController {
         return tejrajQhseService.findSafetyEquipmentById(userId, token, equipmentId);
     }
 
+    @PostMapping(value = "/safety/filter/equipment")
+    public ResponseEntity<Object> getEquipmentFilter(@RequestHeader(value = "userId") Integer userId,
+                                                                      @RequestHeader(value = "token") String token,
+                                                                      @RequestBody Object filterEquipmentRequest) {
+        return tejrajQhseService.getEquipmentFilter(userId, token, filterEquipmentRequest);
+    }
+
+    @PostMapping(value = "/safety/excel/equipment")
+    public ResponseEntity<Object> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
+                                               @RequestHeader(value = "token") String token,
+                                               @RequestBody Object filterEquipmentRequest) {
+        return tejrajQhseService.getEquipmentExcel(userId,token,filterEquipmentRequest);
+    }
+
     @GetMapping(value = "/safety/findOBSByFilter")
     public ResponseEntity<Object> findOBSByFilter(
             @RequestParam(value = "fromDate") String fromDate,
@@ -1207,6 +1221,14 @@ public class TejrajQhseController {
         return tejrajQhseService.getSnagFilter(userId, token, filterObsRequest);
     }
 
+    @PostMapping(value = "/snag/excel")
+    public ResponseEntity<Object> getSnagExcel(@RequestHeader(value = "userId") int userId,
+                                          @RequestHeader(value = "token") String token,
+                                          @RequestBody Object filterObsRequest)
+    {
+        return tejrajQhseService.getSnagExcel(userId, token, filterObsRequest);
+    }
+
     @RequestMapping(value = "/snag/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateSnag(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
@@ -1382,9 +1404,16 @@ public class TejrajQhseController {
     @GetMapping(value = "/getHazardChecklist")
     public ResponseEntity<List<Object>> getHazardChecklist(@RequestHeader(value = "userId") Integer userId,
                                                            @RequestHeader(value = "token") String token,
-                                                           @RequestParam(value = "typeOfWorkId") int id)
-    {
+                                                           @RequestParam(value = "typeOfWorkId") int id) {
         return tejrajQhseService.getHazardChecklist(userId, token, id);
+    }
+
+    @PostMapping("/editHazardCheckpoint")
+    public ResponseEntity<Object> editHazardCheckpoint(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value ="token") String token,
+            @RequestBody Object hazardCheckpointRequest){
+        return tejrajQhseService.editHazardCheckpoint(userId, token, hazardCheckpointRequest);
     }
 
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.POST)
