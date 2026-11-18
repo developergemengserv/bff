@@ -635,7 +635,7 @@ public class TejrajQhseController {
     }
 
     @PostMapping(value = "/safety/excel/equipment")
-    public ResponseEntity<Object> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
+    public ResponseEntity<byte[]> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
                                                @RequestHeader(value = "token") String token,
                                                @RequestBody Object filterEquipmentRequest) {
         return tejrajQhseService.getEquipmentExcel(userId,token,filterEquipmentRequest);
@@ -1222,7 +1222,7 @@ public class TejrajQhseController {
     }
 
     @PostMapping(value = "/snag/excel")
-    public ResponseEntity<Object> getSnagExcel(@RequestHeader(value = "userId") int userId,
+    public ResponseEntity<byte[]> getSnagExcel(@RequestHeader(value = "userId") int userId,
                                           @RequestHeader(value = "token") String token,
                                           @RequestBody Object filterObsRequest)
     {

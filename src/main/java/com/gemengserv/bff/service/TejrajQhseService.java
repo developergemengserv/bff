@@ -476,11 +476,11 @@ public interface TejrajQhseService {
                                                      @RequestBody Object filterEquipmentRequest);
 
     @PostMapping(value = "/safety/excel/equipment")
-    public ResponseEntity<Object> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
+    public ResponseEntity<byte[]> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token,
                                                     @RequestBody Object filterEquipmentRequest);
 
-        @GetMapping(value = "/safety/findOBSByFilter")
+    @GetMapping(value = "/safety/findOBSByFilter")
     ResponseEntity<Object> findOBSByFilter(
             @RequestParam(value = "fromDate") String fromDate,
             @RequestParam(value = "toDate") String toDate,
@@ -913,7 +913,7 @@ public interface TejrajQhseService {
                                                 @RequestBody Object filterObsRequest);
 
     @PostMapping(value = "/snag/excel")
-    public ResponseEntity<Object> getSnagExcel(@RequestHeader(value = "userId") int userId,
+    public ResponseEntity<byte[]> getSnagExcel(@RequestHeader(value = "userId") int userId,
                                           @RequestHeader(value = "token") String token,
                                           @RequestBody Object filterObsRequest);
 
