@@ -444,7 +444,17 @@ public interface TejrajQhseService {
             @RequestHeader(value = "token") String token,
             @PathVariable(value = "equipmentId") Integer equipmentId);
 
-    @GetMapping(value = "/safety/findOBSByFilter")
+    @PostMapping(value = "/safety/filter/equipment")
+    public ResponseEntity<Object> getEquipmentFilter(@RequestHeader(value = "userId") Integer userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestBody Object filterEquipmentRequest);
+
+    @PostMapping(value = "/safety/excel/equipment")
+    public ResponseEntity<Object> getEquipmentExcel(@RequestHeader(value = "userId") Integer userId,
+                                                    @RequestHeader(value = "token") String token,
+                                                    @RequestBody Object filterEquipmentRequest);
+
+        @GetMapping(value = "/safety/findOBSByFilter")
     ResponseEntity<Object> findOBSByFilter(
             @RequestParam(value = "fromDate") String fromDate,
             @RequestParam(value = "toDate") String toDate,
@@ -858,6 +868,11 @@ public interface TejrajQhseService {
                                                 @RequestHeader(value = "token") String token,
                                                 @RequestBody Object filterObsRequest);
 
+    @PostMapping(value = "/snag/excel")
+    public ResponseEntity<Object> getSnagExcel(@RequestHeader(value = "userId") int userId,
+                                          @RequestHeader(value = "token") String token,
+                                          @RequestBody Object filterObsRequest);
+
     @RequestMapping(value = "/snag/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateSnag(@RequestHeader(value = "userId") int userId,
                                              @RequestHeader(value = "token") String token,
@@ -979,6 +994,12 @@ public interface TejrajQhseService {
     @ResponseBody // Make sure this is present if you aren't using @RestController
     public Map<String, Object> uploadHazardChecklist(@RequestParam(value = "userId") int userId,
                                                      @RequestPart(value = "file") MultipartFile file);
+
+    @PostMapping("/editHazardCheckpoint")
+    public ResponseEntity<Object> editHazardCheckpoint(
+            @RequestHeader(value = "userId") int userId,
+            @RequestHeader(value ="token") String token,
+            @RequestBody Object hazardCheckpointRequest);
 
     @RequestMapping(value = "/qc/mrfi", method = RequestMethod.POST)
     public ResponseEntity<Object> createMrfi(
