@@ -1006,4 +1006,9 @@ public interface HolysticoQhseService {
     public ResponseEntity<Object> getMaterialTypeMaster(@RequestHeader(value = "userId") Integer userId,
                                                     @RequestHeader(value = "token") String token);
 
+    @RequestMapping(value = "/qc/mrfiPdfReport", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDataForMrfiPdfReport(@RequestHeader(value = "userId") int userId,
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestParam(value = "mrfiId", required = true) int mrfiId,
+                                                          @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
 }

@@ -1030,6 +1030,12 @@ public interface TejrajQhseService {
                                              @RequestHeader(value = "token") String token,
                                              @RequestBody Object mrfiUpdateRequest);
 
+    @RequestMapping(value = "/qc/mrfiPdfReport", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDataForMrfiPdfReport(@RequestHeader(value = "userId") int userId,
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestParam(value = "mrfiId", required = true) int mrfiId,
+                                                          @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall);
+
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                               @RequestParam("token") String token);

@@ -1358,4 +1358,12 @@ public class HolysticoQhseController {
     {
         return holysticoQhseService.getMaterialTypeMaster(userId,token);
     }
+
+    @RequestMapping(value = "/qc/mrfiPdfReport", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDataForMrfiPdfReport(@RequestHeader(value = "userId") int userId,
+                                                          @RequestHeader(value = "token") String token,
+                                                          @RequestParam(value = "mrfiId", required = true) int mrfiId,
+                                                          @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall) {
+        return holysticoQhseService.getDataForMrfiPdfReport(userId, token, mrfiId, webCall);
+    }
 }

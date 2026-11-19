@@ -1389,6 +1389,14 @@ public class TejrajQhseController {
         return tejrajQhseService.updateMrfi(userId, token, mrfiUpdateRequest);
     }
 
+    @RequestMapping(value = "/qc/mrfiPdfReport", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDataForMrfiPdfReport(@RequestHeader(value = "userId") int userId,
+                                                     @RequestHeader(value = "token") String token,
+                                                     @RequestParam(value = "mrfiId", required = true) int mrfiId,
+                                                     @RequestParam(value = "webCall", defaultValue = "false", required = false) boolean webCall) {
+        return tejrajQhseService.getDataForMrfiPdfReport(userId, token, mrfiId, webCall);
+    }
+
     @RequestMapping(value = "/user/details", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(@RequestParam("user_id") int user_id,
                                          @RequestParam("token") String token)
